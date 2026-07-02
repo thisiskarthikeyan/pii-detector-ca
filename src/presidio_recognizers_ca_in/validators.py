@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import re
 
-_NON_ALNUM = re.compile(r"[^0-9A-Za-z]")
+_NON_ALNUM = re.compile(r"[^0-9A-Za-zÀ-ÖØ-öø-ÿ]")
 
 
 def normalize(value: str) -> str:
@@ -112,7 +112,8 @@ def ca_ohip_valid(value: str) -> bool:
     return luhn_valid(m.group(1))
 
 
-_RAMQ_RE = re.compile(r"([A-Za-z]{4})(\d{2})(\d{2})(\d{2})(\d{2})")
+# RAMQ letter block may contain accented characters from French surnames (CÔTÉ, GAGNÉ).
+_RAMQ_RE = re.compile(r"([A-Za-zÀ-ÖØ-öø-ÿ]{4})(\d{2})(\d{2})(\d{2})(\d{2})")
 
 
 def ca_ramq_valid(value: str) -> bool:

@@ -65,7 +65,7 @@ class RamqRecognizer(ValidatedPatternRecognizer):
             patterns=[
                 Pattern(
                     name="ramq_separated",
-                    regex=r"\b[A-Z]{4}[- ]?\d{4}[- ]?\d{4}\b",
+                    regex=r"\b[A-ZÀ-ÖØ-Þ]{4}[- ]?\d{4}[- ]?\d{4}\b",
                     score=0.4,
                 ),
             ],

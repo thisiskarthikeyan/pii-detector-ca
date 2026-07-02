@@ -45,9 +45,9 @@ class InVoterIdRecognizer(ValidatedPatternRecognizer):
         super().__init__(
             supported_entity="IN_VOTER_ID",
             patterns=[
-                Pattern(name="in_voter_id", regex=r"\b[A-Z]{3}\d{7}\b", score=0.3),
+                Pattern(name="in_voter_id", regex=r"\b[A-Z]{3}\d{7}\b", score=0.4),
             ],
-            context=["voter", "epic", "election", "मतदाता"],
+            context=["voter", "epic", "election", "proof", "id proof", "मतदाता"],
             validator=None,
         )
 
@@ -62,9 +62,9 @@ class InPassportRecognizer(ValidatedPatternRecognizer):
                 Pattern(
                     name="in_passport",
                     regex=r"\b[A-PR-WY][1-9]\d{6}\b",
-                    score=0.2,
+                    score=0.4,
                 ),
             ],
-            context=["passport", "पासपोर्ट"],
+            context=["passport", "proof", "id proof", "पासपोर्ट"],
             validator=None,
         )

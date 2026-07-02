@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Benchmark artifacts (generated; gold split is kept in-repo)
+benchmark/data/generated/
+
+# Real clinical text must never be committed (licensing/PHI)
+benchmark/data/real/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+
+# Secrets
+.env
+*.key
+*credentials*.json

@@ -1,0 +1,775 @@
+{
+  "metadata": {
+    "generated_at": "2026-07-03T17:49:38+00:00",
+    "python": "3.12.13",
+    "versions": {
+      "presidio-analyzer": "2.2.363",
+      "spacy": "3.8.13",
+      "en_core_web_sm": "3.8.0"
+    },
+    "nlp_model": "en_core_web_sm",
+    "score_threshold": 0.35,
+    "corpus_checksums": {
+      "gold/ca_gold.jsonl": "d938c3450420cb5bf9a11395c3a17ec1b4db8105dd3b394a9031ecd968b4e54f",
+      "gold/in_gold.jsonl": "849c8d08f28a3418b528f890cb5b6051f41076ea55956b93b5ad571c91297727",
+      "generated/ca.jsonl": "9a5880369ad3ef5d6bc88e636de967c44fed7ecce28ab1a0b5df15f69255316e",
+      "generated/in.jsonl": "33e7a4046df86e8f9e91dd90a711de32f884aced21371d966a28084146c4d3e0",
+      "negatives/ca_negatives.jsonl": "bb2b1f63b7f87f2365b002c3532130b372ab94f513331cf6f5200d06b66e31a4",
+      "hard/ca_hard.jsonl": "880b94a3afac4d1dd69dac3c7da5952ba10a87707f76811bc000b1fb12c903ec"
+    }
+  },
+  "results": {
+    "Stock Presidio": {
+      "by_variant": {
+        "control": {
+          "gold": 50,
+          "detected": 32,
+          "covered": 26,
+          "recall": 0.64,
+          "strict_recall": 0.52
+        },
+        "no_context": {
+          "gold": 50,
+          "detected": 36,
+          "covered": 26,
+          "recall": 0.72,
+          "strict_recall": 0.52
+        },
+        "unusual_separator": {
+          "gold": 50,
+          "detected": 27,
+          "covered": 23,
+          "recall": 0.54,
+          "strict_recall": 0.46
+        },
+        "line_wrap": {
+          "gold": 50,
+          "detected": 19,
+          "covered": 1,
+          "recall": 0.38,
+          "strict_recall": 0.02
+        },
+        "ocr_confusable": {
+          "gold": 50,
+          "detected": 19,
+          "covered": 1,
+          "recall": 0.38,
+          "strict_recall": 0.02
+        },
+        "dictation": {
+          "gold": 50,
+          "detected": 25,
+          "covered": 19,
+          "recall": 0.5,
+          "strict_recall": 0.38
+        }
+      },
+      "cells": {
+        "CA_AB_ULI|control": {
+          "gold": 10,
+          "detected": 8,
+          "covered": 7,
+          "missed": [
+            "01895-4648",
+            "51178 3807"
+          ]
+        },
+        "CA_AB_ULI|dictation": {
+          "gold": 10,
+          "detected": 1,
+          "covered": 0,
+          "missed": [
+            "8 9 3 9 3 1 3 1 1",
+            "9 7 9 6 1 9 6 9 7",
+            "2 5 1 3 6 1 7 9 9",
+            "3 9 9 0 6 9 9 2 5",
+            "6 8 4 2 2 0 2 1 0",
+            "3 7 9 8 4 3 5 1 4",
+            "8 6 6 1 0 8 2 3 9",
+            "0 1 3 7 5 8 0 5 6",
+            "4 0 9 1 8 1 1 2 1"
+          ]
+        },
+        "CA_AB_ULI|line_wrap": {
+          "gold": 10,
+          "detected": 6,
+          "covered": 0,
+          "missed": [
+            "27723\n9977",
+            "32027\n5114",
+            "13744\n8083",
+            "28179\n3028"
+          ]
+        },
+        "CA_AB_ULI|no_context": {
+          "gold": 10,
+          "detected": 8,
+          "covered": 6,
+          "missed": [
+            "24228-3554",
+            "26161-9262"
+          ]
+        },
+        "CA_AB_ULI|ocr_confusable": {
+          "gold": 10,
+          "detected": 6,
+          "covered": 1,
+          "missed": [
+            "l8366 5280",
+            "66648 4O34",
+            "799l6 2890",
+            "51O06 0436"
+          ]
+        },
+        "CA_AB_ULI|unusual_separator": {
+          "gold": 10,
+          "detected": 5,
+          "covered": 3,
+          "missed": [
+            "45599 918 5",
+            "00446/3771",
+            "81178.6170",
+            "24 319 8597",
+            "29385/1602"
+          ]
+        },
+        "CA_BC_PHN|control": {
+          "gold": 10,
+          "detected": 10,
+          "covered": 10,
+          "missed": []
+        },
+        "CA_BC_PHN|dictation": {
+          "gold": 10,
+          "detected": 10,
+          "covered": 10,
+          "missed": []
+        },
+        "CA_BC_PHN|line_wrap": {
+          "gold": 10,
+          "detected": 2,
+          "covered": 0,
+          "missed": [
+            "9666 440\n508",
+            "9526 237\n092",
+            "9434 670\n865",
+            "9400 985\n094",
+            "9021 889\n257",
+            "9048\n379 379",
+            "9674 253\n156",
+            "9067 701\n767"
+          ]
+        },
+        "CA_BC_PHN|no_context": {
+          "gold": 10,
+          "detected": 10,
+          "covered": 10,
+          "missed": []
+        },
+        "CA_BC_PHN|ocr_confusable": {
+          "gold": 10,
+          "detected": 1,
+          "covered": 0,
+          "missed": [
+            "9310 332 1l5",
+            "955l 055 783",
+            "9230 999 5l5",
+            "9122 l12 275",
+            "9226 51l 392",
+            "919l 707 927",
+            "98O8 761 329",
+            "977O 944 596",
+            "9l65 669 377"
+          ]
+        },
+        "CA_BC_PHN|unusual_separator": {
+          "gold": 10,
+          "detected": 10,
+          "covered": 10,
+          "missed": []
+        },
+        "CA_OHIP|control": {
+          "gold": 10,
+          "detected": 8,
+          "covered": 8,
+          "missed": [
+            "3710 029 673",
+            "4561-890-254"
+          ]
+        },
+        "CA_OHIP|dictation": {
+          "gold": 10,
+          "detected": 9,
+          "covered": 9,
+          "missed": [
+            "4 1 6 0 7 2 4 3 3 4"
+          ]
+        },
+        "CA_OHIP|line_wrap": {
+          "gold": 10,
+          "detected": 3,
+          "covered": 0,
+          "missed": [
+            "6439 813\n327",
+            "6963 457\n020",
+            "1159 598\n281",
+            "9288 407\n266",
+            "9837 054\n668",
+            "8912\n085 928",
+            "8146 794\n717"
+          ]
+        },
+        "CA_OHIP|no_context": {
+          "gold": 10,
+          "detected": 9,
+          "covered": 9,
+          "missed": [
+            "5400 432 091"
+          ]
+        },
+        "CA_OHIP|ocr_confusable": {
+          "gold": 10,
+          "detected": 5,
+          "covered": 0,
+          "missed": [
+            "3939 6O2 995",
+            "O269 039 723",
+            "O757 475 157",
+            "490O 602 659",
+            "964O 047 313"
+          ]
+        },
+        "CA_OHIP|unusual_separator": {
+          "gold": 10,
+          "detected": 10,
+          "covered": 10,
+          "missed": []
+        },
+        "CA_RAMQ|control": {
+          "gold": 10,
+          "detected": 6,
+          "covered": 1,
+          "missed": [
+            "ECCP-3953-1597",
+            "MSMT 7161 0557",
+            "PRTB-5201-2357",
+            "FLCF-8003-1072"
+          ]
+        },
+        "CA_RAMQ|dictation": {
+          "gold": 10,
+          "detected": 3,
+          "covered": 0,
+          "missed": [
+            "J F E G 8 7 5 9 2 7 8 0",
+            "M B T G 7 3 5 9 2 5 1 9",
+            "D J J A 4 7 6 2 2 6 6 1",
+            "J C S C 7 0 5 3 2 0 9 5",
+            "R L J J 9 2 6 2 1 6 0 3",
+            "F M T L 3 3 6 0 0 9 8 4",
+            "P P L N 9 1 5 3 0 5 8 8"
+          ]
+        },
+        "CA_RAMQ|line_wrap": {
+          "gold": 10,
+          "detected": 8,
+          "covered": 1,
+          "missed": [
+            "GGTC 6706\n0342",
+            "DBNH 7909\n0934"
+          ]
+        },
+        "CA_RAMQ|no_context": {
+          "gold": 10,
+          "detected": 9,
+          "covered": 1,
+          "missed": [
+            "GFGB-5851-0492"
+          ]
+        },
+        "CA_RAMQ|ocr_confusable": {
+          "gold": 10,
+          "detected": 7,
+          "covered": 0,
+          "missed": [
+            "ETNJ 82l0 0541",
+            "EDLL 3358 2l39",
+            "FHED 4251 l379"
+          ]
+        },
+        "CA_RAMQ|unusual_separator": {
+          "gold": 10,
+          "detected": 0,
+          "covered": 0,
+          "missed": [
+            "SADC.9707.2537",
+            "EAGP/8802/2764",
+            "JMLN.6707.2046",
+            "LCMJ.7602.1361",
+            "MTEA/3806/2485",
+            "BLPC.7559.2783",
+            "RMTH.5303.2359",
+            "EADA6 9 592770",
+            "PDFP720 5264 8",
+            "SGTH/9356/2611"
+          ]
+        },
+        "CA_SIN|control": {
+          "gold": 10,
+          "detected": 0,
+          "covered": 0,
+          "missed": [
+            "202-276-804",
+            "102 501 657",
+            "958-086-316",
+            "200-868-750",
+            "258 685 700",
+            "598-834-810",
+            "467-606-521",
+            "729 623 702",
+            "640-957-247",
+            "322 525 833"
+          ]
+        },
+        "CA_SIN|dictation": {
+          "gold": 10,
+          "detected": 2,
+          "covered": 0,
+          "missed": [
+            "3 9 5 9 5 6 0 4 8",
+            "9 1 2 3 4 3 8 2 9",
+            "7 2 0 0 5 9 3 6 9",
+            "1 7 9 1 0 1 1 6 7",
+            "3 9 1 0 3 6 9 3 6",
+            "4 0 6 6 1 7 8 6 0",
+            "2 7 5 0 5 6 0 6 7",
+            "1 8 8 1 9 6 8 7 7"
+          ]
+        },
+        "CA_SIN|line_wrap": {
+          "gold": 10,
+          "detected": 0,
+          "covered": 0,
+          "missed": [
+            "591 828\n710",
+            "472\n624 980",
+            "780 319\n141",
+            "119 610\n350",
+            "303\n990 360",
+            "678\n461 989",
+            "707 398\n889",
+            "371 882\n846",
+            "426 320\n735",
+            "691 919\n211"
+          ]
+        },
+        "CA_SIN|no_context": {
+          "gold": 10,
+          "detected": 0,
+          "covered": 0,
+          "missed": [
+            "350 016 747",
+            "739-598-076",
+            "614 498 251",
+            "282 661 750",
+            "641 398 227",
+            "278 951 694",
+            "556-997-674",
+            "645 123 522",
+            "106-298-029",
+            "457 852 440"
+          ]
+        },
+        "CA_SIN|ocr_confusable": {
+          "gold": 10,
+          "detected": 0,
+          "covered": 0,
+          "missed": [
+            "7O9 577 639",
+            "666 195 63l",
+            "3l6 371 541",
+            "287 621 O23",
+            "248 573 3l3",
+            "575 62O 224",
+            "212 67O 459",
+            "124 956 87l",
+            "9O3 789 477",
+            "924 036 4l1"
+          ]
+        },
+        "CA_SIN|unusual_separator": {
+          "gold": 10,
+          "detected": 2,
+          "covered": 0,
+          "missed": [
+            "263.480.667",
+            "988.065.009",
+            "912/955/705",
+            "958/190/159",
+            "449/550/060",
+            "6927236 2 0",
+            "149.902.298",
+            "431.876.960"
+          ]
+        }
+      }
+    },
+    "Presidio + pack": {
+      "by_variant": {
+        "control": {
+          "gold": 50,
+          "detected": 50,
+          "covered": 50,
+          "recall": 1.0,
+          "strict_recall": 1.0
+        },
+        "no_context": {
+          "gold": 50,
+          "detected": 48,
+          "covered": 46,
+          "recall": 0.96,
+          "strict_recall": 0.92
+        },
+        "unusual_separator": {
+          "gold": 50,
+          "detected": 28,
+          "covered": 23,
+          "recall": 0.56,
+          "strict_recall": 0.46
+        },
+        "line_wrap": {
+          "gold": 50,
+          "detected": 19,
+          "covered": 1,
+          "recall": 0.38,
+          "strict_recall": 0.02
+        },
+        "ocr_confusable": {
+          "gold": 50,
+          "detected": 19,
+          "covered": 1,
+          "recall": 0.38,
+          "strict_recall": 0.02
+        },
+        "dictation": {
+          "gold": 50,
+          "detected": 25,
+          "covered": 19,
+          "recall": 0.5,
+          "strict_recall": 0.38
+        }
+      },
+      "cells": {
+        "CA_AB_ULI|control": {
+          "gold": 10,
+          "detected": 10,
+          "covered": 10,
+          "missed": []
+        },
+        "CA_AB_ULI|dictation": {
+          "gold": 10,
+          "detected": 1,
+          "covered": 0,
+          "missed": [
+            "8 9 3 9 3 1 3 1 1",
+            "9 7 9 6 1 9 6 9 7",
+            "2 5 1 3 6 1 7 9 9",
+            "3 9 9 0 6 9 9 2 5",
+            "6 8 4 2 2 0 2 1 0",
+            "3 7 9 8 4 3 5 1 4",
+            "8 6 6 1 0 8 2 3 9",
+            "0 1 3 7 5 8 0 5 6",
+            "4 0 9 1 8 1 1 2 1"
+          ]
+        },
+        "CA_AB_ULI|line_wrap": {
+          "gold": 10,
+          "detected": 6,
+          "covered": 0,
+          "missed": [
+            "27723\n9977",
+            "32027\n5114",
+            "13744\n8083",
+            "28179\n3028"
+          ]
+        },
+        "CA_AB_ULI|no_context": {
+          "gold": 10,
+          "detected": 8,
+          "covered": 6,
+          "missed": [
+            "24228-3554",
+            "26161-9262"
+          ]
+        },
+        "CA_AB_ULI|ocr_confusable": {
+          "gold": 10,
+          "detected": 6,
+          "covered": 1,
+          "missed": [
+            "l8366 5280",
+            "66648 4O34",
+            "799l6 2890",
+            "51O06 0436"
+          ]
+        },
+        "CA_AB_ULI|unusual_separator": {
+          "gold": 10,
+          "detected": 5,
+          "covered": 3,
+          "missed": [
+            "45599 918 5",
+            "00446/3771",
+            "81178.6170",
+            "24 319 8597",
+            "29385/1602"
+          ]
+        },
+        "CA_BC_PHN|control": {
+          "gold": 10,
+          "detected": 10,
+          "covered": 10,
+          "missed": []
+        },
+        "CA_BC_PHN|dictation": {
+          "gold": 10,
+          "detected": 10,
+          "covered": 10,
+          "missed": []
+        },
+        "CA_BC_PHN|line_wrap": {
+          "gold": 10,
+          "detected": 2,
+          "covered": 0,
+          "missed": [
+            "9666 440\n508",
+            "9526 237\n092",
+            "9434 670\n865",
+            "9400 985\n094",
+            "9021 889\n257",
+            "9048\n379 379",
+            "9674 253\n156",
+            "9067 701\n767"
+          ]
+        },
+        "CA_BC_PHN|no_context": {
+          "gold": 10,
+          "detected": 10,
+          "covered": 10,
+          "missed": []
+        },
+        "CA_BC_PHN|ocr_confusable": {
+          "gold": 10,
+          "detected": 1,
+          "covered": 0,
+          "missed": [
+            "9310 332 1l5",
+            "955l 055 783",
+            "9230 999 5l5",
+            "9122 l12 275",
+            "9226 51l 392",
+            "919l 707 927",
+            "98O8 761 329",
+            "977O 944 596",
+            "9l65 669 377"
+          ]
+        },
+        "CA_BC_PHN|unusual_separator": {
+          "gold": 10,
+          "detected": 10,
+          "covered": 10,
+          "missed": []
+        },
+        "CA_OHIP|control": {
+          "gold": 10,
+          "detected": 10,
+          "covered": 10,
+          "missed": []
+        },
+        "CA_OHIP|dictation": {
+          "gold": 10,
+          "detected": 9,
+          "covered": 9,
+          "missed": [
+            "4 1 6 0 7 2 4 3 3 4"
+          ]
+        },
+        "CA_OHIP|line_wrap": {
+          "gold": 10,
+          "detected": 3,
+          "covered": 0,
+          "missed": [
+            "6439 813\n327",
+            "6963 457\n020",
+            "1159 598\n281",
+            "9288 407\n266",
+            "9837 054\n668",
+            "8912\n085 928",
+            "8146 794\n717"
+          ]
+        },
+        "CA_OHIP|no_context": {
+          "gold": 10,
+          "detected": 10,
+          "covered": 10,
+          "missed": []
+        },
+        "CA_OHIP|ocr_confusable": {
+          "gold": 10,
+          "detected": 5,
+          "covered": 0,
+          "missed": [
+            "3939 6O2 995",
+            "O269 039 723",
+            "O757 475 157",
+            "490O 602 659",
+            "964O 047 313"
+          ]
+        },
+        "CA_OHIP|unusual_separator": {
+          "gold": 10,
+          "detected": 10,
+          "covered": 10,
+          "missed": []
+        },
+        "CA_RAMQ|control": {
+          "gold": 10,
+          "detected": 10,
+          "covered": 10,
+          "missed": []
+        },
+        "CA_RAMQ|dictation": {
+          "gold": 10,
+          "detected": 3,
+          "covered": 0,
+          "missed": [
+            "J F E G 8 7 5 9 2 7 8 0",
+            "M B T G 7 3 5 9 2 5 1 9",
+            "D J J A 4 7 6 2 2 6 6 1",
+            "J C S C 7 0 5 3 2 0 9 5",
+            "R L J J 9 2 6 2 1 6 0 3",
+            "F M T L 3 3 6 0 0 9 8 4",
+            "P P L N 9 1 5 3 0 5 8 8"
+          ]
+        },
+        "CA_RAMQ|line_wrap": {
+          "gold": 10,
+          "detected": 8,
+          "covered": 1,
+          "missed": [
+            "GGTC 6706\n0342",
+            "DBNH 7909\n0934"
+          ]
+        },
+        "CA_RAMQ|no_context": {
+          "gold": 10,
+          "detected": 10,
+          "covered": 10,
+          "missed": []
+        },
+        "CA_RAMQ|ocr_confusable": {
+          "gold": 10,
+          "detected": 7,
+          "covered": 0,
+          "missed": [
+            "ETNJ 82l0 0541",
+            "EDLL 3358 2l39",
+            "FHED 4251 l379"
+          ]
+        },
+        "CA_RAMQ|unusual_separator": {
+          "gold": 10,
+          "detected": 1,
+          "covered": 0,
+          "missed": [
+            "SADC.9707.2537",
+            "EAGP/8802/2764",
+            "JMLN.6707.2046",
+            "LCMJ.7602.1361",
+            "MTEA/3806/2485",
+            "BLPC.7559.2783",
+            "RMTH.5303.2359",
+            "PDFP720 5264 8",
+            "SGTH/9356/2611"
+          ]
+        },
+        "CA_SIN|control": {
+          "gold": 10,
+          "detected": 10,
+          "covered": 10,
+          "missed": []
+        },
+        "CA_SIN|dictation": {
+          "gold": 10,
+          "detected": 2,
+          "covered": 0,
+          "missed": [
+            "3 9 5 9 5 6 0 4 8",
+            "9 1 2 3 4 3 8 2 9",
+            "7 2 0 0 5 9 3 6 9",
+            "1 7 9 1 0 1 1 6 7",
+            "3 9 1 0 3 6 9 3 6",
+            "4 0 6 6 1 7 8 6 0",
+            "2 7 5 0 5 6 0 6 7",
+            "1 8 8 1 9 6 8 7 7"
+          ]
+        },
+        "CA_SIN|line_wrap": {
+          "gold": 10,
+          "detected": 0,
+          "covered": 0,
+          "missed": [
+            "591 828\n710",
+            "472\n624 980",
+            "780 319\n141",
+            "119 610\n350",
+            "303\n990 360",
+            "678\n461 989",
+            "707 398\n889",
+            "371 882\n846",
+            "426 320\n735",
+            "691 919\n211"
+          ]
+        },
+        "CA_SIN|no_context": {
+          "gold": 10,
+          "detected": 10,
+          "covered": 10,
+          "missed": []
+        },
+        "CA_SIN|ocr_confusable": {
+          "gold": 10,
+          "detected": 0,
+          "covered": 0,
+          "missed": [
+            "7O9 577 639",
+            "666 195 63l",
+            "3l6 371 541",
+            "287 621 O23",
+            "248 573 3l3",
+            "575 62O 224",
+            "212 67O 459",
+            "124 956 87l",
+            "9O3 789 477",
+            "924 036 4l1"
+          ]
+        },
+        "CA_SIN|unusual_separator": {
+          "gold": 10,
+          "detected": 2,
+          "covered": 0,
+          "missed": [
+            "263.480.667",
+            "988.065.009",
+            "912/955/705",
+            "958/190/159",
+            "449/550/060",
+            "6927236 2 0",
+            "149.902.298",
+            "431.876.960"
+          ]
+        }
+      }
+    }
+  }
+}

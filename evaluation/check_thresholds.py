@@ -21,6 +21,7 @@ HERE = Path(__file__).parent
 RESULTS = HERE / "results" / "results.json"
 NEGATIVES = HERE / "results" / "negatives_ca.json"
 HARD = HERE / "results" / "hard_ca.json"
+ADDRESS_EVAL = HERE / "results" / "address_ca.json"
 THRESHOLDS = HERE / "thresholds.json"
 
 
@@ -102,6 +103,32 @@ def main() -> None:
                             f"hard ca {variant}: recall {actual:.3f} below "
                             f"floor {floor:.2f}"
                         )
+
+    addr_floors = {
+        k: v for k, v in config.get("address_min_strict_recall", {}).items()
+        if not k.startswith("_")
+    }
+    if addr_floors:
+        if not ADDRESS_EVAL.exists():
+            failures.append(f"address eval results missing: {ADDRESS_EVAL}")
+        else:
+            addr = json.loads(ADDRESS_EVAL.read_text(encoding="utf-8"))["results"]
+            for cfg, floor in addr_floors.items():
+                if cfg not in addr:
+                    failures.append(f"address eval: config {cfg!r} missing")
+                    continue
+                actual = addr[cfg]["address"]["strict_recall"]
+                checked += 1
+                status = "OK  " if actual >= floor else "FAIL"
+                print(
+                    f"{status} address ca {cfg:24s} strict recall "
+                    f"{actual:.3f} >= {floor:.2f}"
+                )
+                if actual < floor:
+                    failures.append(
+                        f"address ca {cfg}: strict recall {actual:.3f} "
+                        f"below floor {floor:.2f}"
+                    )
 
     fp_ceilings = {
         k: v

@@ -168,6 +168,39 @@ def ca_ab_uli_plausible(value: str) -> bool | None:
     return None
 
 
+_CA_PROVINCES = frozenset(
+    {"AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT"}
+)
+_POSTAL_TAIL = re.compile(
+    r",\s*([A-Za-z]{2})\s+"
+    r"([ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?"
+    r"\d[ABCEGHJ-NPRSTV-Z]\d)\s*$",
+    re.IGNORECASE,
+)
+_POSTAL_BODY = re.compile(
+    r"^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z]\d[ABCEGHJ-NPRSTV-Z]\d$"
+)
+
+
+def ca_street_address_valid(value: str) -> bool:
+    """Structural check for a full Canadian civic address string."""
+    text = value.strip()
+    m = _POSTAL_TAIL.search(text)
+    if not m or m.group(1).upper() not in _CA_PROVINCES:
+        return False
+    postal = normalize(m.group(2)).upper()
+    if not _POSTAL_BODY.fullmatch(postal):
+        return False
+    head = text[: m.start()].strip()
+    if re.match(r"^PO Box \d", head, re.IGNORECASE):
+        return True
+    if re.match(r"^(?:Unit \d+, )?(?:\d{1,6}-\d{1,6}|\d{1,6})", head):
+        return True
+    if re.match(r"^\d{1,6},", head):
+        return True
+    return False
+
+
 def in_aadhaar_valid(value: str) -> bool:
     """Aadhaar: 12 digits, first digit 2-9, Verhoeff-valid."""
     digits = normalize(value)

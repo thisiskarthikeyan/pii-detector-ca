@@ -16,6 +16,7 @@ Most clinical de-identification tooling is trained and tested on US identifier f
 | `CA_BC_PHN` | British Columbia Personal Health Number | Mod-11 weighted checksum |
 | `CA_AB_ULI` | Alberta Unique Lifetime Identifier | Pattern + context gated |
 | `CA_POSTAL_CODE` | Canadian postal code | Structural (letter-class rules) |
+| `CA_STREET_ADDRESS` | Full civic/mailing address | Structural (postal + province anchor) |
 
 ### India
 

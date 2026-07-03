@@ -23,6 +23,10 @@
     "ocr_confusable": 0.3,
     "dictation": 0.4
   },
+  "address_min_strict_recall": {
+    "_comment": "Strict recall on the ODA holdout address corpus (results/address_ca.json). Measured 2026-07-03: pack 0.950; main-benchmark CA gold ADDRESS strict 0.971 after CA_STREET_ADDRESS recognizer.",
+    "Presidio + pack": 0.90
+  },
   "negatives_max_fp_per_100_notes": {
     "_comment": "FP ceilings on the PII-free confusables corpus (results/negatives_ca.json). Measured 2026-07-03: all-locales 43.67, ca-only 12.67; residual FPs are irreducible checksum collisions on random digit strings.",
     "pack (all locales)": 55,

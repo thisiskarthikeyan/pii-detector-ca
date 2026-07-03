@@ -12,6 +12,7 @@ from presidio_recognizers_ca_in.canada import (
     AlbertaUliRecognizer,
     BcPhnRecognizer,
     CaSinRecognizer,
+    CaStreetAddressRecognizer,
     OhipRecognizer,
     RamqRecognizer,
 )
@@ -68,6 +69,24 @@ class TestCanadianRecognizers:
                     assert results[0].score >= 0.9
                     return
         pytest.fail("no valid BC PHN candidate detected")
+
+    def test_street_address_english_detected(self):
+        text = "Home address: 196 Everstone Dr SW, Calgary, AB T2X 0P1"
+        results = entities_found(CaStreetAddressRecognizer(), text, "CA_STREET_ADDRESS")
+        assert results and results[0].score >= 0.9
+        assert "196 Everstone Dr SW, Calgary, AB T2X 0P1" in text[
+            results[0].start : results[0].end
+        ]
+
+    def test_street_address_french_detected(self):
+        text = "Adresse: 1110, avenue Pins, Montréal, QC H2B 2X1"
+        results = entities_found(CaStreetAddressRecognizer(), text, "CA_STREET_ADDRESS")
+        assert results and results[0].score >= 0.9
+
+    def test_street_address_po_box_detected(self):
+        text = "Mailing address: PO Box 4521, Toronto, ON M5B 2H1"
+        results = entities_found(CaStreetAddressRecognizer(), text, "CA_STREET_ADDRESS")
+        assert results and results[0].score >= 0.9
 
 
 class TestIndianRecognizers:
@@ -152,10 +171,10 @@ class TestContextGating:
 class TestPackageApi:
     def test_get_recognizers_all(self):
         recs = get_recognizers()
-        assert len(recs) == 15
+        assert len(recs) == 16
 
     def test_get_recognizers_by_locale(self):
-        assert len(get_recognizers(["ca"])) == 7
+        assert len(get_recognizers(["ca"])) == 8
         assert len(get_recognizers(["in"])) == 8
 
     def test_entities_are_unique(self):

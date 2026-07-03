@@ -7,6 +7,7 @@ from .health_cards import (
 )
 from .postal_code import CaPostalCodeRecognizer
 from .sin import CaSinRecognizer
+from .street_address import CaStreetAddressRecognizer
 
 __all__ = [
     "CaSinRecognizer",
@@ -16,6 +17,7 @@ __all__ = [
     "AlbertaUliRecognizer",
     "GenericCaHealthCardRecognizer",
     "CaPostalCodeRecognizer",
+    "CaStreetAddressRecognizer",
 ]
 
 
@@ -28,4 +30,5 @@ def get_canada_recognizers() -> list:
         AlbertaUliRecognizer(),
         GenericCaHealthCardRecognizer(),
         CaPostalCodeRecognizer(),
+        CaStreetAddressRecognizer(),
     ]

@@ -46,6 +46,7 @@ jobs:
           uv run --no-sync python benchmark/generate_corpus.py --locale in --n 1000
           uv run --no-sync python benchmark/generate_negatives.py --locale ca --n 300
           uv run --no-sync python benchmark/generate_hard.py --per-cell 10
+          uv run --no-sync python benchmark/generate_address_eval.py --n 300
       - name: Corpus determinism check
         run: uv run --no-sync python benchmark/check_determinism.py
       - name: Run evaluation
@@ -54,5 +55,7 @@ jobs:
         run: uv run --no-sync python evaluation/run_negatives.py
       - name: Adversarial hard-split evaluation
         run: uv run --no-sync python evaluation/run_hard.py
+      - name: Street-address evaluation (ODA holdout)
+        run: uv run --no-sync python evaluation/run_address_eval.py
       - name: Threshold gate
         run: uv run --no-sync python evaluation/check_thresholds.py

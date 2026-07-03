@@ -231,27 +231,31 @@ Applies to both locales; build before deepening either track.
     each format against official sources.
 - [ ] **3.6 RAMQ realism** — generator: 3 surname letters + 1 first-name letter;
   verify structural rules (sex-offset month, day ranges) against RAMQ documentation.
-- [ ] **3.7 French-language Quebec notes**
+- [ ] **3.7 French-language Quebec notes** — **DEFERRED (post-1.0 release)**
   - French clinical note templates + French context-word evaluation (currently the
     French context terms are implemented but never exercised). Requires a French
-    spaCy model in the eval matrix.
+    spaCy model in the eval matrix. Moved out of the initial Canada release scope;
+    revisit after Phase 5/6 or as a follow-up release.
 - [ ] **3.8 CA identifier spec provenance docs**
   - `docs/identifiers/ca_*.md`: authoritative source (Service Canada, RAMQ, BC HIBC,
     Alberta Health, provincial ministries), exact rule implemented, known gaps.
-- [ ] **3.9 CA_STREET_ADDRESS recognizer + non-circular address evaluation**
-  - Motivation: ADDRESS is the dominant leak (strict recall 0.000 on all CA/IN gold
-    addresses — spaCy masks the city, the postal-code recognizer masks the code, and
-    the civic number + street name leak on every note). Addresses in patient records
-    are PHI by association even though standalone addresses are public data.
-  - Rule-based recognizer in the pack's style: civic number + street-name +
-    street-type lexicon (Street/St, Rue, Chemin, Boulevard, Crescent, ...), optional
-    unit prefix and city/province/postal-code anchor; lexicon derived empirically
-    from ODA, not hand-guessed.
-  - Evaluation: insert **real ODA addresses** (never produced by our generators)
-    into synthetic notes — a non-circular address test in the same spirit as the
-    hard split (3.2). Report strict recall before/after the recognizer.
-  - Ethically clean (standalone addresses are not personal data) and OGL-licensed;
-    curated sample committed with attribution, raw CSVs gitignored.
+- [x] **3.9 CA_STREET_ADDRESS recognizer + non-circular address evaluation** — DONE
+  - Motivation: ADDRESS was the dominant leak (strict recall 0.000 on all CA gold
+    addresses — spaCy masked the city, CA_POSTAL_CODE the code, civic + street
+    leaked on every note).
+  - Done: `CaStreetAddressRecognizer` — English + French full-line patterns
+    anchored by province + structural postal code; validator in `validators.py`.
+    Registered as the 8th Canada recognizer (16 total in pack).
+  - ODA holdout: `benchmark/curate_oda_eval.py` (seed 1042, 200/province) →
+    `benchmark/data/oda/ca_addresses_eval.csv` (600 rows, never used by main
+    benchmark generator). `benchmark/generate_address_eval.py` → 300 single-address
+    notes; `evaluation/run_address_eval.py` → `results/address_ca.{md,json}`.
+  - Measured: ODA holdout strict recall 0.000 → **0.950** (pack); main CA gold
+    ADDRESS strict **0.971** (was 0.000); overall CA gold strict **0.972** (was
+    0.840). Gated in CI (`address_min_strict_recall` floor 0.90). TYPE_MAP maps
+    CA_STREET_ADDRESS → ADDRESS for typed metrics.
+  - Paper input (6.1): report holdout before/after table; recognizer count is now
+    16 (paper still says 15 — update at table regeneration).
 
 ## Phase 4 — India track (after Canada track is solid)
 

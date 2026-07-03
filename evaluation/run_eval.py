@@ -77,7 +77,7 @@ def predict_presidio(analyzer: AnalyzerEngine, notes: list[dict]) -> list[list[S
 def predict_bharat_pii(notes: list[dict]) -> list[list[Span]] | None:
     """Optional third-party baseline for the India locale."""
     try:
-        from bharat_pii.api import detect  # type: ignore
+        from bharat_pii.api import detect
     except ImportError:
         return None
     predictions = []

@@ -112,7 +112,12 @@ Applies to both locales; build before deepening either track.
   66 tests pass, corpus regenerates bit-identically, eval reproduces the gated numbers
   exactly, all 44 threshold checks pass. Versions were already recorded in results
   metadata (2.2).
-- [ ] **2.9 Type checking in CI** (mypy or pyright).
+- [x] **2.9 Type checking in CI** — done (2026-07-03). mypy added to dev deps and
+  configured in pyproject (`check_untyped_defs`, covers src/evaluation/benchmark/
+  tests; `ignore_missing_imports` for stub-less presidio/spacy). Two findings fixed:
+  `context` param typed `list[str] | None` vs Presidio's `list[str]` signature, and a
+  stale `type: ignore`. "Type check" step added to the CI test job; mypy clean on all
+  25 source files; `uv.lock` refreshed.
 - [ ] **2.10 Real-data false-positive evaluation (MIMIC notes)**
   - Real de-identified clinical prose as FP stress test (PhysioNet credentialing
     required — **start the application now**; DUA prohibits redistribution: script in

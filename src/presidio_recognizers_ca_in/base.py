@@ -50,7 +50,9 @@ class ValidatedPatternRecognizer(PatternRecognizer):
         super().__init__(
             supported_entity=supported_entity,
             patterns=patterns,
-            context=context,
+            # Presidio types this as list[str]; [] and None behave identically
+            # (the context enhancer skips falsy context).
+            context=list(context) if context else [],
             name=name or f"{supported_entity}Recognizer",
             supported_language=supported_language,
             global_regex_flags=CASE_SENSITIVE_FLAGS if case_sensitive else DEFAULT_REGEX_FLAGS,

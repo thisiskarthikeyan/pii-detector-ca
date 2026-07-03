@@ -22,3 +22,26 @@ jobs:
         run: uv run ruff check .
       - name: Test
         run: uv run pytest -q
+
+  eval:
+    name: Eval regression gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: |
+          uv pip install -e ".[dev]"
+          uv pip install "en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl"
+      - name: Regenerate corpus from fixed seed
+        run: |
+          uv run python benchmark/generate_corpus.py --locale ca --n 1000
+          uv run python benchmark/generate_corpus.py --locale in --n 1000
+      - name: Corpus determinism check
+        run: uv run python benchmark/check_determinism.py
+      - name: Run evaluation
+        run: uv run python evaluation/run_eval.py --all
+      - name: Threshold gate
+        run: uv run python evaluation/check_thresholds.py

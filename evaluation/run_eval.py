@@ -4,9 +4,10 @@ Usage:
     python evaluation/run_eval.py --all            # both locales, gold + generated
     python evaluation/run_eval.py --locale ca --split gold
 
-Writes markdown tables and a JSON error-analysis dump to evaluation/results/.
-A bharat-pii baseline is included for the India locale when the library is
-importable; it is optional and skipped otherwise.
+Writes markdown tables, a machine-readable results.json (consumed by
+check_thresholds.py in CI), and a JSON error-analysis dump to
+evaluation/results/. A bharat-pii baseline is included for the India locale
+when the library is importable; it is optional and skipped otherwise.
 """
 
 from __future__ import annotations
@@ -14,6 +15,9 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from datetime import datetime, timezone
+from importlib.metadata import PackageNotFoundError
+from importlib.metadata import version as pkg_version
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
@@ -30,6 +34,29 @@ NLP_CONFIG = {
     "nlp_engine_name": "spacy",
     "models": [{"lang_code": "en", "model_name": "en_core_web_sm"}],
 }
+
+_METADATA_PACKAGES = ["presidio-analyzer", "spacy", "en_core_web_sm"]
+
+
+def collect_metadata() -> dict:
+    """Environment metadata recorded with every results file (reproducibility)."""
+    versions = {}
+    for pkg in _METADATA_PACKAGES:
+        try:
+            versions[pkg] = pkg_version(pkg)
+        except PackageNotFoundError:
+            versions[pkg] = "not installed"
+    metadata = {
+        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "python": sys.version.split()[0],
+        "versions": versions,
+        "nlp_model": NLP_CONFIG["models"][0]["model_name"],
+        "score_threshold": 0.35,
+    }
+    manifest = REPO / "benchmark" / "data" / "checksums.json"
+    if manifest.exists():
+        metadata["corpus_checksums"] = json.loads(manifest.read_text(encoding="utf-8"))
+    return metadata
 
 
 def build_analyzer(with_pack: bool) -> AnalyzerEngine:
@@ -102,7 +129,9 @@ def format_table(system: str, locale: str, split: str, stats: dict, precision: d
     return "\n".join(lines)
 
 
-def run(locale: str, split: str, out_lines: list[str], errors: dict) -> None:
+def run(
+    locale: str, split: str, out_lines: list[str], errors: dict, runs: list[dict]
+) -> None:
     notes = load_notes(locale, split)
     systems = {
         "Stock Presidio": predict_presidio(build_analyzer(with_pack=False), notes),
@@ -120,6 +149,24 @@ def run(locale: str, split: str, out_lines: list[str], errors: dict) -> None:
             entity: s.missed_values for entity, s in stats.items() if s.missed_values
         }
         o = overall(stats)
+        runs.append(
+            {
+                "system": system,
+                "locale": locale,
+                "split": split,
+                "entities": {
+                    entity: {
+                        "gold": s.gold,
+                        "detected": s.detected,
+                        "recall": s.recall,
+                        "typed_recall": s.typed_recall,
+                    }
+                    for entity, s in sorted(stats.items())
+                },
+                "overall": o,
+                "span_precision": precision,
+            }
+        )
         print(f"{system:18s} {locale}/{split}: recall={o['recall']:.3f} fn={o['fn_rate']:.3f}")
 
 
@@ -133,22 +180,35 @@ def main() -> None:
     results_dir = REPO / "evaluation" / "results"
     results_dir.mkdir(exist_ok=True)
 
-    out_lines = ["# Evaluation results", ""]
+    metadata = collect_metadata()
+    header = [
+        "# Evaluation results",
+        "",
+        f"Generated: {metadata['generated_at']} | Python {metadata['python']} | "
+        + " | ".join(f"{k} {v}" for k, v in metadata["versions"].items()),
+        "",
+    ]
+    out_lines = list(header)
     errors: dict = {}
+    runs: list[dict] = []
     if args.all:
         for locale in ["ca", "in"]:
             for split in ["gold", "generated"]:
-                run(locale, split, out_lines, errors)
+                run(locale, split, out_lines, errors, runs)
     else:
         if not args.locale:
             parser.error("--locale required unless --all")
-        run(args.locale, args.split, out_lines, errors)
+        run(args.locale, args.split, out_lines, errors, runs)
 
     (results_dir / "results.md").write_text("\n".join(out_lines), encoding="utf-8")
+    (results_dir / "results.json").write_text(
+        json.dumps({"metadata": metadata, "runs": runs}, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+    )
     (results_dir / "error_analysis.json").write_text(
         json.dumps(errors, indent=2, ensure_ascii=False), encoding="utf-8"
     )
-    print(f"\nWrote {results_dir / 'results.md'} and error_analysis.json")
+    print(f"\nWrote {results_dir}/results.md, results.json, error_analysis.json")
 
 
 if __name__ == "__main__":

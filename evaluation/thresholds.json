@@ -1,0 +1,38 @@
+{
+  "_comment": [
+    "Regression gate for the 'Presidio + pack' system, enforced by",
+    "check_thresholds.py in CI. Identifier entities are deterministic",
+    "(regex + checksum on a fixed-seed corpus) and must stay at 1.0.",
+    "PERSON/DATE/ADDRESS depend on the spaCy NLP engine and get floors",
+    "slightly below current measured values to absorb model-version drift.",
+    "Applies to both gold and generated splits."
+  ],
+  "system": "Presidio + pack",
+  "min_span_precision": 0.78,
+  "min_recall": {
+    "ca": {
+      "CA_SIN": 1.0,
+      "CA_OHIP": 1.0,
+      "CA_RAMQ": 1.0,
+      "CA_BC_PHN": 1.0,
+      "CA_AB_ULI": 1.0,
+      "DATE": 0.98,
+      "ADDRESS": 0.98,
+      "PERSON": 0.9,
+      "TOTAL": 0.97
+    },
+    "in": {
+      "IN_AADHAAR": 1.0,
+      "IN_ABHA": 1.0,
+      "IN_PAN": 1.0,
+      "IN_UHID": 1.0,
+      "IN_MOBILE": 1.0,
+      "IN_VOTER_ID": 1.0,
+      "IN_PASSPORT": 1.0,
+      "DATE": 0.98,
+      "ADDRESS": 0.98,
+      "PERSON": 0.82,
+      "TOTAL": 0.94
+    }
+  }
+}

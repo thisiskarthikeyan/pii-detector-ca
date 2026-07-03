@@ -41,14 +41,20 @@ context enhancer matches single tokens only, so multi-word context phrases
 
 Applies to both locales; build before deepening either track.
 
-- [ ] **2.1 Eval regression gate in CI**
-  - CI job: install spaCy model(s), regenerate corpus from fixed seed, run
-    `run_eval.py`, fail if per-entity recall drops below pinned thresholds or FP rate
-    rises above tolerance. Thresholds in a checked-in config
-    (e.g. `evaluation/thresholds.yaml`).
-- [ ] **2.2 Corpus determinism check**
-  - CI hashes regenerated JSONL against committed checksums; record checksum + package
-    versions in `results.md` header.
+- [x] **2.1 Eval regression gate in CI** — done (2026-07-02). `run_eval.py` now also
+  writes machine-readable `results/results.json` (with env metadata + corpus
+  checksums); new `evaluation/thresholds.json` pins per-entity recall floors
+  (identifiers 1.0; PERSON/DATE/ADDRESS floors below measured values to absorb spaCy
+  drift; TOTAL + span-precision floors) and `evaluation/check_thresholds.py` enforces
+  them (missing entity = failure). New `eval` CI job: install → regenerate corpus →
+  determinism check → eval → gate. Gate verified to fail (exit 1) on an injected
+  recall drop and on a dropped entity; 44 checks pass on current results.
+- [x] **2.2 Corpus determinism check** — done (2026-07-02). New
+  `benchmark/check_determinism.py` compares sha256 of all four corpus JSONL files
+  against committed `benchmark/data/checksums.json` (`--update` to refresh after
+  intentional generator changes); verified corpus regenerates bit-identically.
+  Version metadata (presidio-analyzer 2.2.363, spacy 3.8.13, en_core_web_sm 3.8.0,
+  Python) now recorded in the `results.md` header and `results.json`.
 - [ ] **2.3 Property-based tests (Hypothesis)**
   - Base-rate validation of random strings (~1/10 Luhn, ~1/10 Verhoeff); generator
     outputs always pass validators; single-digit corruptions always fail;

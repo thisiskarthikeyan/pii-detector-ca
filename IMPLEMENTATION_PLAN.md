@@ -175,6 +175,16 @@ Applies to both locales; build before deepening either track.
   - Expand templates beyond 3 note types; expand name pools using Statistics Canada
     name-frequency lists (English- and French-Canadian, accented forms); more clinical
     filler variety. Addresses the circularity critique for the CA claims.
+  - Address realism from the StatCan **Open Database of Addresses** (ODA, Open
+    Government Licence – Canada): user supplies raw CSVs under
+    `benchmark/data/external/oda/` (gitignored); a deterministic
+    `benchmark/curate_oda.py` samples a small committed subset (with OGL
+    attribution) used for benchmark address slots and address-format variety
+    (unit/suite prefixes, PO boxes, rural routes, French orderings, two-line
+    forms).
+  - Postal codes stay **synthetic** (structural generator): the recognizer is
+    purely structural so real codes add no coverage, and Canada Post claims
+    rights over the postal-code database — real codes must not be committed.
 - [ ] **3.4 CA gold-split human review** — execute documented protocol on the CA gold
   split; record outcome in `docs/gold_review.md`.
 
@@ -193,6 +203,20 @@ Applies to both locales; build before deepening either track.
 - [ ] **3.8 CA identifier spec provenance docs**
   - `docs/identifiers/ca_*.md`: authoritative source (Service Canada, RAMQ, BC HIBC,
     Alberta Health, provincial ministries), exact rule implemented, known gaps.
+- [ ] **3.9 CA_STREET_ADDRESS recognizer + non-circular address evaluation**
+  - Motivation: ADDRESS is the dominant leak (strict recall 0.000 on all CA/IN gold
+    addresses — spaCy masks the city, the postal-code recognizer masks the code, and
+    the civic number + street name leak on every note). Addresses in patient records
+    are PHI by association even though standalone addresses are public data.
+  - Rule-based recognizer in the pack's style: civic number + street-name +
+    street-type lexicon (Street/St, Rue, Chemin, Boulevard, Crescent, ...), optional
+    unit prefix and city/province/postal-code anchor; lexicon derived empirically
+    from ODA, not hand-guessed.
+  - Evaluation: insert **real ODA addresses** (never produced by our generators)
+    into synthetic notes — a non-circular address test in the same spirit as the
+    hard split (3.2). Report strict recall before/after the recognizer.
+  - Ethically clean (standalone addresses are not personal data) and OGL-licensed;
+    curated sample committed with attribution, raw CSVs gitignored.
 
 ## Phase 4 — India track (after Canada track is solid)
 

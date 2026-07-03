@@ -14,6 +14,10 @@ benchmark/data/generated/
 # Real clinical text must never be committed (licensing/PHI)
 benchmark/data/real/
 
+# Raw external datasets (e.g. StatCan ODA CSVs): too large to commit; a small
+# curated sample is committed instead (see benchmark/curate_oda.py).
+benchmark/data/external/
+
 # OS / editors
 .DS_Store
 .idea/

@@ -1,0 +1,135 @@
+"""Property-based tests (Hypothesis) for checksum validators and corpus generators.
+
+Three families of properties:
+
+1. Check-digit uniqueness: for any digit base, exactly one of the ten possible
+   check digits validates (Luhn and Verhoeff are both permutation-complete).
+2. Single-digit error detection: corrupting any one digit of a valid value
+   must break validation (the design guarantee of both checksums).
+3. Generator/validator agreement: every value the corpus generators produce
+   must pass (or at least not fail) the corresponding package validator, in
+   every surface format the generator emits.
+
+Scope note: the initial pass is Canada-only (see IMPLEMENTATION_PLAN.md).
+India entries here act as a freeze gate on current behavior; they are
+provisional and will be revisited/expanded in Phase 4 (item 4.0).
+"""
+
+from __future__ import annotations
+
+import random
+import sys
+from pathlib import Path
+
+import pytest
+from hypothesis import given, settings
+from hypothesis import strategies as st
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "benchmark"))
+
+from pii_generators import (  # noqa: E402
+    gen_ca_ab_uli,
+    gen_ca_bc_phn,
+    gen_ca_ohip,
+    gen_ca_ramq,
+    gen_ca_sin,
+    gen_in_aadhaar,
+    gen_in_abha,
+    gen_in_mobile,
+    gen_in_pan,
+)
+
+from presidio_recognizers_ca_in.validators import (  # noqa: E402
+    ca_ab_uli_plausible,
+    ca_bc_phn_valid,
+    ca_ohip_valid,
+    ca_ramq_valid,
+    ca_sin_valid,
+    in_aadhaar_valid,
+    in_abha_plausible,
+    in_mobile_valid,
+    in_pan_valid,
+    luhn_check_digit,
+    luhn_valid,
+    normalize,
+    verhoeff_check_digit,
+    verhoeff_valid,
+)
+
+digits_st = st.text(alphabet="0123456789", min_size=8, max_size=11)
+
+
+class TestCheckDigitUniqueness:
+    @given(base=digits_st)
+    def test_luhn_exactly_one_check_digit_validates(self, base):
+        valid = [d for d in "0123456789" if luhn_valid(base + d)]
+        assert valid == [luhn_check_digit(base)]
+
+    @given(base=digits_st)
+    def test_verhoeff_exactly_one_check_digit_validates(self, base):
+        valid = [d for d in "0123456789" if verhoeff_valid(base + d)]
+        assert valid == [verhoeff_check_digit(base)]
+
+
+class TestSingleDigitErrorDetection:
+    @given(
+        base=st.text(alphabet="0123456789", min_size=9, max_size=9),
+        pos=st.integers(min_value=0, max_value=9),
+        delta=st.integers(min_value=1, max_value=9),
+    )
+    def test_luhn_detects_any_single_digit_substitution(self, base, pos, delta):
+        full = base + luhn_check_digit(base)
+        corrupted = full[:pos] + str((int(full[pos]) + delta) % 10) + full[pos + 1 :]
+        assert corrupted != full
+        assert not luhn_valid(corrupted)
+
+    @given(
+        base=st.text(alphabet="0123456789", min_size=11, max_size=11),
+        pos=st.integers(min_value=0, max_value=11),
+        delta=st.integers(min_value=1, max_value=9),
+    )
+    def test_verhoeff_detects_any_single_digit_substitution(self, base, pos, delta):
+        full = base + verhoeff_check_digit(base)
+        corrupted = full[:pos] + str((int(full[pos]) + delta) % 10) + full[pos + 1 :]
+        assert corrupted != full
+        assert not verhoeff_valid(corrupted)
+
+
+# (generator, validator, must_pass): plausibility validators return None for
+# plausible values, so for those we only require "not False".
+GENERATOR_VALIDATOR_PAIRS = [
+    (gen_ca_sin, ca_sin_valid, True),
+    (gen_ca_ohip, ca_ohip_valid, True),
+    (gen_ca_ramq, ca_ramq_valid, True),
+    (gen_ca_bc_phn, ca_bc_phn_valid, True),
+    (gen_in_aadhaar, in_aadhaar_valid, True),
+    (gen_in_pan, in_pan_valid, True),
+    (gen_in_mobile, in_mobile_valid, True),
+    (gen_ca_ab_uli, ca_ab_uli_plausible, False),
+    (gen_in_abha, in_abha_plausible, False),
+]
+
+
+class TestGeneratorValidatorAgreement:
+    @pytest.mark.parametrize(
+        "gen,validate,must_pass",
+        GENERATOR_VALIDATOR_PAIRS,
+        ids=[g.__name__ for g, _, _ in GENERATOR_VALIDATOR_PAIRS],
+    )
+    @given(seed=st.integers(min_value=0, max_value=2**32 - 1))
+    @settings(max_examples=50)
+    def test_generated_value_validates(self, gen, validate, must_pass, seed):
+        value = gen(random.Random(seed))
+        result = validate(value)
+        if must_pass:
+            assert result is True
+        else:
+            assert result is not False  # plausibility: None (plausible) expected
+
+    @given(seed=st.integers(min_value=0, max_value=2**32 - 1))
+    @settings(max_examples=50)
+    def test_normalize_strips_generated_sin_to_nine_digits(self, seed):
+        value = gen_ca_sin(random.Random(seed))
+        cleaned = normalize(value)
+        assert len(cleaned) == 9 and cleaned.isdigit()
+        assert cleaned[0] not in "08"

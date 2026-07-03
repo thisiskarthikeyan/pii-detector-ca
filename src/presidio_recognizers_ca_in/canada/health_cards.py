@@ -71,6 +71,10 @@ class RamqRecognizer(ValidatedPatternRecognizer):
             ],
             context=_HEALTH_CONTEXT_EN + _HEALTH_CONTEXT_FR,
             validator=ca_ramq_valid,
+            # Uppercase-only letter block: with IGNORECASE, any 4-letter word
+            # followed by 8 digits ("card 4111 1111") would match and the
+            # structural validator would boost it to certainty.
+            case_sensitive=True,
         )
 
 

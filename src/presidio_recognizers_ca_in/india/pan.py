@@ -19,4 +19,5 @@ class PanRecognizer(ValidatedPatternRecognizer):
             ],
             context=["pan", "permanent account number", "income tax", "पैन"],
             validator=in_pan_valid,
+            case_sensitive=True,  # PANs are printed uppercase; avoid word+digits FPs
         )

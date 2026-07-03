@@ -49,6 +49,7 @@ class InVoterIdRecognizer(ValidatedPatternRecognizer):
             ],
             context=["voter", "epic", "election", "proof", "id proof", "मतदाता"],
             validator=None,
+            case_sensitive=True,  # EPIC numbers are uppercase; avoid word+digits FPs
         )
 
 
@@ -67,4 +68,5 @@ class InPassportRecognizer(ValidatedPatternRecognizer):
             ],
             context=["passport", "proof", "id proof", "पासपोर्ट"],
             validator=None,
+            case_sensitive=True,  # passport numbers are uppercase
         )

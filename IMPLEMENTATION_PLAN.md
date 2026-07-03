@@ -2,12 +2,21 @@
 
 Roadmap to a credible validation process, an open-source release, and a submittable paper.
 
-**Strategy: locale-split, Canada first.** Canada has a bounded identifier landscape
-(one federal ID, ~5 well-specified provincial schemes) and can be driven to
-publication-quality depth quickly. India has far more variation (per-facility UHIDs,
-state-level differences, multi-script text, diverse mobile/ID formats) and gets its own
-track once the Canada track and the shared infrastructure are solid. Locale-agnostic
-work (metrics, CI, release plumbing) is done once, in the shared phases, and reused.
+**Strategy: locale-split, Canada first. India is OUT OF SCOPE for the initial pass.**
+Canada has a bounded identifier landscape (one federal ID, ~5 well-specified provincial
+schemes) and can be driven to publication-quality depth quickly. India has far more
+variation (per-facility UHIDs, state-level differences, multi-script text, diverse
+mobile/ID formats) and gets its own track (Phase 4) only after the Canada work is done.
+
+**India freeze policy for the initial pass:**
+- Existing India recognizers/tests/gates stay in the repo and must keep passing at
+  their current level (freeze = regression protection, not endorsement of depth).
+- No new India recognizers, benchmark content, docs, or evaluation work until Phase 4.
+- India-touching artifacts added by the shared-infra phase (thresholds.json entries,
+  property/negative tests, corpus checksums for `in_*` files) are **provisional** and
+  are re-validated/expanded as the first task of Phase 4 (item 4.0).
+- Locale-agnostic work (metrics, CI, release plumbing) is done once, in the shared
+  phases, and reused by both tracks.
 
 Each item is a checkbox so this file doubles as a progress tracker.
 
@@ -55,14 +64,24 @@ Applies to both locales; build before deepening either track.
   intentional generator changes); verified corpus regenerates bit-identically.
   Version metadata (presidio-analyzer 2.2.363, spacy 3.8.13, en_core_web_sm 3.8.0,
   Python) now recorded in the `results.md` header and `results.json`.
-- [ ] **2.3 Property-based tests (Hypothesis)**
-  - Base-rate validation of random strings (~1/10 Luhn, ~1/10 Verhoeff); generator
-    outputs always pass validators; single-digit corruptions always fail;
-    normalize/format round-trips. New `tests/test_properties.py`.
-- [ ] **2.4 Negative unit-test suite**
-  - Non-detection asserts: credit cards vs SIN/OHIP (shared Luhn!), US SSN, phone
-    numbers vs BC PHN, bad-Verhoeff Aadhaar shapes, cross-locale collisions
-    (Luhn-valid ULI vs SIN, Indian mobile vs BC PHN). New `tests/test_negatives.py`.
+- [x] **2.3 Property-based tests (Hypothesis)** — done (2026-07-02). New
+  `tests/test_properties.py`: exactly-one-check-digit property for Luhn and Verhoeff;
+  single-digit-substitution detection for both checksums; all nine
+  generator/validator pairs agree across random seeds (checksum validators must
+  return True, plausibility validators must not return False); normalize round-trip
+  for SIN. `hypothesis` added to dev deps.
+- [x] **2.4 Negative unit-test suite** — done (2026-07-02). New
+  `tests/test_negatives.py`: credit cards (Luhn-valid, all formats), invoice numbers,
+  US SSN/phone formats, checksum-reject cases (SIN/OHIP/Aadhaar/BC PHN), cross-locale
+  collision (Indian mobile vs BC PHN), and realistic clinical numerics (ICD-10, labs,
+  vitals, accession numbers) — all asserted below reporting threshold across the whole
+  pack. **Found and fixed a real precision bug:** Presidio compiles patterns with
+  IGNORECASE by default, so the RAMQ pattern matched lowercase words + digits
+  ("card 4111 1111" in a credit-card sentence) and the structural validator boosted it
+  to 1.0. Added a `case_sensitive` option to `ValidatedPatternRecognizer` and enabled
+  it for RAMQ, PAN, Voter ID, and Passport (all printed uppercase). Full suite: 66
+  tests pass; determinism + eval + threshold gate all re-verified green (recall
+  unchanged — benchmark values are uppercase).
 - [ ] **2.5 Fully-covered leak metric**
   - Strict variant: gold span fully covered by union of predicted spans. Report both.
     `evaluation/metrics.py`, `run_eval.py`.
@@ -115,6 +134,12 @@ Applies to both locales; build before deepening either track.
 
 ## Phase 4 — India track (after Canada track is solid)
 
+- [ ] **4.0 Revisit provisional India coverage from the shared-infra phase**
+  - Re-validate and deepen everything India-related that was added while India was
+    frozen: thresholds.json `in` floors (set from a shallow benchmark), India entries
+    in the property/negative test suites, India corpus checksums, and the India
+    results in results.md. Treat all current India numbers as provisional until this
+    item completes.
 - [ ] **4.1 IN false-positive stress corpus** — Indian confusables: bare 12/14-digit
   quantities, invoice/GST numbers, IFSC-adjacent strings, lab values.
 - [ ] **4.2 IN adversarial / hard split** — no-context identifiers, separator

@@ -2,9 +2,13 @@
 
 from __future__ import annotations
 
+import re
 from collections.abc import Callable
 
 from presidio_analyzer import Pattern, PatternRecognizer
+
+DEFAULT_REGEX_FLAGS = re.DOTALL | re.MULTILINE | re.IGNORECASE
+CASE_SENSITIVE_FLAGS = re.DOTALL | re.MULTILINE
 
 
 class ValidatedPatternRecognizer(PatternRecognizer):
@@ -34,7 +38,14 @@ class ValidatedPatternRecognizer(PatternRecognizer):
         validator: Callable[[str], bool | None] | None = None,
         name: str | None = None,
         supported_language: str = "en",
+        case_sensitive: bool = False,
     ):
+        """``case_sensitive=True`` disables Presidio's default IGNORECASE flag.
+
+        Needed when a letter block is only meaningful in uppercase (e.g. the
+        RAMQ surname prefix): with IGNORECASE, ordinary lowercase words
+        followed by digits would satisfy the pattern.
+        """
         self._validator = validator
         super().__init__(
             supported_entity=supported_entity,
@@ -42,6 +53,7 @@ class ValidatedPatternRecognizer(PatternRecognizer):
             context=context,
             name=name or f"{supported_entity}Recognizer",
             supported_language=supported_language,
+            global_regex_flags=CASE_SENSITIVE_FLAGS if case_sensitive else DEFAULT_REGEX_FLAGS,
         )
 
     def validate_result(self, pattern_text: str) -> bool | None:

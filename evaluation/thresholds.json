@@ -5,7 +5,11 @@
     "(regex + checksum on a fixed-seed corpus) and must stay at 1.0.",
     "PERSON/DATE/ADDRESS depend on the spaCy NLP engine and get floors",
     "slightly below current measured values to absorb model-version drift.",
-    "Applies to both gold and generated splits."
+    "Applies to both gold and generated splits.",
+    "SCOPE NOTE: initial pass is Canada-only (see IMPLEMENTATION_PLAN.md).",
+    "The 'in' block is a FREEZE gate protecting current India behavior from",
+    "regressions; its floors are provisional and will be re-derived in",
+    "Phase 4 (item 4.0) when the India track starts."
   ],
   "system": "Presidio + pack",
   "min_span_precision": 0.78,

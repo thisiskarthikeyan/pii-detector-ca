@@ -1,195 +1,179 @@
 # Implementation Plan
 
 Roadmap to a credible validation process, an open-source release, and a submittable paper.
-Phases are ordered by dependency: correctness fixes first, then evaluation rigor, then
-automation, then release and paper polish. Each item is a checkbox so this file doubles
-as a progress tracker.
+
+**Strategy: locale-split, Canada first.** Canada has a bounded identifier landscape
+(one federal ID, ~5 well-specified provincial schemes) and can be driven to
+publication-quality depth quickly. India has far more variation (per-facility UHIDs,
+state-level differences, multi-script text, diverse mobile/ID formats) and gets its own
+track once the Canada track and the shared infrastructure are solid. Locale-agnostic
+work (metrics, CI, release plumbing) is done once, in the shared phases, and reused.
+
+Each item is a checkbox so this file doubles as a progress tracker.
 
 ---
 
-## Phase 1 — Correctness fixes (must-fix, blocks everything downstream)
+## Phase 1 — Correctness fixes (COMPLETE)
 
-- [ ] **1.1 Fix context-gating bypass for checksumless identifiers**
-  - Problem: Presidio's `PatternRecognizer` sets score to `MAX_SCORE` (1.0) when
-    `validate_result` returns `True`. The plausibility validators
-    (`ca_ab_uli_plausible`, `in_abha_plausible`) return `True` for nearly any 9/14-digit
-    string, so any bare number is flagged at score 1.0 and the low pattern score +
-    context-word gate is bypassed entirely.
-  - Fix: in `ValidatedPatternRecognizer`, distinguish *checksum* validators
-    (True → boost, False → reject) from *plausibility* validators
-    (None → keep pattern score, False → reject). Plausibility validators should never
-    return `True`.
-  - Files: `src/presidio_recognizers_ca_in/base.py`, `validators.py`,
-    `canada/health_cards.py` (Alberta ULI), `india/abha.py`.
-  - Add regression tests: bare 9-digit / 14-digit numbers with **no context** must not
-    surface above the reporting threshold; with context words they must.
+**Status: COMPLETE (2026-07-02).** All items done; 42 tests pass, ruff clean, full
+eval re-run. Post-fix headline numbers: stock Presidio FN rate 11.5% (CA) / 22.2% (IN)
+→ pack 1.3% / 4.1% on gold splits; all identifier types at 1.000 pack recall; residual
+misses are PERSON names only. Extra fix discovered during 1.4: Presidio's lemma-based
+context enhancer matches single tokens only, so multi-word context phrases
+("health card") never fired for the ULI recognizer — added single-token context words
+("health", "card", "uli"), restoring ULI recall to 1.000 under honest gating.
 
-- [ ] **1.2 Remove dead `boost_score` parameter or make it functional**
-  - `ValidatedPatternRecognizer.boost_score` is stored but never used; the docstring
-    ("raises the score to boost_score") is wrong. Either implement it by overriding the
-    score assignment or delete the parameter and fix the docstring.
+- [x] **1.1 Fix context-gating bypass for checksumless identifiers** — plausibility
+  validators (`ca_ab_uli_plausible`, `in_abha_plausible`) now return None/False (never
+  True), so matches keep their pattern score and context gating governs; three-state
+  contract documented in `base.py`; regression tests added.
+- [x] **1.2 Remove dead `boost_score` parameter** — removed; docstring fixed.
+- [x] **1.3 Fix `gen_ca_sin` first-digit typo** — leading digit drawn uniformly from
+  "12345679"; redundant retry loop removed.
+- [x] **1.4 Re-run full evaluation** — corpus regenerated, `results.md` and
+  `error_analysis.json` updated.
+- [x] **1.5 Reconcile paper numbers with results files** — abstract, §4 entity count
+  (11,605), §5.1 split-agreement claim, §5.2 tables, precision figures, §5.3 error
+  analysis (stale RAMQ paragraph replaced with gating design lesson), conclusion
+  factors (8.8× CA, 5.4× IN).
 
-- [ ] **1.3 Fix `gen_ca_sin` first-digit typo**
-  - `rng.choice("123456579")` duplicates 5 and was presumably meant to be digits 1-9
-    excluding 0/8 (`"12345679"`, or include 9 explicitly: `"123456799"` is wrong too —
-    use `"12345679"` + `"9"` as valid leading digits per spec decision). Remove the
-    now-redundant `while True` / `if base[0] not in "08"` loop.
-  - File: `benchmark/pii_generators.py`.
+## Phase 2 — Shared validation infrastructure (locale-agnostic, do once)
 
-- [ ] **1.4 Re-run the full evaluation after 1.1–1.3 and regenerate results**
-  - `python benchmark/generate_corpus.py --locale ca --n 1000`
-  - `python benchmark/generate_corpus.py --locale in --n 1000`
-  - `python evaluation/run_eval.py --all`
-  - Commit updated `evaluation/results/results.md` and `error_analysis.json`.
+Applies to both locales; build before deepening either track.
 
-- [ ] **1.5 Reconcile paper numbers with results files**
-  - Paper §5.2 says CA_RAMQ pack recall 0.967 and §5.3 discusses a 3.3% RAMQ miss;
-    `results.md` shows 1.000. §5.3 also claims "100% on all eight validated types",
-    contradicting the table two paragraphs earlier. After 1.4, regenerate every number
-    in §5 from the results files and delete or rewrite the stale RAMQ error-analysis
-    paragraph.
-  - File: `paper/paper.md`.
-
-## Phase 2 — Evaluation rigor (what reviewers will judge)
-
-- [ ] **2.1 Stronger stock-Presidio baseline**
-  - Add `en_core_web_lg` (Presidio's default) alongside `en_core_web_sm`; optionally a
-    spaCy transformer engine. Report both in the paper; attribute PERSON-name misses to
-    the best available engine, not the weakest.
-  - Files: `evaluation/run_eval.py` (make NLP config a CLI flag), `paper/paper.md` §5.1.
-
-- [ ] **2.2 False-positive stress corpus ("negatives" split)**
-  - New generator producing notes with confusable non-PII numerics: accession numbers,
-    lab values, invoice/claim numbers, credit-card numbers (Luhn-valid, must NOT match
-    SIN/OHIP), US SSNs, ICD-10 codes, 9/14-digit quantities without context.
-  - Metric: false-positive rate per recognizer on this split; add to results tables.
-  - Files: new `benchmark/negatives.py` (or extend templates), `evaluation/run_eval.py`,
-    `evaluation/metrics.py`.
-
-- [ ] **2.3 Adversarial / hard split**
-  - Identifiers with no adjacent context word, unusual separators (dots, mixed),
-    line-wrapped values, OCR-style noise injection (character substitutions), and
-    dictation artifacts. Report as a separate "hard" table; do not blend into the main
-    split.
-  - Files: `benchmark/` (noise channel module), `paper/paper.md` §4–5.
-
-- [ ] **2.4 Fully-covered leak metric**
-  - Current leak recall counts any 1-character overlap as "detected". Add a strict
-    variant: gold span must be fully covered by the union of predicted spans. Report
-    both; the strict one matches the masking threat model the paper invokes.
-  - Files: `evaluation/metrics.py`, `evaluation/run_eval.py`, `paper/paper.md` §5.1.
-
-- [ ] **2.5 Statistical reporting**
-  - Bootstrap 95% CIs over notes for headline recall/FN/precision; run corpus
-    generation over 3–5 seeds and report variance. Flag small-n cells (e.g.
-    IN_PASSPORT n=11 on gold).
-  - Files: `evaluation/metrics.py`, `evaluation/run_eval.py`, `paper/paper.md`.
-
-- [ ] **2.6 Acknowledge and mitigate benchmark circularity**
-  - Generators import the package's own validators and always place identifiers after
-    strong context words — pack recall is near-true-by-construction. State this
-    explicitly in §6; position the stock-Presidio gap as the robust finding and use the
-    2.2/2.3 splits as the non-circular evidence for the pack.
-  - Files: `paper/paper.md` §4, §6.
-
-- [ ] **2.7 Gold-split human review protocol**
-  - Write the procedure (reviewers, error definition, adjudication), execute it on both
-    gold splits, record the outcome (e.g. "2 reviewers × 200 notes, N span errors").
-    Either make "gold" mean something or drop the term.
-  - Files: new `docs/gold_review.md`, `paper/paper.md` §4.
-
-- [ ] **2.8 Third-party baseline: run or remove**
-  - `run_eval.py` supports bharat-pii but no numbers exist anywhere. Either install it,
-    run it, and report; or remove the code path and the mention.
-
-## Phase 3 — Validation automation (CI as the enforcement mechanism)
-
-- [ ] **3.1 Eval regression gate in CI**
-  - New CI job: install spaCy model(s), regenerate corpus from fixed seed, run
+- [ ] **2.1 Eval regression gate in CI**
+  - CI job: install spaCy model(s), regenerate corpus from fixed seed, run
     `run_eval.py`, fail if per-entity recall drops below pinned thresholds or FP rate
-    rises above tolerance. Thresholds live in a checked-in config
+    rises above tolerance. Thresholds in a checked-in config
     (e.g. `evaluation/thresholds.yaml`).
-  - Files: `.github/workflows/ci.yml`, new threshold config, small assert script.
+- [ ] **2.2 Corpus determinism check**
+  - CI hashes regenerated JSONL against committed checksums; record checksum + package
+    versions in `results.md` header.
+- [ ] **2.3 Property-based tests (Hypothesis)**
+  - Base-rate validation of random strings (~1/10 Luhn, ~1/10 Verhoeff); generator
+    outputs always pass validators; single-digit corruptions always fail;
+    normalize/format round-trips. New `tests/test_properties.py`.
+- [ ] **2.4 Negative unit-test suite**
+  - Non-detection asserts: credit cards vs SIN/OHIP (shared Luhn!), US SSN, phone
+    numbers vs BC PHN, bad-Verhoeff Aadhaar shapes, cross-locale collisions
+    (Luhn-valid ULI vs SIN, Indian mobile vs BC PHN). New `tests/test_negatives.py`.
+- [ ] **2.5 Fully-covered leak metric**
+  - Strict variant: gold span fully covered by union of predicted spans. Report both.
+    `evaluation/metrics.py`, `run_eval.py`.
+- [ ] **2.6 Statistical reporting**
+  - Bootstrap 95% CIs over notes; 3–5 corpus seeds; flag small-n cells.
+- [ ] **2.7 Stronger stock-Presidio baseline**
+  - `en_core_web_lg` (Presidio default) alongside `en_core_web_sm`; NLP config as CLI
+    flag; optionally spaCy transformer.
+- [ ] **2.8 Pin the eval environment** — use `uv.lock` in eval CI; pin spaCy model
+  versions; record versions in results output.
+- [ ] **2.9 Type checking in CI** (mypy or pyright).
+- [ ] **2.10 Real-data false-positive evaluation (MIMIC notes)**
+  - Real de-identified clinical prose as FP stress test (PhysioNet credentialing
+    required — **start the application now**; DUA prohibits redistribution: script in
+    repo, numbers in paper only). Exercises both locales' recognizers at once.
 
-- [ ] **3.2 Corpus determinism check**
-  - CI hashes regenerated JSONL against committed checksums so seed/stdlib drift is
-    caught immediately. Record checksum + package versions in `results.md` header.
+## Phase 3 — Canada track (primary focus)
 
-- [ ] **3.3 Property-based tests (Hypothesis)**
-  - Random digit strings validate at expected base rates (~1/10 Luhn, ~1/10 Verhoeff);
-    every generator output passes its validator; every single-digit corruption of a
-    valid checksum fails; normalize/format round-trips.
-  - Files: new `tests/test_properties.py`, add `hypothesis` to dev deps.
+### 3A. Evaluation rigor
 
-- [ ] **3.4 Negative unit-test suite**
-  - Assert non-detection: credit cards vs SIN/OHIP, US SSN, phone numbers vs BC PHN,
-    Aadhaar-shaped numbers with bad Verhoeff, cross-locale collisions
-    (Luhn-valid ULI ≠ SIN report at top score, Indian mobile vs BC PHN).
-  - Files: new `tests/test_negatives.py`.
+- [ ] **3.1 CA false-positive stress corpus**
+  - Canadian clinical notes with confusable non-PII numerics: accession numbers, lab
+    values, credit-card numbers (Luhn-valid — must NOT match SIN/OHIP), US SSNs,
+    ICD-10 codes, bare 9/10-digit quantities without context.
+- [ ] **3.2 CA adversarial / hard split**
+  - Identifiers without adjacent context words, unusual separators, line-wrapped
+    values, OCR noise, dictation artifacts. Separate "hard" results table.
+- [ ] **3.3 CA benchmark diversity**
+  - Expand templates beyond 3 note types; expand name pools using Statistics Canada
+    name-frequency lists (English- and French-Canadian, accented forms); more clinical
+    filler variety. Addresses the circularity critique for the CA claims.
+- [ ] **3.4 CA gold-split human review** — execute documented protocol on the CA gold
+  split; record outcome in `docs/gold_review.md`.
 
-- [ ] **3.5 Pin the eval environment**
-  - Use `uv.lock` in the eval CI job; pin the spaCy model versions; keep library deps
-    loose for consumers. Document exact versions in results output.
+### 3B. Coverage & correctness depth
 
-- [ ] **3.6 Type checking in CI**
-  - Add mypy or pyright job; codebase is small and mostly annotated already.
+- [ ] **3.5 Remaining provinces/territories**
+  - Per-province recognizers (or documented format profiles) for SK, MB, NS, NB, NL,
+    PE, YT, NT, NU — replacing/augmenting the generic context-gated fallback. Verify
+    each format against official sources.
+- [ ] **3.6 RAMQ realism** — generator: 3 surname letters + 1 first-name letter;
+  verify structural rules (sex-offset month, day ranges) against RAMQ documentation.
+- [ ] **3.7 French-language Quebec notes**
+  - French clinical note templates + French context-word evaluation (currently the
+    French context terms are implemented but never exercised). Requires a French
+    spaCy model in the eval matrix.
+- [ ] **3.8 CA identifier spec provenance docs**
+  - `docs/identifiers/ca_*.md`: authoritative source (Service Canada, RAMQ, BC HIBC,
+    Alberta Health, provincial ministries), exact rule implemented, known gaps.
 
-## Phase 4 — Documentation & auditability
+## Phase 4 — India track (after Canada track is solid)
 
-- [ ] **4.1 Identifier spec provenance docs**
-  - One page per identifier under `docs/identifiers/`: authoritative source (Service
-    Canada, RAMQ, BC HIBC, UIDAI, Income Tax Dept, ECI, MEA), exact rule implemented,
-    known gaps/assumptions. Link from validators' docstrings and from the paper.
+- [ ] **4.1 IN false-positive stress corpus** — Indian confusables: bare 12/14-digit
+  quantities, invoice/GST numbers, IFSC-adjacent strings, lab values.
+- [ ] **4.2 IN adversarial / hard split** — no-context identifiers, separator
+  variants, OCR/dictation noise, code-mixed (Hinglish) snippets.
+- [ ] **4.3 IN benchmark diversity** — expand name pools (regional diversity:
+  North/South/East naming conventions, single-name patients), more templates,
+  state-varied addresses.
+- [ ] **4.4 UHID facility-profile system** — ship a small library of real hospital
+  UHID format profiles (configurable per deployment); document the per-facility
+  configuration story properly.
+- [ ] **4.5 Indic-script and code-mixed text support** — evaluate Hindi context words
+  for real (currently untested); decide scope for Devanagari/other-script notes.
+- [ ] **4.6 bharat-pii baseline: run or remove** — the harness supports it but no
+  numbers exist; install and report, or delete the code path.
+- [ ] **4.7 IN gold-split human review** — same protocol as 3.4.
+- [ ] **4.8 IN identifier spec provenance docs** — UIDAI, ABDM/NHA, Income Tax Dept,
+  ECI, MEA sources.
 
-- [ ] **4.2 README scope disclaimer**
-  - Not a compliance guarantee under PIPEDA/PHIPA/DPDP; synthetic-benchmark caveat;
-    recommend locale-scoped registration (`get_recognizers(["ca"])`) to avoid
-    cross-locale false positives — advertise the existing `locales=` parameter.
+## Phase 5 — Documentation, release engineering
 
-- [ ] **4.3 CONTRIBUTING.md**
-  - Focus on the extension recipe: how to add a locale/identifier
-    (validator → recognizer → generator → template slot → eval threshold → spec doc).
-
-- [ ] **4.4 SECURITY.md** — private disclosure channel for recall/leak findings.
-
-- [ ] **4.5 Housekeeping**
-  - Fix placeholder repo URL and author in `pyproject.toml`; ensure `__pycache__` /
-    `.pyc` are gitignored and untracked; document that `benchmark/data/generated/` is
-    regenerated, not committed; fix RAMQ generator realism (3 surname letters + 1
-    first-name letter) or document the simplification.
-
-## Phase 5 — Release engineering
-
-- [ ] **5.1 PyPI release** — publish 0.1.0 via GitHub Actions trusted publishing;
-  release workflow triggered on tags. (README already advertises `pip install`.)
-- [ ] **5.2 CHANGELOG.md** and tagged releases (semver).
-- [ ] **5.3 CITATION.cff** + Zenodo DOI archived at the paper's evaluated version;
-  paper cites the DOI, not `main`.
+- [ ] **5.1 README scope disclaimer** — not a compliance guarantee (PIPEDA/PHIPA/DPDP);
+  synthetic-benchmark caveat; recommend locale-scoped registration
+  (`get_recognizers(["ca"])`) to avoid cross-locale false positives.
+- [ ] **5.2 CONTRIBUTING.md** — extension recipe: validator → recognizer → generator →
+  template slot → eval threshold → spec doc.
+- [ ] **5.3 SECURITY.md** — private disclosure channel for recall/leak findings.
+- [ ] **5.4 Housekeeping** — fix placeholder repo URL/author in `pyproject.toml`;
+  ensure `__pycache__`/`.pyc` untracked; document generated-data policy.
+- [ ] **5.5 PyPI release** — 0.1.0 via trusted publishing; tag-triggered workflow.
+- [ ] **5.6 CHANGELOG.md** + semver tags.
+- [ ] **5.7 CITATION.cff + Zenodo DOI** archived at the paper's evaluated version.
 
 ## Phase 6 — Paper finalization
 
-- [ ] **6.1 Regenerate all §5 tables** from post-fix results (depends on Phases 1–2);
-  add CIs, strict leak metric, FP-rate table, `en_core_web_lg` baseline column.
-- [ ] **6.2 Ethics / broader-impact statement** — synthetic data only, checksum-valid
-  generated IDs may coincidentally collide with issued ones, dual-use note, not a
-  compliance certification.
-- [ ] **6.3 Datasheet for the benchmark** (Gebru-style) as appendix or supplementary.
-- [ ] **6.4 Complete references** — verify the EMNLP 2025 and Communications Medicine
-  2026 anchors; add identifier spec citations from 4.1; Presidio, i2b2/n2c2, Verhoeff.
-- [ ] **6.5 Fix §3.2 PAN format notation** — replace "AAAHA9999A" with the explicit
-  pattern `[A-Z]{3}[PCFHATBLJG][A-Z][0-9]{4}[A-Z]` and clarify hold-type letter.
-- [ ] **6.6 Soften untested claims** — Hindi/French context words are implemented but
-  never exercised by the English-only corpus; say so.
-- [ ] **6.7 Venue mechanics** — pick target (ClinicalNLP / LOUHI / ML4H), apply its
-  template and page limit, check anonymity-period rules, write the reproducibility
-  appendix (`make reproduce` or single script from clean checkout to all tables).
+Note: the paper currently covers both locales. With the Canada-first split, either
+(a) keep the two-locale paper and let India results reflect current depth while Canada
+gets the hardened evaluation, or (b) narrow the first submission to Canada and make
+India a follow-up. Decide at 6.1 based on how far Phase 4 has progressed by the
+submission deadline.
+
+- [ ] **6.1 Regenerate all §5 tables** from post-Phase-2/3 results; add CIs, strict
+  leak metric, FP-rate table, `en_core_web_lg` baseline column. Decide single- vs
+  two-locale scope.
+- [ ] **6.2 Acknowledge benchmark circularity** in §4/§6; position the stock-Presidio
+  gap as the robust finding; use FP/hard splits as non-circular evidence.
+- [ ] **6.3 Ethics / broader-impact statement** — synthetic data only, checksum-valid
+  collision caveat, dual-use note, not compliance certification.
+- [ ] **6.4 Datasheet for the benchmark** (Gebru-style).
+- [ ] **6.5 Complete references** — verify EMNLP 2025 / Communications Medicine 2026
+  anchors; add identifier spec citations; Presidio, i2b2/n2c2, Verhoeff.
+- [ ] **6.6 Fix §3.2 PAN notation** — explicit pattern
+  `[A-Z]{3}[PCFHATBLJG][A-Z][0-9]{4}[A-Z]`.
+- [ ] **6.7 Soften untested claims** — Hindi context words untested until 4.5; French
+  untested until 3.7.
+- [ ] **6.8 Venue mechanics** — target venue, template, page limit, anonymity rules,
+  reproducibility appendix (single script from clean checkout to all tables).
 
 ---
 
 ## Suggested execution order
 
-1. Phase 1 end-to-end (small diffs, unblocks everything).
-2. Phase 3.1–3.4 (lock in correctness before touching the benchmark further).
-3. Phase 2 (eval rigor; largest work item — 2.2/2.3 are the paper-critical additions).
-4. Phase 4, then 5 (docs and release, mostly mechanical).
-5. Phase 6 last, once numbers are final.
+1. ~~Phase 1~~ (done).
+2. Phase 2 (shared infra — locks in correctness; start PhysioNet application for 2.10
+   immediately since approval takes days–weeks).
+3. Phase 3 (Canada track, 3A before 3B; 3A items are the paper-critical ones).
+4. Decision point: if a submission deadline is near, do Phase 6 with Canada-only or
+   Canada-deep/India-current scope; otherwise proceed to Phase 4.
+5. Phase 4 (India track), then Phase 5, then Phase 6.

@@ -4,7 +4,7 @@
 
 ## Abstract
 
-Automated de-identification of clinical text is dominated by tools and models developed for United States identifier formats and HIPAA categories. When applied to clinical documents from other jurisdictions, these systems silently miss national and provincial identifiers — a privacy failure that is invisible precisely because the categories are absent from the tools' training data and rule sets. We present (1) an open-source pack of fifteen checksum-validated recognizers for Canadian and Indian identifiers that plugs into Microsoft Presidio, (2) a reproducible synthetic benchmark of span-labeled clinical notes for both locales, and (3) an evaluation showing that stock Presidio misses 13.3% of PII spans on Canadian clinical notes and 20.3% on Indian ones, which the recognizer pack reduces to 1.9% and 3.1% respectively — with the residual misses concentrated in person-name recognition for non-Anglophone names. Deterministic checksum validation (Luhn, Verhoeff, mod-11) recovers identifier recall to 100% on all covered entity types without machine-learned components, making the approach auditable — a property regulators and privacy officers can verify by reading the code. Code, corpus generator, and evaluation harness are released under the MIT license.
+Automated de-identification of clinical text is dominated by tools and models developed for United States identifier formats and HIPAA categories. When applied to clinical documents from other jurisdictions, these systems silently miss national and provincial identifiers — a privacy failure that is invisible precisely because the categories are absent from the tools' training data and rule sets. We present (1) an open-source pack of fifteen checksum-validated recognizers for Canadian and Indian identifiers that plugs into Microsoft Presidio, (2) a reproducible synthetic benchmark of span-labeled clinical notes for both locales, and (3) an evaluation showing that stock Presidio misses 11.5% of PII spans on Canadian clinical notes and 22.2% on Indian ones, which the recognizer pack reduces to 1.3% and 4.1% respectively — with the residual misses concentrated in person-name recognition for non-Anglophone names. Deterministic checksum validation (Luhn, Verhoeff, mod-11) recovers identifier recall to 100% on all covered entity types without machine-learned components, making the approach auditable — a property regulators and privacy officers can verify by reading the code. Code, corpus generator, and evaluation harness are released under the MIT license.
 
 ## 1. Introduction
 
@@ -58,7 +58,7 @@ De-identification systems span rule-based (MIST, Philter), feature-based ML, neu
 
 ## 4. Benchmark construction
 
-Notes are assembled from templates for three note types per locale, with slots filled by generators that produce checksum-valid identifiers, locale-plausible person names (Indian; English- and French-Canadian including accented characters), addresses, and dates. Spans are recorded at insertion time, so labels are exact by construction; every record is integrity-checked (`text[start:end] == value`). Identifier surface forms rotate across compact/spaced/dashed variants. Each locale yields 1,000 notes (100 held out as a manually reviewable gold split), totalling 11,732 labeled entities. Clinical content (findings, impressions, diagnoses, medications) is drawn from non-PII pools and is never labeled.
+Notes are assembled from templates for three note types per locale, with slots filled by generators that produce checksum-valid identifiers, locale-plausible person names (Indian; English- and French-Canadian including accented characters), addresses, and dates. Spans are recorded at insertion time, so labels are exact by construction; every record is integrity-checked (`text[start:end] == value`). Identifier surface forms rotate across compact/spaced/dashed variants. Each locale yields 1,000 notes (100 held out as a manually reviewable gold split), totalling 11,605 labeled entities. Clinical content (findings, impressions, diagnoses, medications) is drawn from non-PII pools and is never labeled.
 
 The corpus is synthetic by design: no real patient data is used, no data-use agreement is required, and the generator (seeded, deterministic) is released so the corpus can be regenerated, scaled, or extended to new locales.
 
@@ -68,45 +68,42 @@ The corpus is synthetic by design: no real patient data is used, no data-use agr
 
 Primary metric is **leak-oriented recall**: a gold PII span counts as detected if any predicted span of any entity type overlaps it, reflecting the de-identification threat model where masking matters more than type labeling. The complement is the false-negative (leak) rate. Secondary metric is **typed exact match** (exact boundaries plus correct type after mapping Presidio's built-in types). We also report span precision (fraction of predicted spans overlapping any gold PII).
 
-Systems: stock Presidio 2.x (spaCy `en_core_web_sm` NLP engine, score threshold 0.35) and the same engine with the recognizer pack registered. Numbers below are on the gold splits (100 notes/locale); generated-split results (900 notes/locale) agree within 1.1 points on all totals.
+Systems: stock Presidio 2.x (spaCy `en_core_web_sm` NLP engine, score threshold 0.35) and the same engine with the recognizer pack registered. Numbers below are on the gold splits (100 notes/locale); generated-split results (900 notes/locale) agree within 3 points on all totals.
 
 ### 5.2 Results
 
-**Canada (gold split, 535 entities):**
+**Canada (gold split, 530 entities):**
 
 | Entity | Stock recall | Pack recall |
 |---|---|---|
-| CA_SIN | 0.200 | 1.000 |
-| CA_OHIP | 0.633 | 1.000 |
-| CA_RAMQ | 0.400 | 0.967 |
+| CA_SIN | 0.133 | 1.000 |
+| CA_OHIP | 0.704 | 1.000 |
+| CA_RAMQ | 0.565 | 1.000 |
 | CA_BC_PHN | 1.000 | 1.000 |
-| CA_AB_ULI | 0.800 | 1.000 |
-| PERSON | 0.939 | 0.939 |
-| **Total (FN rate)** | **0.867 (13.3%)** | **0.981 (1.9%)** |
+| CA_AB_ULI | 0.643 | 1.000 |
+| PERSON | 0.959 | 0.959 |
+| **Total (FN rate)** | **0.885 (11.5%)** | **0.987 (1.3%)** |
 
-**India (gold split, 645 entities):**
+**India (gold split, 640 entities):**
 
 | Entity | Stock recall | Pack recall |
 |---|---|---|
-| IN_AADHAAR | 0.783 | 1.000 |
-| IN_ABHA | 0.587 | 1.000 |
-| IN_PAN | 0.088 | 1.000 |
-| IN_UHID | 0.621 | 1.000 |
-| IN_VOTER_ID | 0.412 | 1.000 |
-| IN_PASSPORT | 0.182 | 1.000 |
-| PERSON | 0.877 | 0.877 |
-| **Total (FN rate)** | **0.797 (20.3%)** | **0.969 (3.1%)** |
+| IN_AADHAAR | 0.683 | 1.000 |
+| IN_ABHA | 0.716 | 1.000 |
+| IN_PAN | 0.049 | 1.000 |
+| IN_UHID | 0.610 | 1.000 |
+| IN_VOTER_ID | 0.154 | 1.000 |
+| IN_PASSPORT | 0.083 | 1.000 |
+| PERSON | 0.844 | 0.844 |
+| **Total (FN rate)** | **0.778 (22.2%)** | **0.959 (4.1%)** |
 
-Where stock Presidio does detect locale identifiers, detection is incidental — a SIN caught because its formatting resembles a US phone number — and typed exact recall for those entities is 0.000 across the board, meaning downstream policies keyed to entity types (e.g., "redact but keep dates") cannot be applied. Span precision rises with the pack (CA 0.748 to 0.802; IN 0.711 to 0.790) because validated identifier matches displace no correct predictions.
+Where stock Presidio does detect locale identifiers, detection is incidental — a SIN caught because its formatting resembles a US phone number — and typed exact recall for those entities is 0.000 across the board, meaning downstream policies keyed to entity types (e.g., "redact but keep dates") cannot be applied. Span precision rises with the pack (CA 0.773 to 0.821; IN 0.721 to 0.799) because validated identifier matches displace no correct predictions.
 
 ### 5.3 Error analysis
 
-Post-pack false negatives concentrate in two places:
+Post-pack false negatives are concentrated almost entirely in **person names, which the pack deliberately does not address**: spaCy's NER misses 4.1% of Canadian names and 15.6% of Indian names on the gold splits — e.g., "Manoj Banerjee", "Swati Verma", "Émile Lavoie". The general-NER locale gap for names mirrors the identifier gap and motivates locale-tuned NER or name-gazetteer augmentation as future work. All identifier entity types reach 1.000 recall with the pack on both splits.
 
-1. **Person names (unchanged by the pack, by design).** spaCy's NER misses 6.1% of Canadian names and 12.3% of Indian names — e.g., "Suresh Banerjee", "Swati Kulkarni", "Émile Bouchard". The general-NER locale gap for names mirrors the identifier gap and motivates locale-tuned NER or name-gazetteer augmentation as future work.
-2. **RAMQ without separators (3.3%).** Compact 12-character RAMQ values with rare accented surname prefixes remain hard; accent-aware patterns recovered most but not all.
-
-These are exactly the failure classes that deterministic validation cannot fix, delineating the boundary between what rule-plus-checksum methods solve completely (formatted identifiers: 100% on all eight checksum/structure-validated types) and what requires learned components.
+This delineates the boundary cleanly: formatted identifiers are the failure class that rule-plus-checksum methods solve completely on this benchmark, while non-Anglophone person names require learned components. One design lesson surfaced during development: identifiers *without* a public checksum (ABHA, Alberta ULI) must not be score-boosted on plausibility alone — validators for these types only reject implausible values and otherwise defer to context-word gating, trading a small amount of recall on context-free mentions for acceptable precision on bare digit strings.
 
 ## 6. Limitations
 
@@ -117,7 +114,7 @@ These are exactly the failure classes that deterministic validation cannot fix, 
 
 ## 7. Conclusion
 
-Locale identifier coverage is a low-cost, high-leverage fix for clinical de-identification outside the US: fifteen deterministic recognizers reduced the PII leak rate by a factor of 7 (Canada) and 6.5 (India) on our benchmark, with fully auditable decision logic. We release the pack, the corpus generator, and the evaluation harness to make locale-gap measurement reproducible, and propose the benchmark as a template for extending coverage audits to further jurisdictions.
+Locale identifier coverage is a low-cost, high-leverage fix for clinical de-identification outside the US: fifteen deterministic recognizers reduced the PII leak rate by a factor of 8.8 (Canada) and 5.4 (India) on our benchmark, with fully auditable decision logic. We release the pack, the corpus generator, and the evaluation harness to make locale-gap measurement reproducible, and propose the benchmark as a template for extending coverage audits to further jurisdictions.
 
 ## Reproducibility
 

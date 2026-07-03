@@ -9,6 +9,7 @@ import pytest
 
 from presidio_recognizers_ca_in import get_recognizers
 from presidio_recognizers_ca_in.canada import (
+    AlbertaUliRecognizer,
     BcPhnRecognizer,
     CaSinRecognizer,
     OhipRecognizer,
@@ -85,10 +86,13 @@ class TestIndianRecognizers:
         assert not entities_found(AadhaarRecognizer(), text, "IN_AADHAAR")
 
     def test_abha_detected(self):
+        # ABHA has no checksum: the separated-format match keeps its pattern
+        # score (0.4); it is never boosted to near-certainty by the validator.
         results = entities_found(
             AbhaRecognizer(), "ABHA 12-3456-7890-1234", "IN_ABHA"
         )
-        assert results and results[0].score >= 0.9
+        assert results
+        assert 0.35 <= results[0].score < 0.9
 
     def test_pan_detected(self):
         results = entities_found(PanRecognizer(), "PAN ABCPE1234F", "IN_PAN")
@@ -104,6 +108,45 @@ class TestIndianRecognizers:
         rec = UhidRecognizer(pattern=r"\bAIIMS-\d{8}\b", score=0.6)
         results = entities_found(rec, "UHID AIIMS-12345678", "IN_UHID")
         assert results
+
+
+class TestContextGating:
+    """Checksumless (plausibility-only) recognizers must NOT be boosted to
+    near-certainty by their validator; without context words their matches
+    must stay below the reporting threshold (0.35 in the eval harness)."""
+
+    THRESHOLD = 0.35
+
+    def test_bare_uli_stays_below_threshold(self):
+        results = entities_found(
+            AlbertaUliRecognizer(), "The count was 574839216 units.", "CA_AB_ULI"
+        )
+        assert all(r.score < self.THRESHOLD for r in results)
+
+    def test_bare_abha_stays_below_threshold(self):
+        results = entities_found(
+            AbhaRecognizer(), "Invoice total 12345678901234 rupees.", "IN_ABHA"
+        )
+        assert all(r.score < self.THRESHOLD for r in results)
+
+    def test_uli_repeated_digit_rejected(self):
+        results = entities_found(
+            AlbertaUliRecognizer(), "ULI 111111111 on file", "CA_AB_ULI"
+        )
+        assert not [r for r in results if r.score > 0]
+
+    def test_abha_repeated_digit_rejected(self):
+        results = entities_found(
+            AbhaRecognizer(), "ABHA 22222222222222 on file", "IN_ABHA"
+        )
+        assert not [r for r in results if r.score > 0]
+
+    def test_checksum_validators_still_boost(self):
+        # Contrast: a checksum-validated identifier IS boosted without context.
+        base = "12345678"
+        sin = base + luhn_check_digit(base)
+        results = entities_found(CaSinRecognizer(), f"value {sin} noted", "CA_SIN")
+        assert results and results[0].score >= 0.9
 
 
 class TestPackageApi:

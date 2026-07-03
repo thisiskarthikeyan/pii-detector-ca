@@ -98,7 +98,12 @@ class BcPhnRecognizer(ValidatedPatternRecognizer):
 
 
 class AlbertaUliRecognizer(ValidatedPatternRecognizer):
-    """Alberta: 9 digits, no public checksum — only fires near context words."""
+    """Alberta: 9 digits, no public checksum — only fires near context words.
+
+    Context entries include single tokens ("health", "card", "uli") because
+    Presidio's lemma-based context enhancer matches token-by-token; multi-word
+    phrases such as "health card" never match as a unit.
+    """
 
     def __init__(self):
         super().__init__(
@@ -115,7 +120,8 @@ class AlbertaUliRecognizer(ValidatedPatternRecognizer):
                     score=0.05,  # requires context boost to surface
                 ),
             ],
-            context=_HEALTH_CONTEXT_EN + ["uli", "alberta health", "ahcip"],
+            context=_HEALTH_CONTEXT_EN
+            + ["health", "card", "uli", "alberta health", "ahcip"],
             validator=ca_ab_uli_plausible,
         )
 

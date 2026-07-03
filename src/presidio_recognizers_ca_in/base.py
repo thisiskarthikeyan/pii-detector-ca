@@ -10,10 +10,19 @@ from presidio_analyzer import Pattern, PatternRecognizer
 class ValidatedPatternRecognizer(PatternRecognizer):
     """PatternRecognizer that runs a deterministic validator on each regex match.
 
-    A passing validator raises the score to ``boost_score`` (near-certain);
-    a failing validator invalidates the result entirely. This is what keeps
-    precision high: a 12-digit number is not an Aadhaar unless its Verhoeff
-    check digit is valid.
+    Validators are three-state, matching Presidio's ``validate_result`` contract:
+
+    - ``True`` — the value passed a real integrity check (checksum / rigid
+      structure). Presidio raises the match score to ``MAX_SCORE``.
+    - ``False`` — the value failed the check; the match is invalidated.
+    - ``None`` — no integrity check applies (plausibility-only); the pattern's
+      own score is kept, so weak patterns still need context-word boosting to
+      reach the reporting threshold.
+
+    Checksum validators (SIN, OHIP, Aadhaar, ...) return True/False.
+    Plausibility validators (Alberta ULI, ABHA) must return None/False — never
+    True — so that a bare digit string is not boosted to near-certainty without
+    supporting context.
     """
 
     def __init__(
@@ -22,13 +31,11 @@ class ValidatedPatternRecognizer(PatternRecognizer):
         supported_entity: str,
         patterns: list[Pattern],
         context: list[str] | None = None,
-        validator: Callable[[str], bool] | None = None,
-        boost_score: float = 0.95,
+        validator: Callable[[str], bool | None] | None = None,
         name: str | None = None,
         supported_language: str = "en",
     ):
         self._validator = validator
-        self._boost_score = boost_score
         super().__init__(
             supported_entity=supported_entity,
             patterns=patterns,

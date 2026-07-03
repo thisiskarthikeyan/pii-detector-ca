@@ -1,10 +1,13 @@
 """Checksum and structural validators shared across recognizers.
 
 All functions take the raw matched string (possibly containing spaces or
-dashes) and return True when the value passes the identifier's integrity
-check. Deterministic validation is the precision lever of this package:
-a random digit string that merely *looks* like an identifier is rejected
-unless its check digit is valid.
+dashes). Checksum/structural validators return True when the value passes
+the identifier's integrity check and False otherwise. Plausibility-only
+validators (identifiers with no public checksum) return None when the value
+is plausible — keeping the match's pattern score so context gating applies —
+and False to reject. Deterministic validation is the precision lever of this
+package: a random digit string that merely *looks* like an identifier is
+rejected unless its check digit is valid.
 """
 
 from __future__ import annotations
@@ -149,12 +152,20 @@ def ca_bc_phn_valid(value: str) -> bool:
     return check == int(digits[9])
 
 
-def ca_ab_uli_plausible(value: str) -> bool:
-    """Alberta ULI: 9 digits, no public checksum; reject trivially implausible values."""
+def ca_ab_uli_plausible(value: str) -> bool | None:
+    """Alberta ULI plausibility: 9 digits, no public checksum.
+
+    Returns False to reject trivially implausible values (wrong shape,
+    repeated single digit such as 000000000) and None otherwise. Never
+    returns True: without a checksum there is no integrity evidence, so the
+    match must keep its low pattern score and rely on context-word boosting.
+    """
     digits = normalize(value)
     if len(digits) != 9 or not digits.isdigit():
         return False
-    return len(set(digits)) > 1  # reject e.g. 000000000 / 111111111
+    if len(set(digits)) == 1:
+        return False
+    return None
 
 
 def in_aadhaar_valid(value: str) -> bool:
@@ -180,10 +191,19 @@ def in_pan_valid(value: str) -> bool:
     return cleaned[3] in _PAN_HOLDER_TYPES
 
 
-def in_abha_plausible(value: str) -> bool:
-    """ABHA health account: 14 digits; no public checksum, structural check only."""
+def in_abha_plausible(value: str) -> bool | None:
+    """ABHA plausibility: 14 digits; no public checksum.
+
+    Returns False to reject implausible values and None otherwise (never
+    True), so ABHA matches keep their pattern score and surface only with
+    context-word support. See ``ca_ab_uli_plausible``.
+    """
     digits = normalize(value)
-    return len(digits) == 14 and digits.isdigit() and len(set(digits)) > 1
+    if len(digits) != 14 or not digits.isdigit():
+        return False
+    if len(set(digits)) == 1:
+        return False
+    return None
 
 
 def in_mobile_valid(value: str) -> bool:

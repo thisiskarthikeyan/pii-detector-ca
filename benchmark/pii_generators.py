@@ -87,10 +87,8 @@ def _fmt(digits: str, groups: list[int], rng: random.Random) -> str:
 
 
 def gen_ca_sin(rng: random.Random) -> str:
-    while True:
-        base = str(rng.choice("123456579")) + "".join(rng.choices("0123456789", k=7))
-        if base[0] not in "08":
-            break
+    # Leading digits 0 and 8 are not issued.
+    base = rng.choice("12345679") + "".join(rng.choices("0123456789", k=7))
     digits = base + luhn_check_digit(base)
     return _fmt(digits, [3, 3, 3], rng)
 

@@ -82,14 +82,27 @@ Applies to both locales; build before deepening either track.
   it for RAMQ, PAN, Voter ID, and Passport (all printed uppercase). Full suite: 66
   tests pass; determinism + eval + threshold gate all re-verified green (recall
   unchanged — benchmark values are uppercase).
-- [ ] **2.5 Fully-covered leak metric**
-  - Strict variant: gold span fully covered by union of predicted spans. Report both.
-    `evaluation/metrics.py`, `run_eval.py`.
-- [ ] **2.6 Statistical reporting**
-  - Bootstrap 95% CIs over notes; 3–5 corpus seeds; flag small-n cells.
-- [ ] **2.7 Stronger stock-Presidio baseline**
-  - `en_core_web_lg` (Presidio default) alongside `en_core_web_sm`; NLP config as CLI
-    flag; optionally spaCy transformer.
+- [x] **2.5 Fully-covered leak metric** — done (2026-07-03). `metrics.py` gains
+  `fully_covered` (gold span ⊆ union of predictions) and a "Strict recall" column in
+  all tables/JSON. Findings: pack identifiers stay 1.000 strict; the gap between leak
+  and strict recall is real and locale-shaped — CA pack 0.987 leak vs 0.809 strict on
+  gold (driven by ADDRESS 0.000 strict: spaCy LOCATION covers addresses only
+  partially, and PERSON 0.818 strict), IN pack 0.959 vs 0.900. Strong paper material:
+  the strict metric exposes partial-masking leaks that overlap recall hides.
+- [x] **2.6 Statistical reporting** — done (2026-07-03). Percentile bootstrap 95% CIs
+  (1000 note-level resamples, deterministic seed) for leak recall, strict recall, and
+  precision in every table and in results.json. New `evaluation/seed_variance.py`
+  generates in-memory corpora at alternate seeds (committed corpus/manifest untouched)
+  → `results/seed_variance.md`: across seeds 42/101/202, spread ≤ 0.010 on all
+  metrics, both locales — fixed-seed results are representative.
+- [x] **2.7 Stronger stock-Presidio baseline** — done (2026-07-03). `run_eval.py
+  --model` flag; non-default models write `results_<model>.*` so the canonical gated
+  results are untouched. `en_core_web_lg` 3.8.0 installed and evaluated: stock leak
+  recall is *lower* with lg (CA 0.851 vs 0.885; IN 0.745 vs 0.778 on gold) — the
+  bigger model does not close the identifier gap — while pack+lg improves overall
+  (CA 0.987/0.990, IN 1.000/0.999 leak recall) via better PERSON NER. Strengthens the
+  paper's claim: the gap is a coverage problem, not a model-size problem. spaCy
+  transformer engine deferred (optional).
 - [ ] **2.8 Pin the eval environment** — use `uv.lock` in eval CI; pin spaCy model
   versions; record versions in results output.
 - [ ] **2.9 Type checking in CI** (mypy or pyright).

@@ -103,8 +103,15 @@ Applies to both locales; build before deepening either track.
   (CA 0.987/0.990, IN 1.000/0.999 leak recall) via better PERSON NER. Strengthens the
   paper's claim: the gap is a coverage problem, not a model-size problem. spaCy
   transformer engine deferred (optional).
-- [ ] **2.8 Pin the eval environment** — use `uv.lock` in eval CI; pin spaCy model
-  versions; record versions in results output.
+- [x] **2.8 Pin the eval environment** — done (2026-07-03). `uv.lock` refreshed (now
+  includes hypothesis); CI eval job installs with `uv sync --locked` + pinned spaCy
+  model from new `evaluation/requirements-eval.txt` (model URLs kept out of pyproject
+  so PyPI publishing isn't blocked; `uv run --no-sync` prevents the implicit sync from
+  pruning the model). Test-matrix job intentionally stays on loose resolution — that's
+  what consumers get. Validated by simulating the CI install in a throwaway env:
+  66 tests pass, corpus regenerates bit-identically, eval reproduces the gated numbers
+  exactly, all 44 threshold checks pass. Versions were already recorded in results
+  metadata (2.2).
 - [ ] **2.9 Type checking in CI** (mypy or pyright).
 - [ ] **2.10 Real-data false-positive evaluation (MIMIC notes)**
   - Real de-identified clinical prose as FP stress test (PhysioNet credentialing

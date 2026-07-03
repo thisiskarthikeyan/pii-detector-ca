@@ -1,0 +1,12 @@
+# Pinned spaCy models for the evaluation harness.
+#
+# Kept out of pyproject.toml on purpose: direct-URL dependencies would block
+# publishing the package to PyPI, and library consumers don't need the models.
+# Evaluation results depend on the model version, so it is pinned here and
+# recorded in results.json metadata by run_eval.py.
+
+en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
+
+# Larger baseline (optional; used by `run_eval.py --model en_core_web_lg`,
+# not installed in CI to keep the eval job light):
+# en_core_web_lg @ https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl

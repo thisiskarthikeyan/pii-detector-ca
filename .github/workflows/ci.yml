@@ -24,6 +24,9 @@ jobs:
         run: uv run pytest -q
 
   eval:
+    # Locked environment: eval numbers must be reproducible, so this job
+    # installs exactly uv.lock plus the pinned spaCy model (the test matrix
+    # above intentionally uses loose resolution — that's what consumers get).
     name: Eval regression gate
     runs-on: ubuntu-latest
     steps:
@@ -31,17 +34,17 @@ jobs:
       - uses: astral-sh/setup-uv@v5
         with:
           python-version: "3.12"
-      - name: Install
+      - name: Install (locked)
         run: |
-          uv pip install -e ".[dev]"
-          uv pip install "en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl"
+          uv sync --locked --extra dev
+          uv pip install -r evaluation/requirements-eval.txt
       - name: Regenerate corpus from fixed seed
         run: |
-          uv run python benchmark/generate_corpus.py --locale ca --n 1000
-          uv run python benchmark/generate_corpus.py --locale in --n 1000
+          uv run --no-sync python benchmark/generate_corpus.py --locale ca --n 1000
+          uv run --no-sync python benchmark/generate_corpus.py --locale in --n 1000
       - name: Corpus determinism check
-        run: uv run python benchmark/check_determinism.py
+        run: uv run --no-sync python benchmark/check_determinism.py
       - name: Run evaluation
-        run: uv run python evaluation/run_eval.py --all
+        run: uv run --no-sync python evaluation/run_eval.py --all
       - name: Threshold gate
-        run: uv run python evaluation/check_thresholds.py
+        run: uv run --no-sync python evaluation/check_thresholds.py

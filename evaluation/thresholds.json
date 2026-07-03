@@ -13,6 +13,11 @@
   ],
   "system": "Presidio + pack",
   "min_span_precision": 0.78,
+  "negatives_max_fp_per_100_notes": {
+    "_comment": "FP ceilings on the PII-free confusables corpus (results/negatives_ca.json). Measured 2026-07-03: all-locales 43.67, ca-only 12.67; residual FPs are irreducible checksum collisions on random digit strings.",
+    "pack (all locales)": 55,
+    "pack (ca only)": 20
+  },
   "min_recall": {
     "ca": {
       "CA_SIN": 1.0,

@@ -19,6 +19,7 @@ from pathlib import Path
 
 HERE = Path(__file__).parent
 RESULTS = HERE / "results" / "results.json"
+NEGATIVES = HERE / "results" / "negatives_ca.json"
 THRESHOLDS = HERE / "thresholds.json"
 
 
@@ -71,6 +72,30 @@ def main() -> None:
             failures.append(
                 f"{tag}: span precision {precision:.3f} below floor {min_precision:.2f}"
             )
+
+    fp_ceilings = {
+        k: v
+        for k, v in config.get("negatives_max_fp_per_100_notes", {}).items()
+        if not k.startswith("_")
+    }
+    if fp_ceilings:
+        if not NEGATIVES.exists():
+            failures.append(f"negatives results missing: {NEGATIVES}")
+        else:
+            neg = json.loads(NEGATIVES.read_text(encoding="utf-8"))["results"]
+            for cfg, ceiling in fp_ceilings.items():
+                if cfg not in neg:
+                    failures.append(f"negatives: config {cfg!r} missing from results")
+                    continue
+                actual = neg[cfg]["fp_per_100_notes"]
+                checked += 1
+                status = "OK  " if actual <= ceiling else "FAIL"
+                print(f"{status} negatives {cfg:24s} FP/100 notes {actual:.2f} <= {ceiling}")
+                if actual > ceiling:
+                    failures.append(
+                        f"negatives {cfg}: {actual:.2f} FPs/100 notes above "
+                        f"ceiling {ceiling}"
+                    )
 
     print(f"\n{checked} checks, {len(failures)} failure(s).")
     if failures:

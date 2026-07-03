@@ -127,10 +127,26 @@ Applies to both locales; build before deepening either track.
 
 ### 3A. Evaluation rigor
 
-- [ ] **3.1 CA false-positive stress corpus**
+- [x] **3.1 CA false-positive stress corpus** — DONE
   - Canadian clinical notes with confusable non-PII numerics: accession numbers, lab
     values, credit-card numbers (Luhn-valid — must NOT match SIN/OHIP), US SSNs,
     ICD-10 codes, bare 9/10-digit quantities without context.
+  - Done: `benchmark/generate_negatives.py` emits 300 deterministic PII-free notes
+    (billing / lab report / admin templates) with Luhn-valid credit cards, US SSNs,
+    9/10-digit serials and order numbers, ICD-10, labs/vitals, facility phones, and
+    "context traps" (identifier context words with no identifier).
+    `evaluation/run_negatives.py` measures pack-entity FPs for two configs.
+  - Measured (seed 42): full pack 43.67 FP/100 notes — dominated by `IN_MOBILE` (85)
+    and `IN_AADHAAR` (8) firing on Canadian order numbers / credit cards, a strong
+    argument for locale-scoped registration. CA-only registration: 12.67 FP/100
+    notes, all irreducible checksum collisions (`CA_SIN` 19, `CA_OHIP` 16,
+    `CA_BC_PHN` 3 on random 9/10-digit serials, ~matching the expected ~10% Luhn
+    base rate). Zero FPs from credit cards (4-4-4-4 grouping doesn't match SIN/OHIP
+    separators), US SSNs (3-2-4 shape), or context traps.
+  - Gated in CI: corpus covered by the determinism manifest; FP ceilings (55 and
+    20 per 100 notes) enforced via `thresholds.json` + `check_thresholds.py`.
+  - Paper input: report both FP rates and recommend `locales=["ca"]` for Canadian
+    deployments.
 - [ ] **3.2 CA adversarial / hard split**
   - Identifiers without adjacent context words, unusual separators, line-wrapped
     values, OCR noise, dictation artifacts. Separate "hard" results table.

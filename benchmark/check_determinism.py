@@ -27,6 +27,7 @@ CORPUS_FILES = [
     "gold/in_gold.jsonl",
     "generated/ca.jsonl",
     "generated/in.jsonl",
+    "negatives/ca_negatives.jsonl",
 ]
 
 

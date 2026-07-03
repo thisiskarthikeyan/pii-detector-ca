@@ -13,6 +13,15 @@
   ],
   "system": "Presidio + pack",
   "min_span_precision": 0.78,
+  "hard_min_recall": {
+    "_comment": "Regression floors for 'Presidio + pack' per-variant leak recall on the CA adversarial split (results/hard_ca.json). These are NOT targets: measured 2026-07-03 control 1.00, no_context 0.96, unusual_separator 0.56, line_wrap 0.38, ocr_confusable 0.38, dictation 0.50. Floors sit below measured to absorb seed/model drift; low values are honest findings, and raising them requires actual robustness work, not corpus tweaks.",
+    "control": 1.0,
+    "no_context": 0.9,
+    "unusual_separator": 0.5,
+    "line_wrap": 0.3,
+    "ocr_confusable": 0.3,
+    "dictation": 0.4
+  },
   "negatives_max_fp_per_100_notes": {
     "_comment": "FP ceilings on the PII-free confusables corpus (results/negatives_ca.json). Measured 2026-07-03: all-locales 43.67, ca-only 12.67; residual FPs are irreducible checksum collisions on random digit strings.",
     "pack (all locales)": 55,

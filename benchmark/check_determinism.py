@@ -28,6 +28,7 @@ CORPUS_FILES = [
     "generated/ca.jsonl",
     "generated/in.jsonl",
     "negatives/ca_negatives.jsonl",
+    "hard/ca_hard.jsonl",
 ]
 
 

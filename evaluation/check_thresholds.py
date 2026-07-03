@@ -20,6 +20,7 @@ from pathlib import Path
 HERE = Path(__file__).parent
 RESULTS = HERE / "results" / "results.json"
 NEGATIVES = HERE / "results" / "negatives_ca.json"
+HARD = HERE / "results" / "hard_ca.json"
 THRESHOLDS = HERE / "thresholds.json"
 
 
@@ -72,6 +73,35 @@ def main() -> None:
             failures.append(
                 f"{tag}: span precision {precision:.3f} below floor {min_precision:.2f}"
             )
+
+    hard_floors = {
+        k: v for k, v in config.get("hard_min_recall", {}).items()
+        if not k.startswith("_")
+    }
+    if hard_floors:
+        if not HARD.exists():
+            failures.append(f"hard-split results missing: {HARD}")
+        else:
+            hard = json.loads(HARD.read_text(encoding="utf-8"))["results"]
+            if system not in hard:
+                failures.append(f"hard split: system {system!r} missing from results")
+            else:
+                variants = hard[system]["by_variant"]
+                for variant, floor in hard_floors.items():
+                    if variant not in variants:
+                        failures.append(f"hard split: variant {variant!r} missing")
+                        continue
+                    actual = variants[variant]["recall"]
+                    checked += 1
+                    status = "OK  " if actual >= floor else "FAIL"
+                    print(
+                        f"{status} hard ca {variant:26s} recall {actual:.3f} >= {floor:.2f}"
+                    )
+                    if actual < floor:
+                        failures.append(
+                            f"hard ca {variant}: recall {actual:.3f} below "
+                            f"floor {floor:.2f}"
+                        )
 
     fp_ceilings = {
         k: v

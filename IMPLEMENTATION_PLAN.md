@@ -147,9 +147,30 @@ Applies to both locales; build before deepening either track.
     20 per 100 notes) enforced via `thresholds.json` + `check_thresholds.py`.
   - Paper input: report both FP rates and recommend `locales=["ca"]` for Canadian
     deployments.
-- [ ] **3.2 CA adversarial / hard split**
+- [x] **3.2 CA adversarial / hard split** — DONE
   - Identifiers without adjacent context words, unusual separators, line-wrapped
     values, OCR noise, dictation artifacts. Separate "hard" results table.
+  - Done: `benchmark/generate_hard.py` — 300 single-identifier notes, 5 CA entities
+    x 6 variants x 10 (control / no_context / unusual_separator / line_wrap /
+    ocr_confusable / dictation), checksum-valid values, exact spans, deterministic,
+    in the manifest. `evaluation/run_hard.py` writes the entity-x-variant
+    leak/strict recall matrix to `results/hard_ca.{md,json}`.
+  - Measured (pack, leak recall by variant): control 1.00, no_context 0.96,
+    unusual_separator 0.56, line_wrap 0.38, ocr_confusable 0.38, dictation 0.50.
+    This is the honest, non-circular recall number: the pack's patterns only handle
+    the separator conventions the generators emit, and much of the residual "recall"
+    on degraded variants is incidental overlap from built-in DATE_TIME /
+    PHONE_NUMBER recognizers (pack rows equal stock rows there; strict recall on
+    line_wrap/ocr is 0.02). Notable cells: SIN misses dot/slash-separated and
+    dictation forms entirely; RAMQ drops to 0.10 on unusual separators; BC PHN
+    survives dictation (compact 10-digit re-match) but not line wraps.
+  - Gated in CI as regression floors at measured values (thresholds.json
+    `hard_min_recall`) — floors document current robustness, they are not targets.
+  - Paper input (6.1/6.2): present the variant matrix alongside the main-benchmark
+    1.000 recall as the circularity acknowledgment; frames main-benchmark results
+    as in-distribution upper bound. Closing the gaps (e.g. separator-tolerant
+    patterns, wrap-tolerant matching) is future recognizer work — improving the
+    numbers before the paper is optional, reporting them honestly is not.
 - [ ] **3.3 CA benchmark diversity**
   - Expand templates beyond 3 note types; expand name pools using Statistics Canada
     name-frequency lists (English- and French-Canadian, accented forms); more clinical

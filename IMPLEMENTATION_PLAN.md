@@ -204,6 +204,22 @@ Applies to both locales; build before deepening either track.
     ceilings). lg + seed-variance evidence regenerated (spread ≤ 0.009).
   - Paper impact (for 6.1): corpus is now 11,321 entities (CA 5,013 / IN 6,308);
     all §5 CA numbers change; stock CA FN rate now 9.9% (gold).
+  - Names upgraded from hand-curated pools to census data (2026-07-03):
+    `benchmark/curate_statcan_names.py` cleans StatCan **First names in Canada,
+    2021 Census** (cat. 98-505-X2021007, StatCan Open Licence; raw CSV gitignored
+    under `benchmark/data/external/statcan_names/`) into committed
+    `benchmark/data/statcan_names/ca_first_names.csv` (9,152 names + counts,
+    112 KB, attribution README). CA `gen_person` now samples first names
+    frequency-weighted from the census distribution, plus a 15% accented
+    supplement (census publishes names unaccented, count < 250 excluded, counts
+    randomly rounded — documented in the README). Surnames remain hand-curated
+    (census product covers first names only). India generator untouched
+    (`in_*` hashes verified unchanged).
+  - Re-measured with census names (sm, gold): pack 0.984 leak / 0.840 strict;
+    PERSON 0.952 leak / 0.928 strict — realistic-frequency names cost spaCy ~3
+    points of PERSON leak recall vs the hand-picked pool (0.982). Identifiers
+    unaffected (1.000). All 52 gate checks pass; lg + seed-variance regenerated
+    (spread ≤ 0.005).
 - [ ] **3.4 CA gold-split human review** — execute documented protocol on the CA gold
   split; record outcome in `docs/gold_review.md`.
 

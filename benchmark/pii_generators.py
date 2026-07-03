@@ -33,16 +33,19 @@ INDIAN_LAST = [
     "Sharma", "Patel", "Reddy", "Iyer", "Gupta", "Nair", "Singh", "Rao",
     "Menon", "Verma", "Krishnan", "Desai", "Joshi", "Kulkarni", "Banerjee", "Pillai",
 ]
-# Reflects Canada's actual name diversity (census common-name lists): Anglo,
-# Franco (accented), South/East/Southeast Asian, Middle Eastern, and Eastern
-# European names — the population a Canadian de-id system actually serves.
-CANADIAN_FIRST = [
-    "Émile", "Sophie", "Liam", "Charlotte", "Noah", "Geneviève", "William", "Olivia",
-    "Jean-Philippe", "Emma", "Marc-André", "Camille", "Ethan", "Isabelle", "Lucas", "Chloé",
-    "Étienne", "Océane", "François", "Amélie", "Gabrielle", "Mathieu",
-    "Harpreet", "Gurpreet", "Simran", "Arjun", "Wei", "Ming", "Xiu", "Thanh", "Linh",
-    "Fatima", "Omar", "Ahmed", "Leila", "Maria", "Carlos", "Anastasia", "Dmitri", "Agnieszka",
+# CA first names are sampled frequency-weighted from the committed StatCan
+# 2021 Census list (benchmark/data/statcan_names/, 9k+ names — see README
+# there). The census publishes names UNACCENTED, so a small accented
+# supplement keeps accent handling exercised in the benchmark.
+CANADIAN_FIRST_ACCENTED = [
+    "Émile", "Geneviève", "Chloé", "Étienne", "Océane", "Amélie", "François",
+    "Marc-André", "Hélène", "René", "Gaétan", "Aurélie", "Frédéric", "Béatrice",
 ]
+_ACCENT_SUPPLEMENT_RATE = 0.15
+
+# Surnames stay hand-curated (the census product covers first names only):
+# Anglo, Franco, South/East/Southeast Asian, Middle Eastern, and Eastern
+# European names — the population a Canadian de-id system actually serves.
 CANADIAN_LAST = [
     "Tremblay", "Gagnon", "Roy", "Bouchard", "Côté", "MacDonald", "Wilson", "Taylor",
     "Lavoie", "Fortin", "Campbell", "Stewart", "Bergeron", "Morin", "Singh", "Chen",
@@ -208,10 +211,37 @@ def gen_in_passport(rng: random.Random) -> str:
 # --- Common PII ---------------------------------------------------------------
 
 
+_STATCAN_NAMES_PATH = (
+    Path(__file__).parent / "data" / "statcan_names" / "ca_first_names.csv"
+)
+_STATCAN_CACHE: tuple[list[str], list[int]] | None = None
+
+
+def _statcan_first_names() -> tuple[list[str], list[int]]:
+    """(names, cumulative counts) for frequency-weighted sampling."""
+    global _STATCAN_CACHE
+    if _STATCAN_CACHE is None:
+        names: list[str] = []
+        cum: list[int] = []
+        total = 0
+        with open(_STATCAN_NAMES_PATH, newline="", encoding="utf-8") as f:
+            for row in csv.DictReader(f):
+                names.append(row["name"])
+                total += int(row["count"])
+                cum.append(total)
+        _STATCAN_CACHE = (names, cum)
+    return _STATCAN_CACHE
+
+
 def gen_person(rng: random.Random, locale: str) -> str:
     if locale == "in":
         return f"{rng.choice(INDIAN_FIRST)} {rng.choice(INDIAN_LAST)}"
-    return f"{rng.choice(CANADIAN_FIRST)} {rng.choice(CANADIAN_LAST)}"
+    if rng.random() < _ACCENT_SUPPLEMENT_RATE:
+        first = rng.choice(CANADIAN_FIRST_ACCENTED)
+    else:
+        names, cum = _statcan_first_names()
+        first = rng.choices(names, cum_weights=cum, k=1)[0]
+    return f"{first} {rng.choice(CANADIAN_LAST)}"
 
 
 def gen_date(rng: random.Random) -> str:

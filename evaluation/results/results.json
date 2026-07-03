@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-07-03T06:17:11+00:00",
+    "generated_at": "2026-07-03T18:54:16+00:00",
     "python": "3.12.13",
     "versions": {
       "presidio-analyzer": "2.2.363",
@@ -10,10 +10,12 @@
     "nlp_model": "en_core_web_sm",
     "score_threshold": 0.35,
     "corpus_checksums": {
-      "gold/ca_gold.jsonl": "d938c3450420cb5bf9a11395c3a17ec1b4db8105dd3b394a9031ecd968b4e54f",
+      "gold/ca_gold.jsonl": "d290a6901882668df907f970e49ad9f76f5d8d36ba306dcc791bd10bd7153054",
       "gold/in_gold.jsonl": "849c8d08f28a3418b528f890cb5b6051f41076ea55956b93b5ad571c91297727",
-      "generated/ca.jsonl": "9a5880369ad3ef5d6bc88e636de967c44fed7ecce28ab1a0b5df15f69255316e",
-      "generated/in.jsonl": "33e7a4046df86e8f9e91dd90a711de32f884aced21371d966a28084146c4d3e0"
+      "generated/ca.jsonl": "17525be8bc3a8036d5313f3eee64296d821819c50b63bcf5cf0728f7e26fd334",
+      "generated/in.jsonl": "33e7a4046df86e8f9e91dd90a711de32f884aced21371d966a28084146c4d3e0",
+      "negatives/ca_negatives.jsonl": "bb2b1f63b7f87f2365b002c3532130b372ab94f513331cf6f5200d06b66e31a4",
+      "hard/ca_hard.jsonl": "880b94a3afac4d1dd69dac3c7da5952ba10a87707f76811bc000b1fb12c903ec"
     }
   },
   "runs": [
@@ -24,97 +26,97 @@
       "nlp_model": "en_core_web_sm",
       "entities": {
         "ADDRESS": {
-          "gold": 70,
-          "detected": 70,
+          "gold": 62,
+          "detected": 62,
           "covered": 0,
           "recall": 1.0,
           "strict_recall": 0.0,
           "typed_recall": 0.0
         },
         "CA_AB_ULI": {
-          "gold": 28,
-          "detected": 18,
-          "covered": 18,
-          "recall": 0.6428571428571429,
-          "strict_recall": 0.6428571428571429,
+          "gold": 25,
+          "detected": 19,
+          "covered": 17,
+          "recall": 0.76,
+          "strict_recall": 0.68,
           "typed_recall": 0.0
         },
         "CA_BC_PHN": {
-          "gold": 22,
-          "detected": 22,
-          "covered": 22,
+          "gold": 25,
+          "detected": 25,
+          "covered": 25,
           "recall": 1.0,
           "strict_recall": 1.0,
           "typed_recall": 0.0
         },
         "CA_OHIP": {
-          "gold": 27,
-          "detected": 19,
-          "covered": 4,
-          "recall": 0.7037037037037037,
-          "strict_recall": 0.14814814814814814,
+          "gold": 26,
+          "detected": 18,
+          "covered": 5,
+          "recall": 0.6923076923076923,
+          "strict_recall": 0.19230769230769232,
           "typed_recall": 0.0
         },
         "CA_RAMQ": {
-          "gold": 23,
-          "detected": 13,
-          "covered": 1,
-          "recall": 0.5652173913043478,
-          "strict_recall": 0.043478260869565216,
+          "gold": 24,
+          "detected": 16,
+          "covered": 2,
+          "recall": 0.6666666666666666,
+          "strict_recall": 0.08333333333333333,
           "typed_recall": 0.0
         },
         "CA_SIN": {
-          "gold": 30,
-          "detected": 4,
-          "covered": 4,
-          "recall": 0.13333333333333333,
-          "strict_recall": 0.13333333333333333,
+          "gold": 32,
+          "detected": 7,
+          "covered": 7,
+          "recall": 0.21875,
+          "strict_recall": 0.21875,
           "typed_recall": 0.0
         },
         "DATE": {
-          "gold": 160,
-          "detected": 160,
-          "covered": 160,
+          "gold": 141,
+          "detected": 141,
+          "covered": 140,
           "recall": 1.0,
-          "strict_recall": 1.0,
-          "typed_recall": 0.9875
+          "strict_recall": 0.9929078014184397,
+          "typed_recall": 0.9716312056737588
         },
         "PERSON": {
-          "gold": 170,
-          "detected": 163,
-          "covered": 139,
-          "recall": 0.9588235294117647,
-          "strict_recall": 0.8176470588235294,
-          "typed_recall": 0.5588235294117647
+          "gold": 169,
+          "detected": 166,
+          "covered": 162,
+          "recall": 0.9822485207100592,
+          "strict_recall": 0.9585798816568047,
+          "typed_recall": 0.6568047337278107
         }
       },
       "overall": {
-        "gold": 530,
-        "detected": 469,
-        "covered": 348,
-        "recall": 0.8849056603773585,
-        "fn_rate": 0.11509433962264148,
-        "strict_recall": 0.6566037735849056,
-        "strict_fn_rate": 0.3433962264150944,
-        "typed_recall": 0.47735849056603774
+        "gold": 504,
+        "detected": 454,
+        "covered": 358,
+        "recall": 0.9007936507936508,
+        "fn_rate": 0.09920634920634919,
+        "strict_recall": 0.7103174603174603,
+        "strict_fn_rate": 0.28968253968253965,
+        "typed_recall": 0.49206349206349204
       },
       "span_precision": {
-        "tp": 610,
-        "total": 789,
-        "precision": 0.7731305449936628
+        "tp": 560,
+        "total": 790,
+        "precision": 0.7088607594936709
       },
       "bootstrap_ci_95": {
         "recall": [
-          0.8582,
-          0.9122
+          0.8787,
+          0.9218
         ],
         "strict_recall": [
-          0.621,
-          0.6907
+          0.6772,
+          0.7449
         ],
         "precision": [
-          0.7471,
-          0.7982
+          0.684,
+          0.7353
         ]
       }
     },
@@ -125,97 +127,97 @@
       "nlp_model": "en_core_web_sm",
       "entities": {
         "ADDRESS": {
-          "gold": 70,
-          "detected": 70,
+          "gold": 62,
+          "detected": 62,
           "covered": 0,
           "recall": 1.0,
           "strict_recall": 0.0,
           "typed_recall": 0.0
         },
         "CA_AB_ULI": {
-          "gold": 28,
-          "detected": 28,
-          "covered": 28,
+          "gold": 25,
+          "detected": 25,
+          "covered": 25,
           "recall": 1.0,
           "strict_recall": 1.0,
           "typed_recall": 1.0
         },
         "CA_BC_PHN": {
-          "gold": 22,
-          "detected": 22,
-          "covered": 22,
+          "gold": 25,
+          "detected": 25,
+          "covered": 25,
           "recall": 1.0,
           "strict_recall": 1.0,
           "typed_recall": 1.0
         },
         "CA_OHIP": {
-          "gold": 27,
-          "detected": 27,
-          "covered": 27,
+          "gold": 26,
+          "detected": 26,
+          "covered": 26,
           "recall": 1.0,
           "strict_recall": 1.0,
           "typed_recall": 1.0
         },
         "CA_RAMQ": {
-          "gold": 23,
-          "detected": 23,
-          "covered": 23,
+          "gold": 24,
+          "detected": 24,
+          "covered": 24,
           "recall": 1.0,
           "strict_recall": 1.0,
           "typed_recall": 1.0
         },
         "CA_SIN": {
-          "gold": 30,
-          "detected": 30,
-          "covered": 30,
+          "gold": 32,
+          "detected": 32,
+          "covered": 32,
           "recall": 1.0,
           "strict_recall": 1.0,
           "typed_recall": 1.0
         },
         "DATE": {
-          "gold": 160,
-          "detected": 160,
-          "covered": 160,
+          "gold": 141,
+          "detected": 141,
+          "covered": 140,
           "recall": 1.0,
-          "strict_recall": 1.0,
-          "typed_recall": 0.9875
+          "strict_recall": 0.9929078014184397,
+          "typed_recall": 0.9716312056737588
         },
         "PERSON": {
-          "gold": 170,
-          "detected": 163,
-          "covered": 139,
-          "recall": 0.9588235294117647,
-          "strict_recall": 0.8176470588235294,
-          "typed_recall": 0.5588235294117647
+          "gold": 169,
+          "detected": 166,
+          "covered": 162,
+          "recall": 0.9822485207100592,
+          "strict_recall": 0.9585798816568047,
+          "typed_recall": 0.6568047337278107
         }
       },
       "overall": {
-        "gold": 530,
-        "detected": 523,
-        "covered": 429,
-        "recall": 0.9867924528301887,
-        "fn_rate": 0.013207547169811318,
-        "strict_recall": 0.809433962264151,
-        "strict_fn_rate": 0.19056603773584901,
-        "typed_recall": 0.7226415094339622
+        "gold": 504,
+        "detected": 501,
+        "covered": 434,
+        "recall": 0.9940476190476191,
+        "fn_rate": 0.005952380952380931,
+        "strict_recall": 0.8611111111111112,
+        "strict_fn_rate": 0.13888888888888884,
+        "typed_recall": 0.753968253968254
       },
       "span_precision": {
-        "tp": 821,
-        "total": 1000,
-        "precision": 0.821
+        "tp": 768,
+        "total": 998,
+        "precision": 0.7695390781563126
       },
       "bootstrap_ci_95": {
         "recall": [
-          0.9758,
-          0.9962
+          0.9865,
+          1.0
         ],
         "strict_recall": [
-          0.7883,
-          0.8296
+          0.8425,
+          0.8797
         ],
         "precision": [
-          0.7988,
-          0.8406
+          0.7478,
+          0.7919
         ]
       }
     },
@@ -226,97 +228,97 @@
       "nlp_model": "en_core_web_sm",
       "entities": {
         "ADDRESS": {
-          "gold": 591,
+          "gold": 605,
           "detected": 589,
           "covered": 0,
-          "recall": 0.9966159052453468,
+          "recall": 0.9735537190082645,
           "strict_recall": 0.0,
           "typed_recall": 0.0
         },
         "CA_AB_ULI": {
-          "gold": 216,
-          "detected": 137,
-          "covered": 129,
-          "recall": 0.6342592592592593,
-          "strict_recall": 0.5972222222222222,
+          "gold": 222,
+          "detected": 166,
+          "covered": 160,
+          "recall": 0.7477477477477478,
+          "strict_recall": 0.7207207207207207,
           "typed_recall": 0.0
         },
         "CA_BC_PHN": {
-          "gold": 226,
-          "detected": 226,
-          "covered": 226,
+          "gold": 213,
+          "detected": 213,
+          "covered": 213,
           "recall": 1.0,
           "strict_recall": 1.0,
           "typed_recall": 0.0
         },
         "CA_OHIP": {
-          "gold": 220,
-          "detected": 147,
-          "covered": 33,
-          "recall": 0.6681818181818182,
-          "strict_recall": 0.15,
+          "gold": 261,
+          "detected": 165,
+          "covered": 49,
+          "recall": 0.632183908045977,
+          "strict_recall": 0.18773946360153257,
           "typed_recall": 0.0
         },
         "CA_RAMQ": {
-          "gold": 238,
-          "detected": 108,
-          "covered": 14,
-          "recall": 0.453781512605042,
-          "strict_recall": 0.058823529411764705,
+          "gold": 204,
+          "detected": 103,
+          "covered": 7,
+          "recall": 0.5049019607843137,
+          "strict_recall": 0.03431372549019608,
           "typed_recall": 0.0
         },
         "CA_SIN": {
-          "gold": 311,
-          "detected": 71,
-          "covered": 68,
-          "recall": 0.2282958199356913,
-          "strict_recall": 0.21864951768488747,
+          "gold": 302,
+          "detected": 68,
+          "covered": 67,
+          "recall": 0.2251655629139073,
+          "strict_recall": 0.22185430463576158,
           "typed_recall": 0.0
         },
         "DATE": {
-          "gold": 1520,
-          "detected": 1520,
-          "covered": 1498,
+          "gold": 1197,
+          "detected": 1197,
+          "covered": 1176,
           "recall": 1.0,
-          "strict_recall": 0.9855263157894737,
-          "typed_recall": 0.9651315789473685
+          "strict_recall": 0.9824561403508771,
+          "typed_recall": 0.9640768588137009
         },
         "PERSON": {
-          "gold": 1489,
-          "detected": 1386,
-          "covered": 1245,
-          "recall": 0.9308260577568838,
-          "strict_recall": 0.8361316319677636,
-          "typed_recall": 0.5533915379449295
+          "gold": 1505,
+          "detected": 1439,
+          "covered": 1378,
+          "recall": 0.9561461794019933,
+          "strict_recall": 0.9156146179401994,
+          "typed_recall": 0.639202657807309
         }
       },
       "overall": {
-        "gold": 4811,
-        "detected": 4184,
-        "covered": 3213,
-        "recall": 0.869673664518811,
-        "fn_rate": 0.130326335481189,
-        "strict_recall": 0.6678445229681979,
-        "strict_fn_rate": 0.33215547703180215,
-        "typed_recall": 0.4762003741425899
+        "gold": 4509,
+        "detected": 3940,
+        "covered": 3050,
+        "recall": 0.8738079396762032,
+        "fn_rate": 0.12619206032379682,
+        "strict_recall": 0.6764249279219339,
+        "strict_fn_rate": 0.32357507207806613,
+        "typed_recall": 0.46928365491239743
       },
       "span_precision": {
-        "tp": 5394,
-        "total": 7135,
-        "precision": 0.7559915907498248
+        "tp": 5024,
+        "total": 7201,
+        "precision": 0.6976808776558812
       },
       "bootstrap_ci_95": {
         "recall": [
-          0.862,
-          0.8781
+          0.8655,
+          0.8827
         ],
         "strict_recall": [
-          0.6567,
-          0.6787
+          0.6638,
+          0.6882
         ],
         "precision": [
-          0.748,
-          0.7639
+          0.6899,
+          0.7062
         ]
       }
     },
@@ -327,97 +329,97 @@
       "nlp_model": "en_core_web_sm",
       "entities": {
         "ADDRESS": {
-          "gold": 591,
-          "detected": 591,
+          "gold": 605,
+          "detected": 605,
           "covered": 0,
           "recall": 1.0,
           "strict_recall": 0.0,
           "typed_recall": 0.0
         },
         "CA_AB_ULI": {
-          "gold": 216,
-          "detected": 216,
-          "covered": 216,
+          "gold": 222,
+          "detected": 222,
+          "covered": 222,
           "recall": 1.0,
           "strict_recall": 1.0,
           "typed_recall": 1.0
         },
         "CA_BC_PHN": {
-          "gold": 226,
-          "detected": 226,
-          "covered": 226,
+          "gold": 213,
+          "detected": 213,
+          "covered": 213,
           "recall": 1.0,
           "strict_recall": 1.0,
           "typed_recall": 1.0
         },
         "CA_OHIP": {
-          "gold": 220,
-          "detected": 220,
-          "covered": 220,
+          "gold": 261,
+          "detected": 261,
+          "covered": 261,
           "recall": 1.0,
           "strict_recall": 1.0,
           "typed_recall": 1.0
         },
         "CA_RAMQ": {
-          "gold": 238,
-          "detected": 238,
-          "covered": 238,
+          "gold": 204,
+          "detected": 204,
+          "covered": 204,
           "recall": 1.0,
           "strict_recall": 1.0,
           "typed_recall": 1.0
         },
         "CA_SIN": {
-          "gold": 311,
-          "detected": 311,
-          "covered": 311,
+          "gold": 302,
+          "detected": 302,
+          "covered": 302,
           "recall": 1.0,
           "strict_recall": 1.0,
           "typed_recall": 1.0
         },
         "DATE": {
-          "gold": 1520,
-          "detected": 1520,
-          "covered": 1498,
+          "gold": 1197,
+          "detected": 1197,
+          "covered": 1176,
           "recall": 1.0,
-          "strict_recall": 0.9855263157894737,
-          "typed_recall": 0.9651315789473685
+          "strict_recall": 0.9824561403508771,
+          "typed_recall": 0.9640768588137009
         },
         "PERSON": {
-          "gold": 1489,
-          "detected": 1386,
-          "covered": 1245,
-          "recall": 0.9308260577568838,
-          "strict_recall": 0.8361316319677636,
-          "typed_recall": 0.5533915379449295
+          "gold": 1505,
+          "detected": 1439,
+          "covered": 1378,
+          "recall": 0.9561461794019933,
+          "strict_recall": 0.9156146179401994,
+          "typed_recall": 0.639202657807309
         }
       },
       "overall": {
-        "gold": 4811,
-        "detected": 4708,
-        "covered": 3954,
-        "recall": 0.9785907295780503,
-        "fn_rate": 0.021409270421949733,
-        "strict_recall": 0.821866555809603,
-        "strict_fn_rate": 0.178133444190397,
-        "typed_recall": 0.7279151943462897
+        "gold": 4509,
+        "detected": 4443,
+        "covered": 3756,
+        "recall": 0.9853626081170991,
+        "fn_rate": 0.014637391882900919,
+        "strict_recall": 0.8330006653359947,
+        "strict_fn_rate": 0.1669993346640053,
+        "typed_recall": 0.7358616101131071
       },
       "span_precision": {
-        "tp": 7313,
-        "total": 9054,
-        "precision": 0.8077092997570134
+        "tp": 6941,
+        "total": 9118,
+        "precision": 0.7612415003290195
       },
       "bootstrap_ci_95": {
         "recall": [
-          0.9746,
-          0.9825
+          0.9819,
+          0.9887
         ],
         "strict_recall": [
-          0.8139,
-          0.8293
+          0.8251,
+          0.8401
         ],
         "precision": [
-          0.8012,
-          0.8143
+          0.7549,
+          0.7683
         ]
       }
     },

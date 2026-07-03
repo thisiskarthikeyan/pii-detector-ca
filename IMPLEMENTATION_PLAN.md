@@ -171,20 +171,39 @@ Applies to both locales; build before deepening either track.
     as in-distribution upper bound. Closing the gaps (e.g. separator-tolerant
     patterns, wrap-tolerant matching) is future recognizer work — improving the
     numbers before the paper is optional, reporting them honestly is not.
-- [ ] **3.3 CA benchmark diversity**
-  - Expand templates beyond 3 note types; expand name pools using Statistics Canada
-    name-frequency lists (English- and French-Canadian, accented forms); more clinical
-    filler variety. Addresses the circularity critique for the CA claims.
-  - Address realism from the StatCan **Open Database of Addresses** (ODA, Open
-    Government Licence – Canada): user supplies raw CSVs under
-    `benchmark/data/external/oda/` (gitignored); a deterministic
-    `benchmark/curate_oda.py` samples a small committed subset (with OGL
-    attribution) used for benchmark address slots and address-format variety
-    (unit/suite prefixes, PO boxes, rural routes, French orderings, two-line
-    forms).
-  - Postal codes stay **synthetic** (structural generator): the recognizer is
-    purely structural so real codes add no coverage, and Canada Post claims
-    rights over the postal-code database — real codes must not be committed.
+- [x] **3.3 CA benchmark diversity** — DONE
+  - Expand templates beyond 3 note types; expand name pools; more clinical filler
+    variety. Addresses the circularity critique for the CA claims.
+  - Done — addresses: `benchmark/curate_oda.py` reservoir-samples 2,000 usable
+    rows per province from raw StatCan **ODA** CSVs (AB/ON/QC, OGL – Canada,
+    supplied under gitignored `benchmark/data/external/oda/`) into committed
+    `benchmark/data/oda/ca_addresses_sample.csv` (6,000 real civic addresses,
+    204 KB) with provenance README (raw-file sha256, seed, filter). CA `gen_address`
+    now draws real ODA addresses with format variety: French street-type ordering
+    ("88, rue Lacaune"), unit prefixes ("910-766 John Counter Blvd" / "Unit 4, ..."),
+    PO boxes, directions (NW/SE). The sample is a committed source artifact (CI
+    cannot regenerate it), deliberately NOT in the determinism manifest.
+  - Postal codes stay **synthetic**: the recognizer is purely structural so real
+    codes add no coverage, and Canada Post claims rights over the postal-code
+    database — real codes must not be committed. ODA `postal_code` column dropped
+    at curation.
+  - Done — names: CA pools widened from 16/16 to 38/43 reflecting census diversity
+    (Franco accented, Punjabi, Chinese, Vietnamese, Filipino, Arabic, Eastern
+    European, Irish/Scottish, Indigenous surnames). Templates: 3 new CA note types
+    (ED triage, internal-medicine consult with PII in running prose, outpatient lab
+    requisition) — 6 CA templates total. CA-only clinical-history additions kept in
+    `CLINICAL_HISTORIES_CA` so the frozen India corpus regenerates bit-identically
+    (verified: `in_*` hashes unchanged).
+  - Re-measured (sm, gold): pack leak recall 0.994 / strict 0.861; identifiers all
+    still 1.000/1.000; PERSON 0.982 leak (diverse names did NOT degrade spaCy on
+    these templates); ADDRESS strict still 0.000 on real ODA addresses — confirms
+    3.9 motivation with non-synthetic evidence. Span-precision floor re-pinned
+    0.78 → 0.75 (measured 0.761–0.770 CA): richer templates give spaCy's built-ins
+    more to mislabel (ORGANIZATION on hospital headers, DATE_TIME on durations);
+    pack entities contribute zero benchmark FPs (gated separately via negatives
+    ceilings). lg + seed-variance evidence regenerated (spread ≤ 0.009).
+  - Paper impact (for 6.1): corpus is now 11,321 entities (CA 5,013 / IN 6,308);
+    all §5 CA numbers change; stock CA FN rate now 9.9% (gold).
 - [ ] **3.4 CA gold-split human review** — execute documented protocol on the CA gold
   split; record outcome in `docs/gold_review.md`.
 

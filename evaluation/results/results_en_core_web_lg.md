@@ -1,74 +1,74 @@
 # Evaluation results
 
-Generated: 2026-07-03T06:05:57+00:00 | Python 3.12.13 | presidio-analyzer 2.2.363 | spacy 3.8.13 | en_core_web_lg 3.8.0
+Generated: 2026-07-03T18:57:01+00:00 | Python 3.12.13 | presidio-analyzer 2.2.363 | spacy 3.8.13 | en_core_web_lg 3.8.0
 
 ### Stock Presidio — locale=ca, split=gold
 
 | Entity | Gold | Detected (overlap) | Recall | Strict recall | FN rate | Typed exact recall |
 |---|---|---|---|---|---|---|
-| ADDRESS | 70 | 70 | 1.000 | 0.000 | 0.000 | 0.000 |
-| CA_AB_ULI | 28 | 11 | 0.393 | 0.393 | 0.607 | 0.000 |
-| CA_BC_PHN | 22 | 22 | 1.000 | 1.000 | 0.000 | 0.000 |
-| CA_OHIP | 27 | 18 | 0.667 | 0.185 | 0.333 | 0.000 |
-| CA_RAMQ | 23 | 7 | 0.304 | 0.043 | 0.696 | 0.000 |
-| CA_SIN | 30 | 0 | 0.000 | 0.000 | 1.000 | 0.000 |
-| DATE | 160 | 160 | 1.000 | 0.938 | 0.000 | 0.912 |
-| PERSON | 170 | 163 | 0.959 | 0.929 | 0.041 | 0.871 |
-| **TOTAL** | 530 | 451 | 0.851 | 0.655 | 0.149 | 0.555 |
+| ADDRESS | 62 | 61 | 0.984 | 0.000 | 0.016 | 0.000 |
+| CA_AB_ULI | 25 | 8 | 0.320 | 0.320 | 0.680 | 0.000 |
+| CA_BC_PHN | 25 | 25 | 1.000 | 1.000 | 0.000 | 0.000 |
+| CA_OHIP | 26 | 19 | 0.731 | 0.231 | 0.269 | 0.000 |
+| CA_RAMQ | 24 | 11 | 0.458 | 0.125 | 0.542 | 0.000 |
+| CA_SIN | 32 | 0 | 0.000 | 0.000 | 1.000 | 0.000 |
+| DATE | 141 | 141 | 1.000 | 0.957 | 0.000 | 0.957 |
+| PERSON | 169 | 165 | 0.976 | 0.976 | 0.024 | 0.858 |
+| **TOTAL** | 504 | 430 | 0.853 | 0.679 | 0.147 | 0.556 |
 
-Span precision (predicted spans overlapping any gold PII): 0.757 (565/746)
-Bootstrap 95% CI (1000 note-resamples): leak recall [0.823, 0.878], strict recall [0.616, 0.696], precision [0.734, 0.781]
+Span precision (predicted spans overlapping any gold PII): 0.705 (526/746)
+Bootstrap 95% CI (1000 note-resamples): leak recall [0.828, 0.880], strict recall [0.644, 0.716], precision [0.684, 0.729]
 
 ### Presidio + pack — locale=ca, split=gold
 
 | Entity | Gold | Detected (overlap) | Recall | Strict recall | FN rate | Typed exact recall |
 |---|---|---|---|---|---|---|
-| ADDRESS | 70 | 70 | 1.000 | 0.000 | 0.000 | 0.000 |
-| CA_AB_ULI | 28 | 28 | 1.000 | 1.000 | 0.000 | 1.000 |
-| CA_BC_PHN | 22 | 22 | 1.000 | 1.000 | 0.000 | 1.000 |
-| CA_OHIP | 27 | 27 | 1.000 | 1.000 | 0.000 | 1.000 |
-| CA_RAMQ | 23 | 23 | 1.000 | 1.000 | 0.000 | 1.000 |
-| CA_SIN | 30 | 30 | 1.000 | 1.000 | 0.000 | 1.000 |
-| DATE | 160 | 160 | 1.000 | 0.938 | 0.000 | 0.912 |
-| PERSON | 170 | 163 | 0.959 | 0.929 | 0.041 | 0.871 |
-| **TOTAL** | 530 | 523 | 0.987 | 0.826 | 0.013 | 0.800 |
+| ADDRESS | 62 | 62 | 1.000 | 0.000 | 0.000 | 0.000 |
+| CA_AB_ULI | 25 | 25 | 1.000 | 1.000 | 0.000 | 1.000 |
+| CA_BC_PHN | 25 | 25 | 1.000 | 1.000 | 0.000 | 1.000 |
+| CA_OHIP | 26 | 26 | 1.000 | 1.000 | 0.000 | 1.000 |
+| CA_RAMQ | 24 | 24 | 1.000 | 1.000 | 0.000 | 1.000 |
+| CA_SIN | 32 | 32 | 1.000 | 1.000 | 0.000 | 1.000 |
+| DATE | 141 | 141 | 1.000 | 0.957 | 0.000 | 0.957 |
+| PERSON | 169 | 165 | 0.976 | 0.976 | 0.024 | 0.858 |
+| **TOTAL** | 504 | 500 | 0.992 | 0.857 | 0.008 | 0.817 |
 
-Span precision (predicted spans overlapping any gold PII): 0.811 (776/957)
-Bootstrap 95% CI (1000 note-resamples): leak recall [0.977, 0.994], strict recall [0.802, 0.849], precision [0.792, 0.830]
+Span precision (predicted spans overlapping any gold PII): 0.769 (734/954)
+Bootstrap 95% CI (1000 note-resamples): leak recall [0.984, 0.998], strict recall [0.840, 0.876], precision [0.751, 0.789]
 
 ### Stock Presidio — locale=ca, split=generated
 
 | Entity | Gold | Detected (overlap) | Recall | Strict recall | FN rate | Typed exact recall |
 |---|---|---|---|---|---|---|
-| ADDRESS | 591 | 591 | 1.000 | 0.000 | 0.000 | 0.000 |
-| CA_AB_ULI | 216 | 64 | 0.296 | 0.282 | 0.704 | 0.000 |
-| CA_BC_PHN | 226 | 226 | 1.000 | 1.000 | 0.000 | 0.000 |
-| CA_OHIP | 220 | 148 | 0.673 | 0.168 | 0.327 | 0.000 |
-| CA_RAMQ | 238 | 66 | 0.277 | 0.080 | 0.723 | 0.000 |
-| CA_SIN | 311 | 7 | 0.023 | 0.023 | 0.977 | 0.000 |
-| DATE | 1520 | 1520 | 1.000 | 0.950 | 0.000 | 0.930 |
-| PERSON | 1489 | 1439 | 0.966 | 0.955 | 0.034 | 0.901 |
-| **TOTAL** | 4811 | 4061 | 0.844 | 0.668 | 0.156 | 0.572 |
+| ADDRESS | 605 | 597 | 0.987 | 0.000 | 0.013 | 0.000 |
+| CA_AB_ULI | 222 | 80 | 0.360 | 0.351 | 0.640 | 0.000 |
+| CA_BC_PHN | 213 | 213 | 1.000 | 1.000 | 0.000 | 0.000 |
+| CA_OHIP | 261 | 163 | 0.625 | 0.207 | 0.375 | 0.000 |
+| CA_RAMQ | 204 | 59 | 0.289 | 0.064 | 0.711 | 0.000 |
+| CA_SIN | 302 | 12 | 0.040 | 0.033 | 0.960 | 0.000 |
+| DATE | 1197 | 1197 | 1.000 | 0.942 | 0.000 | 0.933 |
+| PERSON | 1505 | 1456 | 0.967 | 0.960 | 0.033 | 0.860 |
+| **TOTAL** | 4509 | 3777 | 0.838 | 0.652 | 0.162 | 0.535 |
 
-Span precision (predicted spans overlapping any gold PII): 0.743 (4949/6659)
-Bootstrap 95% CI (1000 note-resamples): leak recall [0.836, 0.853], strict recall [0.658, 0.680], precision [0.736, 0.751]
+Span precision (predicted spans overlapping any gold PII): 0.701 (4697/6697)
+Bootstrap 95% CI (1000 note-resamples): leak recall [0.829, 0.846], strict recall [0.640, 0.663], precision [0.694, 0.709]
 
 ### Presidio + pack — locale=ca, split=generated
 
 | Entity | Gold | Detected (overlap) | Recall | Strict recall | FN rate | Typed exact recall |
 |---|---|---|---|---|---|---|
-| ADDRESS | 591 | 591 | 1.000 | 0.000 | 0.000 | 0.000 |
-| CA_AB_ULI | 216 | 216 | 1.000 | 1.000 | 0.000 | 1.000 |
-| CA_BC_PHN | 226 | 226 | 1.000 | 1.000 | 0.000 | 1.000 |
-| CA_OHIP | 220 | 220 | 1.000 | 1.000 | 0.000 | 1.000 |
-| CA_RAMQ | 238 | 238 | 1.000 | 1.000 | 0.000 | 1.000 |
-| CA_SIN | 311 | 311 | 1.000 | 1.000 | 0.000 | 1.000 |
-| DATE | 1520 | 1520 | 1.000 | 0.950 | 0.000 | 0.930 |
-| PERSON | 1489 | 1439 | 0.966 | 0.955 | 0.034 | 0.901 |
-| **TOTAL** | 4811 | 4761 | 0.990 | 0.847 | 0.010 | 0.824 |
+| ADDRESS | 605 | 605 | 1.000 | 0.000 | 0.000 | 0.000 |
+| CA_AB_ULI | 222 | 222 | 1.000 | 1.000 | 0.000 | 1.000 |
+| CA_BC_PHN | 213 | 213 | 1.000 | 1.000 | 0.000 | 1.000 |
+| CA_OHIP | 261 | 261 | 1.000 | 1.000 | 0.000 | 1.000 |
+| CA_RAMQ | 204 | 204 | 1.000 | 1.000 | 0.000 | 1.000 |
+| CA_SIN | 302 | 302 | 1.000 | 1.000 | 0.000 | 1.000 |
+| DATE | 1197 | 1197 | 1.000 | 0.942 | 0.000 | 0.933 |
+| PERSON | 1505 | 1456 | 0.967 | 0.960 | 0.033 | 0.860 |
+| **TOTAL** | 4509 | 4460 | 0.989 | 0.837 | 0.011 | 0.801 |
 
-Span precision (predicted spans overlapping any gold PII): 0.801 (6868/8578)
-Bootstrap 95% CI (1000 note-resamples): leak recall [0.987, 0.992], strict recall [0.841, 0.854], precision [0.795, 0.807]
+Span precision (predicted spans overlapping any gold PII): 0.768 (6614/8614)
+Bootstrap 95% CI (1000 note-resamples): leak recall [0.986, 0.992], strict recall [0.830, 0.844], precision [0.762, 0.774]
 
 ### Stock Presidio — locale=in, split=gold
 

@@ -9,6 +9,7 @@ was ever issued to a real person.
 
 from __future__ import annotations
 
+import csv
 import random
 import sys
 from pathlib import Path
@@ -32,13 +33,23 @@ INDIAN_LAST = [
     "Sharma", "Patel", "Reddy", "Iyer", "Gupta", "Nair", "Singh", "Rao",
     "Menon", "Verma", "Krishnan", "Desai", "Joshi", "Kulkarni", "Banerjee", "Pillai",
 ]
+# Reflects Canada's actual name diversity (census common-name lists): Anglo,
+# Franco (accented), South/East/Southeast Asian, Middle Eastern, and Eastern
+# European names — the population a Canadian de-id system actually serves.
 CANADIAN_FIRST = [
     "Émile", "Sophie", "Liam", "Charlotte", "Noah", "Geneviève", "William", "Olivia",
     "Jean-Philippe", "Emma", "Marc-André", "Camille", "Ethan", "Isabelle", "Lucas", "Chloé",
+    "Étienne", "Océane", "François", "Amélie", "Gabrielle", "Mathieu",
+    "Harpreet", "Gurpreet", "Simran", "Arjun", "Wei", "Ming", "Xiu", "Thanh", "Linh",
+    "Fatima", "Omar", "Ahmed", "Leila", "Maria", "Carlos", "Anastasia", "Dmitri", "Agnieszka",
 ]
 CANADIAN_LAST = [
     "Tremblay", "Gagnon", "Roy", "Bouchard", "Côté", "MacDonald", "Wilson", "Taylor",
     "Lavoie", "Fortin", "Campbell", "Stewart", "Bergeron", "Morin", "Singh", "Chen",
+    "Beaulieu", "Pelletier", "Gauthier", "Ouellet", "Bélanger", "Lévesque",
+    "Sidhu", "Dhillon", "Gill", "Sandhu", "Wong", "Li", "Zhang", "Nguyen", "Tran", "Pham",
+    "Santos", "Reyes", "Ali", "Khan", "Hassan", "Ibrahim",
+    "Kowalski", "O'Brien", "McCarthy", "MacLeod", "Cardinal",
 ]
 
 INDIAN_CITIES = [
@@ -51,14 +62,8 @@ INDIAN_STREETS = [
     "MG Road", "Brigade Road", "Linking Road", "Anna Salai", "Jubilee Hills Road No 36",
     "FC Road", "Park Street", "Sarjapur Road", "Banjara Hills",
 ]
-CANADIAN_CITIES = [
-    ("Toronto", "ON"), ("Montréal", "QC"), ("Vancouver", "BC"), ("Calgary", "AB"),
-    ("Ottawa", "ON"), ("Québec City", "QC"), ("Halifax", "NS"), ("Winnipeg", "MB"),
-]
-CANADIAN_STREETS = [
-    "Yonge Street", "Rue Sainte-Catherine", "Granville Street", "17th Avenue SW",
-    "Bank Street", "Grande Allée", "Spring Garden Road", "Portage Avenue",
-]
+# Canadian street/city pools were replaced by the curated ODA sample
+# (see gen_address / _oda_addresses).
 
 HOSPITALS_IN = [
     "Apollo Hospitals", "Fortis Healthcare", "AIIMS New Delhi", "Manipal Hospital",
@@ -221,13 +226,50 @@ def gen_date(rng: random.Random) -> str:
     return f"{y}-{m:02d}-{d:02d}"
 
 
+# Canadian addresses are drawn from the curated StatCan ODA sample (real,
+# public civic addresses under the Open Government Licence - Canada; see
+# benchmark/data/oda/README.md). Postal codes remain synthetic by policy.
+_ODA_SAMPLE_PATH = Path(__file__).parent / "data" / "oda" / "ca_addresses_sample.csv"
+_ODA_CACHE: list[dict] = []
+
+# French street types precede the street name ("88, rue Lacaune").
+_FRENCH_STREET_TYPES = {
+    "rue", "avenue", "boulevard", "chemin", "montée", "côte", "rang",
+    "place", "allée", "terrasse", "croissant", "impasse", "promenade",
+}
+
+
+def _oda_addresses() -> list[dict]:
+    if not _ODA_CACHE:
+        with open(_ODA_SAMPLE_PATH, newline="", encoding="utf-8") as f:
+            _ODA_CACHE.extend(csv.DictReader(f))
+    return _ODA_CACHE
+
+
+def _format_ca_address(row: dict, rng: random.Random) -> str:
+    muni, prov = row["municipality"], row["province"]
+    postal = gen_ca_postal(rng)
+    typ = row["str_type"]
+    if typ and typ.lower() in _FRENCH_STREET_TYPES:
+        street = f"{row['street_no']}, {typ.lower()} {row['str_name']}"
+    else:
+        street = " ".join(
+            p for p in [row["street_no"], row["str_name"], typ, row["str_dir"]] if p
+        )
+    style = rng.random()
+    if style < 0.08:
+        return f"PO Box {rng.randint(1, 9999)}, {muni}, {prov} {postal}"
+    unit = row["unit"] or (str(rng.randint(1, 90)) if style < 0.18 else "")
+    if unit:
+        street = f"{unit}-{street}" if rng.random() < 0.5 else f"Unit {unit}, {street}"
+    return f"{street}, {muni}, {prov} {postal}"
+
+
 def gen_address(rng: random.Random, locale: str) -> str:
     if locale == "in":
         city, state, pin = rng.choice(INDIAN_CITIES)
         return f"{rng.randint(1, 400)} {rng.choice(INDIAN_STREETS)}, {city}, {state} {pin}"
-    city, prov = rng.choice(CANADIAN_CITIES)
-    street = rng.choice(CANADIAN_STREETS)
-    return f"{rng.randint(1, 9000)} {street}, {city}, {prov} {gen_ca_postal(rng)}"
+    return _format_ca_address(rng.choice(_oda_addresses()), rng)
 
 
 GENERATORS_CA = {

@@ -2,445 +2,407 @@
   "Stock Presidio|ca|gold": {
     "PERSON": [
       {
-        "note_id": "ca-00000",
-        "value": "Émile Lavoie",
+        "note_id": "ca-00033",
+        "value": "Étienne Cardinal",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00009",
-        "value": "Émile Singh",
+        "note_id": "ca-00043",
+        "value": "Émile Pham",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00018",
-        "value": "Émile Taylor",
+        "note_id": "ca-00056",
+        "value": "Étienne Beaulieu",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00026",
-        "value": "Émile Morin",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00052",
-        "value": "Geneviève Côté",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00069",
-        "value": "Émile Tremblay",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00090",
-        "value": "Émile Taylor",
+        "note_id": "ca-00082",
+        "value": "Émile Ouellet",
         "type": "PERSON"
       }
     ],
     "CA_RAMQ": [
       {
-        "note_id": "ca-00002",
-        "value": "BOUG 6558 0648",
+        "note_id": "ca-00005",
+        "value": "BEAL 8404 2340",
         "type": "CA_RAMQ"
       },
       {
-        "note_id": "ca-00011",
-        "value": "GAGT 7710 1417",
+        "note_id": "ca-00006",
+        "value": "PELP92042474",
         "type": "CA_RAMQ"
       },
       {
-        "note_id": "ca-00013",
-        "value": "LAVA43601294",
+        "note_id": "ca-00007",
+        "value": "BERL 8753 0636",
         "type": "CA_RAMQ"
       },
       {
-        "note_id": "ca-00016",
-        "value": "BERR 4912 0354",
+        "note_id": "ca-00010",
+        "value": "PELE56620788",
         "type": "CA_RAMQ"
       },
       {
-        "note_id": "ca-00023",
-        "value": "TAYC39031458",
+        "note_id": "ca-00019",
+        "value": "NGUR62062078",
         "type": "CA_RAMQ"
       },
       {
-        "note_id": "ca-00027",
-        "value": "SINL91561898",
+        "note_id": "ca-00025",
+        "value": "MACC64030222",
         "type": "CA_RAMQ"
       },
       {
-        "note_id": "ca-00031",
-        "value": "LAVT 9155 2615",
+        "note_id": "ca-00037",
+        "value": "SINF48100919",
         "type": "CA_RAMQ"
       },
       {
-        "note_id": "ca-00038",
-        "value": "BERM37011028",
+        "note_id": "ca-00039",
+        "value": "LIJX 5957 2759",
         "type": "CA_RAMQ"
       },
       {
         "note_id": "ca-00041",
-        "value": "CAMM 9009 0258",
+        "value": "FORM81022482",
         "type": "CA_RAMQ"
       },
       {
-        "note_id": "ca-00052",
-        "value": "CAMT35010283",
+        "note_id": "ca-00067",
+        "value": "ALIR34532723",
         "type": "CA_RAMQ"
       },
       {
-        "note_id": "ca-00062",
-        "value": "CHEB95081517",
+        "note_id": "ca-00080",
+        "value": "SANB68031950",
         "type": "CA_RAMQ"
       },
       {
-        "note_id": "ca-00070",
-        "value": "CHEE35521873",
+        "note_id": "ca-00095",
+        "value": "WONM86040418",
         "type": "CA_RAMQ"
       },
       {
-        "note_id": "ca-00081",
-        "value": "CAMR67552866",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00087",
-        "value": "CHEF 9659 0648",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00089",
-        "value": "GAGG 3858 2540",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00098",
-        "value": "CAMR39541122",
+        "note_id": "ca-00096",
+        "value": "REYM 9554 1083",
         "type": "CA_RAMQ"
       }
     ],
     "CA_OHIP": [
       {
-        "note_id": "ca-00012",
-        "value": "1974672170JX",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00015",
-        "value": "5911-455-375-JX",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00020",
-        "value": "4343225852MC",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00025",
-        "value": "4339459655JX",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00034",
-        "value": "4267 963 603 JX",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00043",
-        "value": "6865116690JX",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00044",
-        "value": "2729149241KD",
+        "note_id": "ca-00045",
+        "value": "4675304036KD",
         "type": "CA_OHIP"
       },
       {
         "note_id": "ca-00049",
-        "value": "6693755362AB",
+        "value": "6851882727MC",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00090",
-        "value": "2949 912 022 MC",
+        "note_id": "ca-00050",
+        "value": "3330230735AB",
         "type": "CA_OHIP"
-      }
-    ],
-    "CA_AB_ULI": [
-      {
-        "note_id": "ca-00007",
-        "value": "781151148",
-        "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00008",
-        "value": "581901562",
-        "type": "CA_AB_ULI"
+        "note_id": "ca-00079",
+        "value": "0350014478MC",
+        "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00022",
-        "value": "410948406",
-        "type": "CA_AB_ULI"
+        "note_id": "ca-00088",
+        "value": "6321313550JX",
+        "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00035",
-        "value": "344046319",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00037",
-        "value": "413395817",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00045",
-        "value": "690219647",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00048",
-        "value": "68530-6364",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00057",
-        "value": "31933-7766",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00059",
-        "value": "672207627",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00064",
-        "value": "698205468",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00071",
-        "value": "71975 9048",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00072",
-        "value": "321145403",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00073",
-        "value": "227397464",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00075",
-        "value": "780876132",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00092",
-        "value": "56290 4472",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00094",
-        "value": "84034-6729",
-        "type": "CA_AB_ULI"
+        "note_id": "ca-00091",
+        "value": "9818278765JX",
+        "type": "CA_OHIP"
       },
       {
         "note_id": "ca-00099",
-        "value": "79843-5148",
-        "type": "CA_AB_ULI"
+        "value": "7082075040KD",
+        "type": "CA_OHIP"
+      }
+    ],
+    "ADDRESS": [
+      {
+        "note_id": "ca-00009",
+        "value": "254 Upper Queen St, Thames Centre, ON Y4Z 8A8",
+        "type": "ADDRESS"
       }
     ],
     "CA_SIN": [
       {
+        "note_id": "ca-00004",
+        "value": "235425964",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00005",
+        "value": "204-077-143",
+        "type": "CA_SIN"
+      },
+      {
         "note_id": "ca-00007",
-        "value": "263480667",
+        "value": "248509895",
         "type": "CA_SIN"
       },
       {
-        "note_id": "ca-00008",
-        "value": "912-955-705",
+        "note_id": "ca-00009",
+        "value": "202298832",
         "type": "CA_SIN"
       },
       {
-        "note_id": "ca-00013",
-        "value": "535 683 080",
+        "note_id": "ca-00012",
+        "value": "427 188 289",
         "type": "CA_SIN"
       },
       {
         "note_id": "ca-00014",
-        "value": "765-163-712",
+        "value": "132-763-467",
         "type": "CA_SIN"
       },
       {
-        "note_id": "ca-00015",
-        "value": "188 872 865",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00017",
-        "value": "924 036 411",
+        "note_id": "ca-00016",
+        "value": "962022356",
         "type": "CA_SIN"
       },
       {
         "note_id": "ca-00019",
-        "value": "406617860",
+        "value": "179-101-167",
         "type": "CA_SIN"
       },
       {
-        "note_id": "ca-00023",
-        "value": "550907620",
+        "note_id": "ca-00021",
+        "value": "734-343-221",
         "type": "CA_SIN"
       },
       {
         "note_id": "ca-00025",
-        "value": "643 114 465",
+        "value": "902275817",
         "type": "CA_SIN"
       },
       {
-        "note_id": "ca-00030",
-        "value": "568-425-094",
+        "note_id": "ca-00026",
+        "value": "196 207 468",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00028",
+        "value": "261 927 446",
         "type": "CA_SIN"
       },
       {
         "note_id": "ca-00031",
-        "value": "534 278 353",
+        "value": "184 250 991",
         "type": "CA_SIN"
       },
       {
-        "note_id": "ca-00033",
-        "value": "286926241",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00034",
-        "value": "110-757-473",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00035",
-        "value": "271685844",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00043",
-        "value": "512942103",
+        "note_id": "ca-00039",
+        "value": "635-254-717",
         "type": "CA_SIN"
       },
       {
         "note_id": "ca-00044",
-        "value": "481-268-514",
+        "value": "608 255 337",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00045",
+        "value": "265-457-846",
         "type": "CA_SIN"
       },
       {
         "note_id": "ca-00046",
-        "value": "451-653-950",
+        "value": "600627699",
         "type": "CA_SIN"
       },
       {
-        "note_id": "ca-00049",
-        "value": "386-412-639",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00051",
-        "value": "239 757 800",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00053",
-        "value": "114 431 836",
+        "note_id": "ca-00052",
+        "value": "613 368 695",
         "type": "CA_SIN"
       },
       {
         "note_id": "ca-00057",
-        "value": "987-012-366",
+        "value": "360-397-574",
         "type": "CA_SIN"
       },
       {
-        "note_id": "ca-00059",
-        "value": "261 991 681",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00060",
-        "value": "237-670-328",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00064",
-        "value": "782-329-718",
+        "note_id": "ca-00058",
+        "value": "185-319-290",
         "type": "CA_SIN"
       },
       {
         "note_id": "ca-00065",
-        "value": "155 716 509",
+        "value": "529 222 739",
         "type": "CA_SIN"
       },
       {
-        "note_id": "ca-00069",
-        "value": "705290864",
+        "note_id": "ca-00067",
+        "value": "941-936-908",
         "type": "CA_SIN"
       },
       {
-        "note_id": "ca-00072",
-        "value": "223 713 306",
+        "note_id": "ca-00073",
+        "value": "769-820-549",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00075",
+        "value": "448390997",
         "type": "CA_SIN"
       },
       {
         "note_id": "ca-00077",
-        "value": "453-074-007",
+        "value": "438-466-286",
         "type": "CA_SIN"
       },
       {
-        "note_id": "ca-00082",
-        "value": "752-939-306",
+        "note_id": "ca-00081",
+        "value": "925 315 376",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00083",
+        "value": "441 038 387",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00084",
+        "value": "576 973 275",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00087",
+        "value": "659241640",
         "type": "CA_SIN"
       },
       {
         "note_id": "ca-00090",
-        "value": "666 037 379",
+        "value": "951178383",
         "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00091",
+        "value": "559 598 172",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00096",
+        "value": "226 729 085",
+        "type": "CA_SIN"
+      }
+    ],
+    "CA_AB_ULI": [
+      {
+        "note_id": "ca-00008",
+        "value": "12955-7055",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00015",
+        "value": "67485-7331",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00016",
+        "value": "85874-2267",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00017",
+        "value": "95687 3037",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00029",
+        "value": "270778368",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00036",
+        "value": "423939602",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00043",
+        "value": "137588080",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00046",
+        "value": "95639-3760",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00047",
+        "value": "50393 7191",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00056",
+        "value": "266921017",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00061",
+        "value": "948403425",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00063",
+        "value": "18193-3685",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00071",
+        "value": "20204 7508",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00081",
+        "value": "20665 9367",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00082",
+        "value": "321145403",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00083",
+        "value": "11227-3974",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00090",
+        "value": "591872943",
+        "type": "CA_AB_ULI"
       }
     ]
   },
   "Presidio + pack|ca|gold": {
     "PERSON": [
       {
-        "note_id": "ca-00000",
-        "value": "Émile Lavoie",
+        "note_id": "ca-00033",
+        "value": "Étienne Cardinal",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00009",
-        "value": "Émile Singh",
+        "note_id": "ca-00043",
+        "value": "Émile Pham",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00018",
-        "value": "Émile Taylor",
+        "note_id": "ca-00056",
+        "value": "Étienne Beaulieu",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00026",
-        "value": "Émile Morin",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00052",
-        "value": "Geneviève Côté",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00069",
-        "value": "Émile Tremblay",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00090",
-        "value": "Émile Taylor",
+        "note_id": "ca-00082",
+        "value": "Émile Ouellet",
         "type": "PERSON"
       }
     ]
@@ -448,3761 +410,3673 @@
   "Stock Presidio|ca|generated": {
     "PERSON": [
       {
-        "note_id": "ca-00109",
-        "value": "Émile Campbell",
+        "note_id": "ca-00111",
+        "value": "Émile Bouchard",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00129",
-        "value": "Émile Côté",
+        "note_id": "ca-00163",
+        "value": "Émile Pham",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00157",
-        "value": "Émile Campbell",
+        "note_id": "ca-00180",
+        "value": "Étienne Gill",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00158",
-        "value": "Émile Gagnon",
+        "note_id": "ca-00189",
+        "value": "Étienne Reyes",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00192",
-        "value": "Émile Singh",
+        "note_id": "ca-00206",
+        "value": "Thanh Cardinal",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00247",
-        "value": "Émile Singh",
+        "note_id": "ca-00239",
+        "value": "Étienne Pelletier",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00249",
-        "value": "Émile Taylor",
+        "note_id": "ca-00272",
+        "value": "Émile Kowalski",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00255",
-        "value": "Émile Chen",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00266",
-        "value": "Émile Tremblay",
+        "note_id": "ca-00290",
+        "value": "Étienne Taylor",
         "type": "PERSON"
       },
       {
         "note_id": "ca-00296",
-        "value": "Émile Tremblay",
+        "value": "Océane Tran",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00322",
-        "value": "Émile Singh",
+        "note_id": "ca-00316",
+        "value": "Geneviève Côté",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00325",
-        "value": "Émile Chen",
+        "note_id": "ca-00319",
+        "value": "Thanh Lévesque",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00360",
-        "value": "Émile Fortin",
+        "note_id": "ca-00362",
+        "value": "Océane Pham",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00364",
-        "value": "Émile Chen",
+        "note_id": "ca-00371",
+        "value": "Océane Sandhu",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00365",
-        "value": "Émile Campbell",
+        "note_id": "ca-00383",
+        "value": "Étienne MacLeod",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00413",
-        "value": "Émile Gagnon",
+        "note_id": "ca-00393",
+        "value": "Océane Cardinal",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00417",
-        "value": "Émile Gagnon",
+        "note_id": "ca-00396",
+        "value": "Océane Pham",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00442",
-        "value": "Émile Chen",
+        "note_id": "ca-00409",
+        "value": "Émile Ouellet",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00472",
-        "value": "Émile Wilson",
+        "note_id": "ca-00452",
+        "value": "Océane Beaulieu",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00483",
-        "value": "Émile Bouchard",
+        "note_id": "ca-00503",
+        "value": "Océane Sandhu",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00510",
-        "value": "Émile Singh",
+        "note_id": "ca-00509",
+        "value": "Océane Morin",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00542",
-        "value": "Émile Tremblay",
+        "note_id": "ca-00521",
+        "value": "Émile Tran",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00559",
-        "value": "Émile Wilson",
+        "note_id": "ca-00534",
+        "value": "Océane Chen",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00569",
-        "value": "Émile Tremblay",
+        "note_id": "ca-00548",
+        "value": "Étienne MacLeod",
+        "type": "PERSON"
+      },
+      {
+        "note_id": "ca-00567",
+        "value": "Étienne Ibrahim",
         "type": "PERSON"
       },
       {
         "note_id": "ca-00570",
-        "value": "Émile Chen",
+        "value": "Émile Gill",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00607",
-        "value": "Émile Côté",
+        "note_id": "ca-00589",
+        "value": "Émile Hassan",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00618",
-        "value": "Émile Stewart",
+        "note_id": "ca-00598",
+        "value": "Étienne Ibrahim",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00626",
-        "value": "Émile Singh",
+        "note_id": "ca-00629",
+        "value": "Océane Tran",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00644",
-        "value": "Émile Morin",
+        "note_id": "ca-00647",
+        "value": "Étienne Ouellet",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00694",
-        "value": "Émile Gagnon",
+        "note_id": "ca-00652",
+        "value": "Étienne MacLeod",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00699",
-        "value": "Émile Wilson",
+        "note_id": "ca-00679",
+        "value": "Émile Ali",
+        "type": "PERSON"
+      },
+      {
+        "note_id": "ca-00693",
+        "value": "Océane Ali",
+        "type": "PERSON"
+      },
+      {
+        "note_id": "ca-00740",
+        "value": "Émile Tran",
         "type": "PERSON"
       },
       {
         "note_id": "ca-00741",
-        "value": "Émile Morin",
+        "value": "Émile Khan",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00781",
-        "value": "Émile Fortin",
+        "note_id": "ca-00743",
+        "value": "Émile Tran",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00788",
-        "value": "Émile Singh",
+        "note_id": "ca-00767",
+        "value": "Océane Sandhu",
+        "type": "PERSON"
+      },
+      {
+        "note_id": "ca-00790",
+        "value": "François Tremblay",
+        "type": "PERSON"
+      },
+      {
+        "note_id": "ca-00797",
+        "value": "Océane Khan",
         "type": "PERSON"
       },
       {
         "note_id": "ca-00798",
-        "value": "Émile Singh",
+        "value": "Océane Gauthier",
         "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00804",
-        "value": "Émile Fortin",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00814",
-        "value": "Émile Gagnon",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00814",
-        "value": "Émile Roy",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00862",
-        "value": "Émile Morin",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00869",
-        "value": "Émile Roy",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00871",
-        "value": "Émile Chen",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00888",
-        "value": "Émile Fortin",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00890",
-        "value": "Émile Lavoie",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00896",
-        "value": "Émile Roy",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00902",
-        "value": "Émile Tremblay",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00922",
-        "value": "Émile Taylor",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00936",
-        "value": "Émile Bouchard",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00936",
-        "value": "Émile Tremblay",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00947",
-        "value": "Émile Morin",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00950",
-        "value": "Émile Bergeron",
-        "type": "PERSON"
-      }
-    ],
-    "CA_SIN": [
-      {
-        "note_id": "ca-00100",
-        "value": "239 874 662",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00103",
-        "value": "114-664-386",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00104",
-        "value": "307475517",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00107",
-        "value": "775-983-760",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00109",
-        "value": "400-728-317",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00115",
-        "value": "161888045",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00117",
-        "value": "221 182 819",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00122",
-        "value": "496 399 353",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00127",
-        "value": "288152804",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00138",
-        "value": "396941783",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00139",
-        "value": "636196461",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00142",
-        "value": "587975418",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00144",
-        "value": "330 883 406",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00146",
-        "value": "607 123 510",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00153",
-        "value": "700201809",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00157",
-        "value": "472-575-695",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00159",
-        "value": "454-364-167",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00161",
-        "value": "726-221-948",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00162",
-        "value": "729-694-604",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00166",
-        "value": "534-220-595",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00167",
-        "value": "462 035 718",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00171",
-        "value": "413850090",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00172",
-        "value": "243417615",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00175",
-        "value": "756413985",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00179",
-        "value": "467158028",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00185",
-        "value": "998 572 077",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00190",
-        "value": "913413233",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00192",
-        "value": "978-473-460",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00199",
-        "value": "665 063 749",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00200",
-        "value": "357711357",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00202",
-        "value": "566 058 053",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00206",
-        "value": "254 327 042",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00207",
-        "value": "459-187-274",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00213",
-        "value": "642778484",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00214",
-        "value": "194 080 685",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00215",
-        "value": "580561546",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00220",
-        "value": "904 893 237",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00222",
-        "value": "301 414 181",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00224",
-        "value": "708172762",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00225",
-        "value": "395 604 085",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00229",
-        "value": "475 430 849",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00234",
-        "value": "203771928",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00237",
-        "value": "374932176",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00239",
-        "value": "754 931 053",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00241",
-        "value": "996 610 929",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00243",
-        "value": "120 293 063",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00244",
-        "value": "480966688",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00248",
-        "value": "555-146-299",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00250",
-        "value": "600-118-731",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00258",
-        "value": "214 739 286",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00260",
-        "value": "601 734 254",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00261",
-        "value": "161-320-627",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00262",
-        "value": "651 259 129",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00265",
-        "value": "104909916",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00268",
-        "value": "569125610",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00271",
-        "value": "698 963 030",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00272",
-        "value": "567 887 708",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00273",
-        "value": "637736588",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00282",
-        "value": "262-667-561",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00285",
-        "value": "279107544",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00286",
-        "value": "933192577",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00287",
-        "value": "349 072 439",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00289",
-        "value": "464471762",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00292",
-        "value": "301 528 899",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00295",
-        "value": "348 159 120",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00297",
-        "value": "662838812",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00302",
-        "value": "180 750 861",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00303",
-        "value": "213732118",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00306",
-        "value": "399-432-467",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00307",
-        "value": "207 997 131",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00311",
-        "value": "611-415-530",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00312",
-        "value": "703 228 288",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00313",
-        "value": "408 567 865",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00315",
-        "value": "501 560 999",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00316",
-        "value": "318791753",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00317",
-        "value": "622-313-062",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00319",
-        "value": "289-128-191",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00324",
-        "value": "228-641-262",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00329",
-        "value": "505653840",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00330",
-        "value": "129158564",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00336",
-        "value": "617 964 853",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00342",
-        "value": "580264836",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00343",
-        "value": "394 929 269",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00344",
-        "value": "917-281-610",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00347",
-        "value": "978-335-966",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00348",
-        "value": "210 469 185",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00349",
-        "value": "645-590-233",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00352",
-        "value": "516 057 247",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00353",
-        "value": "461 431 678",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00358",
-        "value": "578065823",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00363",
-        "value": "761-887-348",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00369",
-        "value": "268 043 619",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00370",
-        "value": "367 007 135",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00371",
-        "value": "233 933 266",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00374",
-        "value": "546 702 242",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00378",
-        "value": "365477272",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00379",
-        "value": "918-408-766",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00383",
-        "value": "353-761-810",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00388",
-        "value": "913651170",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00389",
-        "value": "507 272 334",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00392",
-        "value": "275975787",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00393",
-        "value": "962898755",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00394",
-        "value": "147 734 321",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00395",
-        "value": "268809787",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00400",
-        "value": "684566359",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00402",
-        "value": "502539695",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00407",
-        "value": "517 634 135",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00408",
-        "value": "440562486",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00409",
-        "value": "650-638-778",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00413",
-        "value": "160-090-338",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00416",
-        "value": "576-509-350",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00423",
-        "value": "948 891 627",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00427",
-        "value": "366-919-918",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00428",
-        "value": "930 663 885",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00431",
-        "value": "448756924",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00432",
-        "value": "937-948-412",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00433",
-        "value": "791 909 039",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00441",
-        "value": "996145298",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00445",
-        "value": "978-105-864",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00447",
-        "value": "660 533 365",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00448",
-        "value": "557-460-656",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00454",
-        "value": "938-669-660",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00455",
-        "value": "761-678-614",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00466",
-        "value": "535498430",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00475",
-        "value": "963 731 393",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00477",
-        "value": "799 623 541",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00478",
-        "value": "404-324-097",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00479",
-        "value": "196-979-132",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00481",
-        "value": "728 039 124",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00485",
-        "value": "194121166",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00486",
-        "value": "542-623-889",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00487",
-        "value": "928892447",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00492",
-        "value": "320 181 209",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00501",
-        "value": "693 281 776",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00502",
-        "value": "422-981-555",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00507",
-        "value": "751548454",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00510",
-        "value": "373-975-267",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00512",
-        "value": "165 693 912",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00514",
-        "value": "414019398",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00520",
-        "value": "290694538",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00522",
-        "value": "459 514 261",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00523",
-        "value": "167-722-032",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00525",
-        "value": "485 831 135",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00530",
-        "value": "936210871",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00532",
-        "value": "214884116",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00538",
-        "value": "637182072",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00548",
-        "value": "706018652",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00550",
-        "value": "905-119-376",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00552",
-        "value": "264 686 270",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00553",
-        "value": "465-653-558",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00554",
-        "value": "315-353-003",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00555",
-        "value": "478 018 377",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00558",
-        "value": "315 758 375",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00560",
-        "value": "480-887-751",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00564",
-        "value": "596 605 048",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00565",
-        "value": "500692009",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00569",
-        "value": "103984944",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00570",
-        "value": "203569058",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00574",
-        "value": "643091572",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00584",
-        "value": "723-505-376",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00585",
-        "value": "112219910",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00588",
-        "value": "135388940",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00592",
-        "value": "249112061",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00595",
-        "value": "714-196-078",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00599",
-        "value": "319-999-116",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00600",
-        "value": "512-438-979",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00601",
-        "value": "259-340-909",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00602",
-        "value": "155-214-406",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00604",
-        "value": "724 439 427",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00605",
-        "value": "331546424",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00606",
-        "value": "582566519",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00609",
-        "value": "209 502 814",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00610",
-        "value": "386694244",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00613",
-        "value": "284-648-466",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00619",
-        "value": "303325658",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00621",
-        "value": "512-292-459",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00628",
-        "value": "956 275 598",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00632",
-        "value": "334191632",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00635",
-        "value": "134521202",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00640",
-        "value": "483-667-507",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00642",
-        "value": "239426885",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00643",
-        "value": "201-949-625",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00648",
-        "value": "167 399 120",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00650",
-        "value": "161 028 576",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00657",
-        "value": "742-209-893",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00658",
-        "value": "143 552 826",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00659",
-        "value": "441-934-007",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00663",
-        "value": "986563096",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00665",
-        "value": "289 118 366",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00666",
-        "value": "429 827 405",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00669",
-        "value": "230 967 580",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00671",
-        "value": "764 728 630",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00674",
-        "value": "514-861-988",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00676",
-        "value": "340708510",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00677",
-        "value": "139890586",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00680",
-        "value": "684-163-249",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00685",
-        "value": "326-162-195",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00688",
-        "value": "360-972-228",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00693",
-        "value": "912 431 855",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00694",
-        "value": "440604643",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00695",
-        "value": "205 366 834",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00700",
-        "value": "626 192 975",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00702",
-        "value": "160-155-354",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00705",
-        "value": "627 499 205",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00707",
-        "value": "625170949",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00709",
-        "value": "106-294-416",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00711",
-        "value": "926740754",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00713",
-        "value": "192-971-059",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00716",
-        "value": "302 964 937",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00721",
-        "value": "663-281-418",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00730",
-        "value": "925-625-253",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00734",
-        "value": "536 533 789",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00738",
-        "value": "493591564",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00743",
-        "value": "945-896-314",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00746",
-        "value": "139510085",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00749",
-        "value": "537-363-202",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00752",
-        "value": "362 420 127",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00755",
-        "value": "964505309",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00756",
-        "value": "786-280-917",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00758",
-        "value": "325386324",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00762",
-        "value": "237660246",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00774",
-        "value": "681 126 892",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00778",
-        "value": "702605510",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00782",
-        "value": "300512233",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00784",
-        "value": "136-670-056",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00785",
-        "value": "724-086-103",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00786",
-        "value": "491 076 030",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00788",
-        "value": "428-805-386",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00791",
-        "value": "396647026",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00795",
-        "value": "178-392-130",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00799",
-        "value": "674-744-263",
-        "type": "CA_SIN"
       },
       {
         "note_id": "ca-00801",
-        "value": "640 124 582",
-        "type": "CA_SIN"
+        "value": "Océane McCarthy",
+        "type": "PERSON"
       },
       {
-        "note_id": "ca-00806",
-        "value": "590 513 669",
-        "type": "CA_SIN"
+        "note_id": "ca-00811",
+        "value": "Émile Li",
+        "type": "PERSON"
       },
       {
-        "note_id": "ca-00808",
-        "value": "698-308-939",
-        "type": "CA_SIN"
+        "note_id": "ca-00838",
+        "value": "Émile Gauthier",
+        "type": "PERSON"
       },
       {
-        "note_id": "ca-00812",
-        "value": "768-964-959",
-        "type": "CA_SIN"
+        "note_id": "ca-00879",
+        "value": "Émile Côté",
+        "type": "PERSON"
       },
       {
-        "note_id": "ca-00815",
-        "value": "166623694",
-        "type": "CA_SIN"
+        "note_id": "ca-00905",
+        "value": "Étienne McCarthy",
+        "type": "PERSON"
       },
       {
-        "note_id": "ca-00817",
-        "value": "969445147",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00823",
-        "value": "402-081-160",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00831",
-        "value": "460-397-193",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00833",
-        "value": "466974292",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00836",
-        "value": "338 079 924",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00844",
-        "value": "915-205-520",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00847",
-        "value": "689413854",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00850",
-        "value": "924 732 225",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00851",
-        "value": "677-626-004",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00853",
-        "value": "962 453 676",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00854",
-        "value": "390 008 530",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00859",
-        "value": "647728385",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00861",
-        "value": "647-547-108",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00862",
-        "value": "688293992",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00863",
-        "value": "381-589-787",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00865",
-        "value": "679-518-514",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00867",
-        "value": "286 764 329",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00869",
-        "value": "684275472",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00870",
-        "value": "671-083-384",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00873",
-        "value": "233 410 018",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00878",
-        "value": "101-693-430",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00881",
-        "value": "161 286 158",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00882",
-        "value": "905 964 151",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00886",
-        "value": "532630100",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00887",
-        "value": "552 653 230",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00893",
-        "value": "350 527 073",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00894",
-        "value": "160 791 208",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00897",
-        "value": "625 910 955",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00898",
-        "value": "749960100",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00899",
-        "value": "399 484 617",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00901",
-        "value": "150064418",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00902",
-        "value": "251 629 697",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00907",
-        "value": "335897005",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00909",
-        "value": "512909078",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00910",
-        "value": "666 397 518",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00911",
-        "value": "532-548-245",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00913",
-        "value": "216138305",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00917",
-        "value": "319615811",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00918",
-        "value": "288-678-360",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00920",
-        "value": "970-294-260",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00922",
-        "value": "780 087 003",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00925",
-        "value": "579-922-170",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00926",
-        "value": "908526486",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00928",
-        "value": "310958020",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00930",
-        "value": "777419136",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00934",
-        "value": "610-104-028",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00939",
-        "value": "676501133",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00944",
-        "value": "649 683 190",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00945",
-        "value": "936 704 386",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00946",
-        "value": "660 109 182",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00949",
-        "value": "704-766-922",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00952",
-        "value": "973637549",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00954",
-        "value": "947 041 653",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00959",
-        "value": "672297801",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00960",
-        "value": "550-097-513",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00962",
-        "value": "995 169 885",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00963",
-        "value": "932587926",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00965",
-        "value": "124689795",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00966",
-        "value": "738091867",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00969",
-        "value": "533352977",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00970",
-        "value": "674 728 456",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00973",
-        "value": "663 383 669",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00977",
-        "value": "342-171-766",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00988",
-        "value": "978-355-683",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00990",
-        "value": "610-049-884",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00993",
-        "value": "405337395",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00997",
-        "value": "113111934",
-        "type": "CA_SIN"
-      },
-      {
-        "note_id": "ca-00999",
-        "value": "917826174",
-        "type": "CA_SIN"
-      }
-    ],
-    "CA_RAMQ": [
-      {
-        "note_id": "ca-00100",
-        "value": "GAGB72041490",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00105",
-        "value": "WILE82092899",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00111",
-        "value": "STER 8205 0271",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00112",
-        "value": "SINE63080423",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00120",
-        "value": "FORJ52110623",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00131",
-        "value": "BOUC90102669",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00134",
-        "value": "BOUD95572671",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00135",
-        "value": "CHEJ31540705",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00138",
-        "value": "WILT 6160 0514",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00139",
-        "value": "BERM 4256 2034",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00142",
-        "value": "TAYP 6212 0722",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00143",
-        "value": "TREA75561570",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00148",
-        "value": "TRER 7806 0906",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00153",
-        "value": "CAMA 6509 0405",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00158",
-        "value": "FORF92070145",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00159",
-        "value": "CÔTE97532519",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00174",
-        "value": "CAME 6857 0375",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00180",
-        "value": "WILL 7311 1171",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00193",
-        "value": "TAYF 7555 0907",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00195",
-        "value": "CAMG73611676",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00197",
-        "value": "STEJ 9953 0404",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00203",
-        "value": "TAYE46040355",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00213",
-        "value": "MORE66110988",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00218",
-        "value": "BERG58011883",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00223",
-        "value": "TREB88621581",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00225",
-        "value": "CÔTP 6854 1073",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00243",
-        "value": "TAYJ76511691",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00248",
-        "value": "GAGD 9409 1445",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00249",
-        "value": "SINM57542499",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00250",
-        "value": "MACD32530403",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00255",
-        "value": "BERD59121630",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00265",
-        "value": "TAYL40571022",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00273",
-        "value": "LAVB67020344",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00276",
-        "value": "CÔTJ91050728",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00277",
-        "value": "GAGB95611956",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00282",
-        "value": "MORT49561304",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00284",
-        "value": "BERM64512332",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00289",
-        "value": "TAYB46070925",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00295",
-        "value": "MACT 8011 0319",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00298",
-        "value": "BERJ91021955",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00301",
-        "value": "ROYD 3951 0598",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00306",
-        "value": "SINF95601211",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00310",
-        "value": "MORR 9953 0745",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00312",
-        "value": "TREG34010548",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00313",
-        "value": "CAMD41021402",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00316",
-        "value": "CHEG87572741",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00322",
-        "value": "LAVA 9061 1234",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00335",
-        "value": "WILD 6258 2237",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00342",
-        "value": "WILG53611807",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00347",
-        "value": "SINS83041832",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00352",
-        "value": "MACA83622049",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00360",
-        "value": "WILR 4259 1113",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00363",
-        "value": "BERF 5212 0757",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00367",
-        "value": "CÔTE 3657 0636",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00376",
-        "value": "FORE30070154",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00384",
-        "value": "FORD58532094",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00388",
-        "value": "MACF 9658 2593",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00393",
-        "value": "WILE53021878",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00395",
-        "value": "TAYC 3103 0589",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00401",
-        "value": "MACF50022182",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00403",
-        "value": "SINE45590510",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00408",
-        "value": "TAYJ57031032",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00410",
-        "value": "ROYP75521933",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00411",
-        "value": "MORC99612801",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00414",
-        "value": "CÔTM73582658",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00416",
-        "value": "CAMR 3609 0239",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00420",
-        "value": "SINM35112527",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00426",
-        "value": "BOUP 4808 2506",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00439",
-        "value": "CÔTL70562582",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00442",
-        "value": "TREB41121575",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00446",
-        "value": "TRES94520510",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00454",
-        "value": "CHEF41621169",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00460",
-        "value": "GAGG76010391",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00463",
-        "value": "SINC44120682",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00465",
-        "value": "SINE 9257 2360",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00479",
-        "value": "CHES74512850",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00481",
-        "value": "LAVF 8252 0364",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00485",
-        "value": "CÔTR35042406",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00486",
-        "value": "CHEJ 6507 0901",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00492",
-        "value": "CÔTA45121281",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00500",
-        "value": "FORG68030854",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00504",
-        "value": "BERF74030340",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00506",
-        "value": "MORS32012808",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00507",
-        "value": "LAVE 3502 1071",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00512",
-        "value": "ROYB 5460 2704",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00518",
-        "value": "CAMM80081876",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00519",
-        "value": "FORM 7312 2111",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00522",
-        "value": "CAMR91531322",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00533",
-        "value": "GAGA63592088",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00539",
-        "value": "GAGB32601364",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00551",
-        "value": "WILR82020761",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00564",
-        "value": "WILF69572787",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00573",
-        "value": "TAYR62051839",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00575",
-        "value": "CAMT64122223",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00578",
-        "value": "CAMM52591298",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00583",
-        "value": "TAYR30031490",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00597",
-        "value": "CÔTD84071745",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00602",
-        "value": "CÔTJ79111544",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00609",
-        "value": "CÔTA 6154 1538",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00611",
-        "value": "TRED 3204 0953",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00613",
-        "value": "LAVA 7906 1857",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00615",
-        "value": "CAMR 4408 0623",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00618",
-        "value": "CÔTM 6602 1199",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00619",
-        "value": "WILR43040235",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00622",
-        "value": "BERD 4251 2106",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00624",
-        "value": "MACD58120487",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00631",
-        "value": "LAVE68052077",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00635",
-        "value": "TAYT96101405",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00670",
-        "value": "FORL 6709 0804",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00675",
-        "value": "LAVA74011626",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00678",
-        "value": "MORT88530949",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00683",
-        "value": "BERC84551120",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00685",
-        "value": "LAVP71121924",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00688",
-        "value": "TRES31601322",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00695",
-        "value": "STEG84510230",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00698",
-        "value": "CHEB49572527",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00699",
-        "value": "ROYP60562282",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00700",
-        "value": "GAGR48121593",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00706",
-        "value": "STEG49100742",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00713",
-        "value": "BERG 5012 0866",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00718",
-        "value": "ROYP84052070",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00724",
-        "value": "TREM 7657 0828",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00725",
-        "value": "BERS 8807 0922",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00732",
-        "value": "CÔTD87590243",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00740",
-        "value": "WILP41062668",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00741",
-        "value": "TAYC 8812 0884",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00744",
-        "value": "BERL59542366",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00745",
-        "value": "CAMF87511531",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00772",
-        "value": "TRET 7859 2824",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00775",
-        "value": "FORB 7203 2134",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00779",
-        "value": "BERM 4356 1159",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00785",
-        "value": "SINT73042832",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00790",
-        "value": "TREB38030107",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00794",
-        "value": "CHER43070447",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00796",
-        "value": "TREC 9506 0660",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00801",
-        "value": "MORP 7905 2620",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00802",
-        "value": "TREL80110339",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00813",
-        "value": "MORS57611032",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00819",
-        "value": "GAGE94062238",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00820",
-        "value": "CHEF77581524",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00823",
-        "value": "CHEL34542145",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00824",
-        "value": "MORL94020332",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00841",
-        "value": "TAYJ78621475",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00853",
-        "value": "TRER 7712 1252",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00859",
-        "value": "BOUC 8260 1120",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00860",
-        "value": "MORT94032211",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00864",
-        "value": "FORJ46091946",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00866",
-        "value": "ROYJ 7156 2081",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00868",
-        "value": "FORS 5158 1471",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00870",
-        "value": "TAYT32611544",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00874",
-        "value": "CAMC60531245",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00878",
-        "value": "MORG58562399",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00884",
-        "value": "BERL 4860 1502",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00892",
-        "value": "TAYA 4804 0936",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00897",
-        "value": "TAYR57071407",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00899",
-        "value": "FORL 8954 0650",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00910",
-        "value": "GAGA91530601",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00917",
-        "value": "SIND 8952 1206",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00918",
-        "value": "FORR92071009",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00922",
-        "value": "CHEF69102626",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00929",
-        "value": "CÔTP81080649",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00930",
-        "value": "GAGG 6201 1172",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00938",
-        "value": "TAYR50031165",
-        "type": "CA_RAMQ"
+        "note_id": "ca-00906",
+        "value": "Étienne Gill",
+        "type": "PERSON"
       },
       {
         "note_id": "ca-00943",
-        "value": "STER95071899",
-        "type": "CA_RAMQ"
+        "value": "Océane Tran",
+        "type": "PERSON"
       },
       {
-        "note_id": "ca-00947",
-        "value": "GAGA 8252 0910",
-        "type": "CA_RAMQ"
+        "note_id": "ca-00959",
+        "value": "Étienne Pelletier",
+        "type": "PERSON"
       },
       {
-        "note_id": "ca-00951",
-        "value": "BERS 4802 2844",
-        "type": "CA_RAMQ"
+        "note_id": "ca-00985",
+        "value": "Émile Sandhu",
+        "type": "PERSON"
       },
       {
-        "note_id": "ca-00954",
-        "value": "FORC 8109 2677",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00955",
-        "value": "ROYR81571674",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00973",
-        "value": "ROYJ44552737",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00977",
-        "value": "ROYD35521940",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00980",
-        "value": "ROYT 7812 0451",
-        "type": "CA_RAMQ"
-      },
-      {
-        "note_id": "ca-00982",
-        "value": "TAYC57052804",
-        "type": "CA_RAMQ"
+        "note_id": "ca-00997",
+        "value": "Émile Roy",
+        "type": "PERSON"
       }
     ],
     "CA_OHIP": [
       {
-        "note_id": "ca-00117",
-        "value": "7066184552JX",
+        "note_id": "ca-00108",
+        "value": "2250921794KD",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00147",
-        "value": "1217007457KD",
+        "note_id": "ca-00131",
+        "value": "3892570114JX",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00160",
-        "value": "7625226365JX",
+        "note_id": "ca-00155",
+        "value": "3727843579KD",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00166",
-        "value": "4699263598KD",
+        "note_id": "ca-00161",
+        "value": "1609327414MC",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00171",
-        "value": "3037866435KD",
+        "note_id": "ca-00174",
+        "value": "5375007381JX",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00190",
-        "value": "2144722176MC",
+        "note_id": "ca-00193",
+        "value": "5383123410AB",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00222",
-        "value": "4954171320KD",
+        "note_id": "ca-00201",
+        "value": "2666655697MC",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00226",
-        "value": "4737748394AB",
+        "note_id": "ca-00216",
+        "value": "4386040762JX",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00237",
-        "value": "5004343389MC",
+        "note_id": "ca-00229",
+        "value": "4903001651AB",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00261",
-        "value": "8867833009JX",
+        "note_id": "ca-00230",
+        "value": "5791 707 994 JX",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00263",
-        "value": "3653625925MC",
+        "note_id": "ca-00240",
+        "value": "5899-282-189-KD",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00272",
-        "value": "3658141621AB",
+        "note_id": "ca-00250",
+        "value": "3598-108-649-KD",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00283",
-        "value": "1738457850MC",
+        "note_id": "ca-00259",
+        "value": "7588861091JX",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00296",
-        "value": "5880178834JX",
+        "note_id": "ca-00264",
+        "value": "3583 078 005 AB",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00297",
-        "value": "2920339005AB",
+        "note_id": "ca-00269",
+        "value": "2754731046JX",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00303",
-        "value": "7356029558JX",
+        "note_id": "ca-00284",
+        "value": "7900021333KD",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00304",
-        "value": "5358214806AB",
+        "note_id": "ca-00287",
+        "value": "1841154097AB",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00314",
-        "value": "9665145125AB",
+        "note_id": "ca-00292",
+        "value": "4135125914AB",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00315",
-        "value": "1791005182",
+        "note_id": "ca-00299",
+        "value": "9800656713KD",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00318",
-        "value": "2689928485MC",
+        "note_id": "ca-00322",
+        "value": "7215278925JX",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00327",
+        "value": "8747532755AB",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00331",
+        "value": "1258190410KD",
         "type": "CA_OHIP"
       },
       {
         "note_id": "ca-00334",
-        "value": "0810194795AB",
+        "value": "3411938719JX",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00338",
-        "value": "9560592009MC",
+        "note_id": "ca-00337",
+        "value": "0039795331KD",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00341",
-        "value": "0976221929MC",
+        "note_id": "ca-00348",
+        "value": "6786259207JX",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00343",
-        "value": "9725022264MC",
+        "note_id": "ca-00374",
+        "value": "9363951246KD",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00355",
-        "value": "8755702068AB",
+        "note_id": "ca-00385",
+        "value": "2151237779KD",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00386",
-        "value": "1101-524-559",
+        "note_id": "ca-00400",
+        "value": "5295048580AB",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00415",
-        "value": "6355535235JX",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00441",
-        "value": "6886899332MC",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00448",
-        "value": "9454639601MC",
+        "note_id": "ca-00442",
+        "value": "1167088630JX",
         "type": "CA_OHIP"
       },
       {
         "note_id": "ca-00449",
+        "value": "2539690418AB",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00450",
+        "value": "7562123658MC",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00464",
+        "value": "5093595675MC",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00466",
+        "value": "4429846639JX",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00468",
+        "value": "5939 932 637 AB",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00469",
+        "value": "1050773090AB",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00475",
+        "value": "3089053148JX",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00489",
+        "value": "4967213192AB",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00499",
         "value": "3285478917AB",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00457",
-        "value": "9628503626JX",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00494",
-        "value": "7107585361AB",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00495",
-        "value": "4828265605MC",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00497",
-        "value": "3454006838KD",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00502",
-        "value": "3211055771MC",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00513",
-        "value": "7220442177JX",
+        "note_id": "ca-00512",
+        "value": "0181147711AB",
         "type": "CA_OHIP"
       },
       {
         "note_id": "ca-00517",
-        "value": "3050-816-317-JX",
+        "value": "0014178453AB",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00522",
+        "value": "8206266069KD",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00528",
+        "value": "0119907723AB",
         "type": "CA_OHIP"
       },
       {
         "note_id": "ca-00534",
-        "value": "4389859077MC",
+        "value": "7260157651MC",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00535",
-        "value": "1011-216-742-JX",
+        "note_id": "ca-00546",
+        "value": "0223335548MC",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00538",
-        "value": "1401645211MC",
+        "note_id": "ca-00556",
+        "value": "3701 283 859 AB",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00544",
-        "value": "8567653673KD",
+        "note_id": "ca-00560",
+        "value": "4486125927MC",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00574",
-        "value": "5371467662AB",
+        "note_id": "ca-00563",
+        "value": "6226834783MC",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00587",
-        "value": "4368175172KD",
+        "note_id": "ca-00567",
+        "value": "7150820848KD",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00599",
-        "value": "6729398575AB",
+        "note_id": "ca-00577",
+        "value": "3317388480MC",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00604",
+        "value": "4524685270KD",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00606",
+        "value": "2285773756AB",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00611",
+        "value": "3418938449MC",
         "type": "CA_OHIP"
       },
       {
         "note_id": "ca-00612",
-        "value": "0997524228AB",
+        "value": "3362066114AB",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00639",
-        "value": "2578102945MC",
+        "note_id": "ca-00623",
+        "value": "4964633517JX",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00649",
-        "value": "5728415190MC",
+        "note_id": "ca-00627",
+        "value": "5968-818-012",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00654",
-        "value": "9102814044MC",
+        "note_id": "ca-00641",
+        "value": "3577794765AB",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00679",
-        "value": "6261794504MC",
+        "note_id": "ca-00645",
+        "value": "4867436810MC",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00693",
-        "value": "1873281503JX",
+        "note_id": "ca-00647",
+        "value": "4496 612 401 MC",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00697",
-        "value": "7393063180JX",
+        "note_id": "ca-00650",
+        "value": "4911 206 037 MC",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00655",
+        "value": "0946701489AB",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00660",
+        "value": "5264124388KD",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00682",
+        "value": "1377444714JX",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00686",
+        "value": "0975138066KD",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00692",
+        "value": "9250206654JX",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00701",
+        "value": "7431850325JX",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00712",
+        "value": "5158957877KD",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00714",
+        "value": "8076619181JX",
         "type": "CA_OHIP"
       },
       {
         "note_id": "ca-00717",
-        "value": "3913731455JX",
+        "value": "0350300547AB",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00727",
-        "value": "7322617973AB",
+        "note_id": "ca-00723",
+        "value": "0575889399AB",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00731",
+        "note_id": "ca-00737",
+        "value": "3750941787JX",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00740",
+        "value": "7491061698AB",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00755",
+        "value": "6958101039KD",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00767",
+        "value": "9780983251KD",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00775",
+        "value": "7393063180JX",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00779",
+        "value": "3140499421JX",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00782",
+        "value": "0078911823MC",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00794",
+        "value": "9297105653JX",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00809",
+        "value": "0732261797AB",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00813",
         "value": "3292061474AB",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00734",
-        "value": "9142034587MC",
+        "note_id": "ca-00831",
+        "value": "3373182330KD",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00748",
-        "value": "1833731829KD",
+        "note_id": "ca-00832",
+        "value": "9479644396AB",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00764",
-        "value": "4823609138MC",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00778",
-        "value": "5176163243JX",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00781",
-        "value": "4579321466JX",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00795",
-        "value": "5441332268MC",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00798",
-        "value": "1018 122 265",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00803",
-        "value": "8612889371AB",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00804",
-        "value": "1693-905-976-MC",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00808",
-        "value": "3999-271-939-JX",
-        "type": "CA_OHIP"
-      },
-      {
-        "note_id": "ca-00838",
-        "value": "4220936670KD",
+        "note_id": "ca-00845",
+        "value": "1851400844JX",
         "type": "CA_OHIP"
       },
       {
         "note_id": "ca-00851",
+        "value": "5380-196-096-MC",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00852",
+        "value": "0639637917AB",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00861",
+        "value": "3333435604KD",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00867",
+        "value": "8553780142MC",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00880",
+        "value": "1493448508MC",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00891",
+        "value": "5552557836MC",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00894",
+        "value": "5971-429-732",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00902",
+        "value": "3773090125JX",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00914",
+        "value": "2560-942-308-MC",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00916",
+        "value": "6442461759JX",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00940",
         "value": "5204371776KD",
         "type": "CA_OHIP"
       },
       {
-        "note_id": "ca-00857",
-        "value": "5700-158-818-AB",
+        "note_id": "ca-00948",
+        "value": "9980997937MC",
         "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00951",
+        "value": "7086953366AB",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00973",
+        "value": "9251398146MC",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00977",
+        "value": "5631-894-010-JX",
+        "type": "CA_OHIP"
+      },
+      {
+        "note_id": "ca-00987",
+        "value": "2511-890-861-KD",
+        "type": "CA_OHIP"
+      }
+    ],
+    "ADDRESS": [
+      {
+        "note_id": "ca-00378",
+        "value": "19 2 Street, Two Hills County No. 21, AB P5J 5S0",
+        "type": "ADDRESS"
+      },
+      {
+        "note_id": "ca-00437",
+        "value": "335 Riverview Dr, Strathroy-Caradoc, ON Y7M 9N1",
+        "type": "ADDRESS"
+      },
+      {
+        "note_id": "ca-00488",
+        "value": "5713 56 Street, Rocky Mountain House, AB G8A 9M4",
+        "type": "ADDRESS"
+      },
+      {
+        "note_id": "ca-00638",
+        "value": "10507 105 Street, High Level, AB C0B 9B6",
+        "type": "ADDRESS"
+      },
+      {
+        "note_id": "ca-00657",
+        "value": "Unit 83, 524, avenue 7, Milk River, AB E0V 1G6",
+        "type": "ADDRESS"
+      },
+      {
+        "note_id": "ca-00816",
+        "value": "Unit 46, 71332 262, Greenview No. 16, AB X9Z 7M0",
+        "type": "ADDRESS"
+      },
+      {
+        "note_id": "ca-00891",
+        "value": "252 Willowmere Close, Chestermere, AB X3N 4C5",
+        "type": "ADDRESS"
+      },
+      {
+        "note_id": "ca-00953",
+        "value": "Unit 304, 5330 58A St, Red Deer, AB M4C 9E4",
+        "type": "ADDRESS"
+      }
+    ],
+    "CA_RAMQ": [
+      {
+        "note_id": "ca-00102",
+        "value": "ALIF 3106 2585",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00114",
+        "value": "TRAE40071774",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00118",
+        "value": "WONR92592708",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00135",
+        "value": "MACL 7954 2386",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00138",
+        "value": "CARP 5761 2714",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00139",
+        "value": "BEAL 3910 0953",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00141",
+        "value": "TAYA30601871",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00143",
+        "value": "TREF 6154 0947",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00145",
+        "value": "CÔTE77042227",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00165",
+        "value": "ZHAR 3104 0502",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00173",
+        "value": "LAVE76100833",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00176",
+        "value": "CHEB 6457 2274",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00181",
+        "value": "MACM50061869",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00182",
+        "value": "GILJ 9003 0729",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00184",
+        "value": "NGUT87020675",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00199",
+        "value": "LIRX 8061 2349",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00203",
+        "value": "PHAS82072257",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00223",
+        "value": "ZHAF 4106 2083",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00226",
+        "value": "GAGB 6508 2096",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00238",
+        "value": "FORR68571109",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00239",
+        "value": "MACT 3562 2603",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00242",
+        "value": "ZHAP 7061 2605",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00243",
+        "value": "MCCJ 4751 0781",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00248",
+        "value": "FORA 5903 1634",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00265",
+        "value": "KHAF 4560 0416",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00267",
+        "value": "OBLX36102561",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00270",
+        "value": "ALIG87012760",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00271",
+        "value": "KHAE85542244",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00272",
+        "value": "WONL92072684",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00290",
+        "value": "BÉLP89580311",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00291",
+        "value": "ZHAR 3611 1389",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00294",
+        "value": "DHIJ67041327",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00295",
+        "value": "ZHAP 3052 0325",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00300",
+        "value": "BERE 8208 2882",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00301",
+        "value": "TRAJ42010997",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00304",
+        "value": "CAMS 4152 2304",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00308",
+        "value": "GILG 5101 1261",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00311",
+        "value": "TREL87060217",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00316",
+        "value": "MACC37521864",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00320",
+        "value": "ALIS 6452 2257",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00328",
+        "value": "MORL44512178",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00353",
+        "value": "ROYL62601078",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00358",
+        "value": "HASJ 9255 2594",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00360",
+        "value": "GAGJ53051685",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00363",
+        "value": "FORS 4252 2695",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00366",
+        "value": "LIMX40050261",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00369",
+        "value": "SINP49552401",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00370",
+        "value": "CHET99552885",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00372",
+        "value": "SIDP73080998",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00386",
+        "value": "HASE61062699",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00394",
+        "value": "STEA83622049",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00396",
+        "value": "LÉVP35551429",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00398",
+        "value": "MCCS61512416",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00403",
+        "value": "FORJ 3851 2325",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00415",
+        "value": "CHEF76062077",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00428",
+        "value": "GAGT 5760 0575",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00433",
+        "value": "BÉLC54072821",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00438",
+        "value": "MACF39531568",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00448",
+        "value": "HAST 9709 2669",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00451",
+        "value": "PHAS67040394",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00455",
+        "value": "SANM39040392",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00456",
+        "value": "CARE33082789",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00461",
+        "value": "BERP93031213",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00467",
+        "value": "LAVL 3458 0415",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00472",
+        "value": "LAVS92062213",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00477",
+        "value": "MACR 4151 2688",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00480",
+        "value": "SINM51511460",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00484",
+        "value": "MACD45052425",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00490",
+        "value": "PHAJ 6611 0379",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00494",
+        "value": "MORT80520465",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00505",
+        "value": "TAYR67110777",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00510",
+        "value": "MACR 3808 1374",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00518",
+        "value": "CARP96612677",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00551",
+        "value": "IBRB55080552",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00554",
+        "value": "SANL91061918",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00557",
+        "value": "OUEL 3059 2525",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00559",
+        "value": "STED43031019",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00565",
+        "value": "MACC70060745",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00566",
+        "value": "TREG44540866",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00571",
+        "value": "CÔTL 5202 1173",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00575",
+        "value": "ALIS 7362 0644",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00580",
+        "value": "SANC 6810 0389",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00582",
+        "value": "MACA69100249",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00589",
+        "value": "FORB56032888",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00592",
+        "value": "LIFX71591340",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00599",
+        "value": "MACB55582216",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00624",
+        "value": "GILA 6802 2574",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00631",
+        "value": "IBRL58621070",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00637",
+        "value": "MORP54601075",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00638",
+        "value": "IBRA 5311 0829",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00642",
+        "value": "OBEX98030585",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00652",
+        "value": "CHES50071041",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00654",
+        "value": "MACT33622644",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00659",
+        "value": "CARP 5353 1308",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00662",
+        "value": "CARA39600418",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00664",
+        "value": "TAYM 4161 1140",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00665",
+        "value": "TAYM 3806 2545",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00671",
+        "value": "MACB 5859 0227",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00679",
+        "value": "BERE 6755 2703",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00696",
+        "value": "MCCP 6708 0964",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00698",
+        "value": "BÉLB81521648",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00707",
+        "value": "IBRB31042874",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00708",
+        "value": "GILS81530328",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00719",
+        "value": "STEB33552891",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00721",
+        "value": "PELF 7560 0449",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00735",
+        "value": "GAGG 6505 2516",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00744",
+        "value": "ROYC42061361",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00746",
+        "value": "SINR 7901 1038",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00762",
+        "value": "IBRM85061280",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00766",
+        "value": "CHEF 5509 0521",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00768",
+        "value": "WONB 3161 1092",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00771",
+        "value": "SANT73611695",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00774",
+        "value": "STER53572861",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00777",
+        "value": "BÉLE32521273",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00784",
+        "value": "DHIM69602886",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00795",
+        "value": "KOWR 7352 1089",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00801",
+        "value": "ROYF66622337",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00811",
+        "value": "TRET35540766",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00815",
+        "value": "TRET 8603 1316",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00833",
+        "value": "ALIG66110799",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00834",
+        "value": "TAYL 5457 1559",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00836",
+        "value": "MCCC92611334",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00844",
+        "value": "BÉLE 5761 1471",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00856",
+        "value": "ALIC30580625",
+        "type": "CA_RAMQ"
       },
       {
         "note_id": "ca-00858",
-        "value": "2410831008AB",
-        "type": "CA_OHIP"
+        "value": "MACL46511016",
+        "type": "CA_RAMQ"
       },
       {
-        "note_id": "ca-00903",
-        "value": "7648486343JX",
-        "type": "CA_OHIP"
+        "note_id": "ca-00863",
+        "value": "BÉLS 3159 2224",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00884",
+        "value": "TREL90032159",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00886",
+        "value": "BERE 6401 2092",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00896",
+        "value": "BÉLM98021144",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00907",
+        "value": "GAGS60600356",
+        "type": "CA_RAMQ"
       },
       {
         "note_id": "ca-00908",
-        "value": "6868721801JX",
-        "type": "CA_OHIP"
+        "value": "LAVP83082213",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00910",
+        "value": "OBCX50021373",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00913",
+        "value": "CHES84090210",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00923",
+        "value": "TRAP 5060 2438",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00928",
+        "value": "GILT 3911 0183",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00930",
+        "value": "SANR54550726",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00943",
+        "value": "OBLX 8403 0333",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00950",
+        "value": "OBFX41550692",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00955",
+        "value": "DHID35571469",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00970",
+        "value": "GILT 3309 2844",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00971",
+        "value": "GILB43602683",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00993",
+        "value": "GAUJ83012407",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00996",
+        "value": "CAMM98112798",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00997",
+        "value": "FORM 3210 2382",
+        "type": "CA_RAMQ"
+      },
+      {
+        "note_id": "ca-00999",
+        "value": "FORE90052173",
+        "type": "CA_RAMQ"
+      }
+    ],
+    "CA_SIN": [
+      {
+        "note_id": "ca-00103",
+        "value": "647556356",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00104",
+        "value": "128 179 306",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00109",
+        "value": "625-136-171",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00113",
+        "value": "142 661 016",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00118",
+        "value": "307475517",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00119",
+        "value": "115 986 622",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00122",
+        "value": "501 287 163",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00123",
+        "value": "366 493 013",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00126",
+        "value": "227 467 891",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00136",
+        "value": "318-049-095",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00137",
+        "value": "345022339",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00145",
+        "value": "355 817 909",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00146",
+        "value": "521-371-286",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00151",
+        "value": "525-569-323",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00155",
+        "value": "506-809-433",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00156",
+        "value": "371094087",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00157",
+        "value": "236 252 466",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00170",
+        "value": "124-058-652",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00171",
+        "value": "416-595-577",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00172",
+        "value": "999-598-469",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00174",
+        "value": "478 966 054",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00181",
+        "value": "218 103 992",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00182",
+        "value": "463 645 671",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00185",
+        "value": "536-717-077",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00190",
+        "value": "235-306-370",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00199",
+        "value": "699059127",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00200",
+        "value": "340-477-298",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00201",
+        "value": "949533921",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00204",
+        "value": "532-063-773",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00207",
+        "value": "695594481",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00209",
+        "value": "226598571",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00212",
+        "value": "554960146",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00218",
+        "value": "413-567-785",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00222",
+        "value": "311-954-325",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00223",
+        "value": "477-108-690",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00224",
+        "value": "389481508",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00227",
+        "value": "338 112 493",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00230",
+        "value": "349133223",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00234",
+        "value": "942 385 907",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00236",
+        "value": "285-209-425",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00238",
+        "value": "722162211",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00245",
+        "value": "391749462",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00253",
+        "value": "720-001-403",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00255",
+        "value": "286-104-120",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00256",
+        "value": "652 681 669",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00262",
+        "value": "742-576-689",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00264",
+        "value": "432776755",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00265",
+        "value": "971-781-240",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00266",
+        "value": "113 845 598",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00269",
+        "value": "617201827",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00270",
+        "value": "561 092 263",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00272",
+        "value": "188 419 360",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00274",
+        "value": "568 046 684",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00279",
+        "value": "562-956-128",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00281",
+        "value": "218 115 632",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00283",
+        "value": "543 546 444",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00285",
+        "value": "457774735",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00288",
+        "value": "538 841 644",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00291",
+        "value": "716-024-179",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00293",
+        "value": "696-696-368",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00294",
+        "value": "126837764",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00295",
+        "value": "391 157 252",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00296",
+        "value": "293344644",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00298",
+        "value": "779-098-144",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00303",
+        "value": "239 946 619",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00305",
+        "value": "221351950",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00306",
+        "value": "639 197 482",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00307",
+        "value": "703-780-932",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00312",
+        "value": "452745268",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00313",
+        "value": "230971723",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00328",
+        "value": "607574639",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00330",
+        "value": "991238866",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00331",
+        "value": "983425257",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00334",
+        "value": "728019738",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00335",
+        "value": "220-847-412",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00336",
+        "value": "121 758 841",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00342",
+        "value": "239474208",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00344",
+        "value": "207167628",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00349",
+        "value": "616 218 780",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00359",
+        "value": "673 415 923",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00360",
+        "value": "629041559",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00362",
+        "value": "412-672-016",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00365",
+        "value": "681757316",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00366",
+        "value": "486 490 238",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00370",
+        "value": "221 053 929",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00378",
+        "value": "938-900-784",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00381",
+        "value": "964140230",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00383",
+        "value": "445 085 947",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00384",
+        "value": "163 045 230",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00385",
+        "value": "780739009",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00393",
+        "value": "298 720 137",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00394",
+        "value": "464 613 223",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00399",
+        "value": "595-204-330",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00404",
+        "value": "192 885 366",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00408",
+        "value": "659-486-088",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00409",
+        "value": "177-230-729",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00411",
+        "value": "956 742 761",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00419",
+        "value": "211-483-466",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00422",
+        "value": "523 606 135",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00429",
+        "value": "343-602-215",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00430",
+        "value": "122-740-806",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00432",
+        "value": "276083680",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00437",
+        "value": "923192694",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00440",
+        "value": "342 923 182",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00442",
+        "value": "719978181",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00448",
+        "value": "469116685",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00452",
+        "value": "958-359-366",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00453",
+        "value": "787828391",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00454",
+        "value": "967 284 340",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00459",
+        "value": "950-381-608",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00460",
+        "value": "322 360 405",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00465",
+        "value": "196 931 323",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00466",
+        "value": "401-170-519",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00469",
+        "value": "904 862 158",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00473",
+        "value": "345-615-496",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00474",
+        "value": "695 189 951",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00475",
+        "value": "472-932-961",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00479",
+        "value": "338 246 226",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00480",
+        "value": "698 948 411",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00481",
+        "value": "403-130-339",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00483",
+        "value": "503 177 370",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00488",
+        "value": "636 352 072",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00490",
+        "value": "508 829 330",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00497",
+        "value": "607-835-063",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00500",
+        "value": "200 116 556",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00501",
+        "value": "942-156-803",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00502",
+        "value": "967 867 151",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00508",
+        "value": "671-935-013",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00510",
+        "value": "704 444 322",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00513",
+        "value": "911885226",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00514",
+        "value": "681932042",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00517",
+        "value": "976171629",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00520",
+        "value": "448 261 131",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00523",
+        "value": "208 191 726",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00524",
+        "value": "697818128",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00528",
+        "value": "935855460",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00530",
+        "value": "936-104-033",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00531",
+        "value": "396830234",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00532",
+        "value": "209080845",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00535",
+        "value": "323 886 499",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00537",
+        "value": "369-093-653",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00539",
+        "value": "219572237",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00541",
+        "value": "710-940-354",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00542",
+        "value": "681-955-944",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00545",
+        "value": "275-221-513",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00548",
+        "value": "526-146-758",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00549",
+        "value": "499 003 424",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00554",
+        "value": "718 126 121",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00558",
+        "value": "775-372-568",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00562",
+        "value": "342084381",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00572",
+        "value": "224 548 966",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00573",
+        "value": "927-906-941",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00574",
+        "value": "713-826-618",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00577",
+        "value": "652 082 330",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00581",
+        "value": "736 719 691",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00582",
+        "value": "481587103",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00583",
+        "value": "937364388",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00588",
+        "value": "179780093",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00589",
+        "value": "790-646-137",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00591",
+        "value": "571-721-273",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00593",
+        "value": "921-647-046",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00595",
+        "value": "155-864-101",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00599",
+        "value": "767199144",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00600",
+        "value": "904-981-487",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00605",
+        "value": "725 099 725",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00609",
+        "value": "396956583",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00611",
+        "value": "796 298 644",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00613",
+        "value": "310 583 984",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00615",
+        "value": "966804775",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00616",
+        "value": "328-323-092",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00619",
+        "value": "451-251-995",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00624",
+        "value": "397 359 142",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00625",
+        "value": "621 832 484",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00626",
+        "value": "396-882-045",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00634",
+        "value": "548 340 801",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00636",
+        "value": "130 095 565",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00637",
+        "value": "680347838",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00639",
+        "value": "752190322",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00640",
+        "value": "650 440 506",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00641",
+        "value": "650-537-640",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00648",
+        "value": "279-123-806",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00649",
+        "value": "132299066",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00654",
+        "value": "324 454 313",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00656",
+        "value": "763171766",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00660",
+        "value": "618 071 658",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00667",
+        "value": "795-694-165",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00668",
+        "value": "273-156-265",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00669",
+        "value": "916-140-387",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00672",
+        "value": "756-838-801",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00673",
+        "value": "543438915",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00678",
+        "value": "211432240",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00683",
+        "value": "467025870",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00685",
+        "value": "301302659",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00688",
+        "value": "497168724",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00690",
+        "value": "332246776",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00693",
+        "value": "531255586",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00695",
+        "value": "106 236 029",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00697",
+        "value": "608-927-216",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00699",
+        "value": "545 771 743",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00707",
+        "value": "518 324 561",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00717",
+        "value": "370373870",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00720",
+        "value": "387-279-110",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00726",
+        "value": "924-869-548",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00729",
+        "value": "441-934-007",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00732",
+        "value": "961 403 482",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00740",
+        "value": "468592415",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00744",
+        "value": "764 728 630",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00747",
+        "value": "913-265-625",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00750",
+        "value": "293-842-019",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00751",
+        "value": "278864699",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00752",
+        "value": "980584874",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00764",
+        "value": "718214521",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00768",
+        "value": "729-732-818",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00769",
+        "value": "416 015 428",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00772",
+        "value": "224 386 722",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00774",
+        "value": "744-284-795",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00775",
+        "value": "438 668 543",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00777",
+        "value": "512-659-285",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00782",
+        "value": "528 366 354",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00783",
+        "value": "738 833 276",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00791",
+        "value": "604-771-063",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00800",
+        "value": "728 315 664",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00808",
+        "value": "478 602 154",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00809",
+        "value": "944 208 594",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00813",
+        "value": "711-759-563",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00815",
+        "value": "151 040 433",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00821",
+        "value": "325 716 751",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00824",
+        "value": "965-087-489",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00826",
+        "value": "904-785-805",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00830",
+        "value": "249647520",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00832",
+        "value": "787 373 638",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00834",
+        "value": "794 909 796",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00835",
+        "value": "484604400",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00838",
+        "value": "152-464-509",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00841",
+        "value": "742851827",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00842",
+        "value": "538 632 134",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00843",
+        "value": "685048936",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00844",
+        "value": "323068643",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00847",
+        "value": "503-556-912",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00851",
+        "value": "221-846-397",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00855",
+        "value": "280859414",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00861",
+        "value": "186-466-314",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00869",
+        "value": "573-827-037",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00871",
+        "value": "255-018-525",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00872",
+        "value": "300 288 818",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00877",
+        "value": "518 782 925",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00879",
+        "value": "126-002-336",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00881",
+        "value": "461-087-835",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00882",
+        "value": "309 730 653",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00885",
+        "value": "969170406",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00889",
+        "value": "740-228-549",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00895",
+        "value": "744 855 644",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00900",
+        "value": "536-596-927",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00901",
+        "value": "768829855",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00902",
+        "value": "466-387-966",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00909",
+        "value": "606 572 212",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00913",
+        "value": "340-832-203",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00914",
+        "value": "460 731 748",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00919",
+        "value": "311-450-548",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00921",
+        "value": "987-715-620",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00924",
+        "value": "287 158 687",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00925",
+        "value": "530272236",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00926",
+        "value": "245 029 491",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00927",
+        "value": "790-823-363",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00935",
+        "value": "443 179 973",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00937",
+        "value": "657-023-198",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00940",
+        "value": "664 299 815",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00942",
+        "value": "177-336-351",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00944",
+        "value": "474 230 968",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00945",
+        "value": "651997504",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00946",
+        "value": "257 001 586",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00947",
+        "value": "638930032",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00949",
+        "value": "310-836-176",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00950",
+        "value": "665-967-162",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00955",
+        "value": "744409285",
+        "type": "CA_SIN"
       },
       {
         "note_id": "ca-00956",
-        "value": "5074676486KD",
-        "type": "CA_OHIP"
+        "value": "272569146",
+        "type": "CA_SIN"
       },
       {
-        "note_id": "ca-00960",
-        "value": "6420652270KD",
-        "type": "CA_OHIP"
+        "note_id": "ca-00958",
+        "value": "312 573 611",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00967",
+        "value": "240 356 543",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00970",
+        "value": "727-897-712",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00976",
+        "value": "275610855",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00978",
+        "value": "478186034",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00980",
+        "value": "970 227 773",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00981",
+        "value": "584 114 946",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00988",
+        "value": "731011508",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00989",
+        "value": "921 083 499",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00990",
+        "value": "264 001 462",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00991",
+        "value": "327940268",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00992",
+        "value": "333-092-039",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00998",
+        "value": "128768769",
+        "type": "CA_SIN"
+      },
+      {
+        "note_id": "ca-00999",
+        "value": "422860940",
+        "type": "CA_SIN"
       }
     ],
     "CA_AB_ULI": [
       {
-        "note_id": "ca-00107",
-        "value": "96588 8101",
+        "note_id": "ca-00103",
+        "value": "612893834",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00110",
-        "value": "41272-6041",
+        "note_id": "ca-00111",
+        "value": "44148-3387",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00113",
-        "value": "923876716",
+        "note_id": "ca-00112",
+        "value": "74664-0394",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00125",
-        "value": "981162165",
+        "note_id": "ca-00119",
+        "value": "18531 8762",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00126",
-        "value": "463553340",
+        "value": "20429-3069",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00129",
-        "value": "10621 3712",
+        "note_id": "ca-00128",
+        "value": "76887 8448",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00144",
-        "value": "277575184",
+        "note_id": "ca-00133",
+        "value": "46623-3281",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00145",
-        "value": "62610 0511",
+        "note_id": "ca-00137",
+        "value": "989064966",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00146",
-        "value": "817274704",
+        "value": "38446-5110",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00161",
-        "value": "68847-6873",
+        "note_id": "ca-00151",
+        "value": "154957318",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00169",
-        "value": "91348-3370",
+        "note_id": "ca-00156",
+        "value": "33885 2175",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00172",
-        "value": "87367-5446",
+        "note_id": "ca-00160",
+        "value": "80123 2262",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00182",
-        "value": "141726971",
+        "note_id": "ca-00170",
+        "value": "712430609",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00189",
-        "value": "502454782",
+        "note_id": "ca-00179",
+        "value": "57093 4706",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00191",
-        "value": "90470 5478",
+        "note_id": "ca-00186",
+        "value": "508254406",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00202",
-        "value": "49125-8756",
+        "note_id": "ca-00195",
+        "value": "37866-4331",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00216",
-        "value": "720747934",
+        "note_id": "ca-00200",
+        "value": "886964483",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00230",
-        "value": "94259-3261",
+        "note_id": "ca-00205",
+        "value": "37206-0582",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00240",
-        "value": "92350-0690",
+        "note_id": "ca-00210",
+        "value": "68081 5602",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00211",
+        "value": "131251763",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00214",
+        "value": "194317692",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00220",
+        "value": "951346208",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00228",
+        "value": "40894-3388",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00231",
+        "value": "126394528",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00233",
+        "value": "95141-4290",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00241",
-        "value": "98282-1500",
+        "value": "56154 2271",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00244",
-        "value": "69094 9264",
+        "note_id": "ca-00246",
+        "value": "72003-2999",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00252",
-        "value": "76544 3367",
+        "value": "432604316",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00258",
-        "value": "861532742",
+        "note_id": "ca-00256",
+        "value": "35799-8200",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00264",
-        "value": "732675962",
+        "note_id": "ca-00262",
+        "value": "878733896",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00266",
+        "value": "881167617",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00275",
-        "value": "72891 0344",
+        "value": "333889269",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00282",
+        "value": "20460 5765",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00283",
+        "value": "833859351",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00285",
-        "value": "691466510",
+        "value": "762453519",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00287",
-        "value": "85296-4170",
+        "note_id": "ca-00298",
+        "value": "91256 1107",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00294",
-        "value": "829603722",
+        "note_id": "ca-00307",
+        "value": "36973-5261",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00299",
-        "value": "545207578",
+        "note_id": "ca-00310",
+        "value": "21378-5473",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00305",
-        "value": "007387844",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00311",
-        "value": "67990 0800",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00319",
-        "value": "207885060",
+        "note_id": "ca-00315",
+        "value": "719752498",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00323",
-        "value": "111265102",
+        "value": "57924 0401",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00324",
+        "value": "264243166",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00326",
-        "value": "69868-4952",
+        "value": "49505-6105",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00327",
-        "value": "652514024",
+        "note_id": "ca-00333",
+        "value": "34496 6199",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00329",
+        "note_id": "ca-00336",
+        "value": "818611068",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00342",
+        "value": "125970879",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00355",
+        "value": "13352 6899",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00367",
         "value": "656334949",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00331",
-        "value": "98858-6864",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00337",
-        "value": "658599604",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00340",
-        "value": "103622641",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00348",
-        "value": "34571-8856",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00353",
-        "value": "66022-8453",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00358",
-        "value": "536375890",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00362",
-        "value": "63515-3343",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00364",
-        "value": "44878-0081",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00371",
-        "value": "53690-8123",
+        "note_id": "ca-00375",
+        "value": "12853-8884",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00378",
-        "value": "916802951",
+        "value": "67507 6441",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00382",
-        "value": "612423647",
+        "note_id": "ca-00379",
+        "value": "103622641",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00391",
-        "value": "23192 6916",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00392",
-        "value": "69774-2487",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00397",
-        "value": "985166349",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00398",
-        "value": "26227-3745",
+        "note_id": "ca-00395",
+        "value": "14316 7748",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00402",
-        "value": "14199-9314",
+        "value": "97823-8512",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00407",
-        "value": "38879-3159",
+        "note_id": "ca-00405",
+        "value": "44372-3773",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00412",
+        "note_id": "ca-00422",
+        "value": "909542916",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00425",
+        "value": "464214688",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00431",
+        "value": "718640764",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00434",
+        "value": "57090 4614",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00435",
+        "value": "95997-3972",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00444",
+        "value": "82359-6048",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00447",
+        "value": "663503691",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00457",
+        "value": "77982 3993",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00460",
         "value": "834813142",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00417",
-        "value": "269028899",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00418",
-        "value": "29846-6364",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00423",
-        "value": "844943615",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00428",
-        "value": "71321-2046",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00430",
+        "note_id": "ca-00478",
         "value": "26801-0111",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00432",
-        "value": "40139-6307",
+        "note_id": "ca-00483",
+        "value": "83831-3549",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00443",
-        "value": "84950 0722",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00453",
-        "value": "671527400",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00467",
-        "value": "377617162",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00493",
-        "value": "28255-6998",
+        "note_id": "ca-00485",
+        "value": "712274119",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00496",
-        "value": "75377-6793",
+        "value": "109248508",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00516",
-        "value": "24885 8816",
+        "note_id": "ca-00500",
+        "value": "540293499",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00520",
-        "value": "57183-5477",
+        "note_id": "ca-00506",
+        "value": "49525-1049",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00530",
-        "value": "142472551",
+        "note_id": "ca-00509",
+        "value": "483053421",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00540",
-        "value": "41577 5009",
+        "note_id": "ca-00524",
+        "value": "830154221",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00541",
-        "value": "158130054",
+        "note_id": "ca-00531",
+        "value": "993474021",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00535",
+        "value": "177834664",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00538",
+        "value": "69533 6838",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00542",
-        "value": "155344201",
+        "value": "222770435",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00547",
+        "value": "75044 2664",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00550",
-        "value": "250997246",
+        "value": "666326922",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00559",
-        "value": "688305807",
+        "note_id": "ca-00552",
+        "value": "733454588",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00560",
-        "value": "45504 9226",
+        "note_id": "ca-00555",
+        "value": "497507489",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00561",
-        "value": "952536595",
+        "note_id": "ca-00573",
+        "value": "31695-7183",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00566",
-        "value": "566700843",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00579",
-        "value": "278956182",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00580",
-        "value": "31324-2566",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00584",
-        "value": "16357-7794",
+        "note_id": "ca-00585",
+        "value": "28295-2287",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00588",
-        "value": "23158 3057",
+        "value": "68851-0812",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00589",
-        "value": "18121 2418",
+        "note_id": "ca-00591",
+        "value": "61306-9121",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00598",
-        "value": "133885855",
+        "note_id": "ca-00602",
+        "value": "93950-0543",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00604",
-        "value": "60804-3640",
+        "note_id": "ca-00603",
+        "value": "65754-9173",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00608",
-        "value": "333733364",
+        "note_id": "ca-00613",
+        "value": "90951-5944",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00623",
-        "value": "361442289",
+        "note_id": "ca-00620",
+        "value": "71581-3007",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00640",
-        "value": "90831-3715",
+        "note_id": "ca-00621",
+        "value": "841389954",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00642",
-        "value": "53713-2966",
+        "note_id": "ca-00626",
+        "value": "273201828",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00652",
-        "value": "46635-9623",
+        "note_id": "ca-00646",
+        "value": "453538894",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00658",
-        "value": "470526017",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00661",
-        "value": "98280-6304",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00664",
-        "value": "75012-8433",
+        "note_id": "ca-00656",
+        "value": "737938622",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00666",
-        "value": "078781937",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00667",
-        "value": "147749106",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00668",
-        "value": "51912 0757",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00669",
-        "value": "60863 4628",
+        "value": "244394284",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00676",
-        "value": "248420191",
+        "value": "32176-8903",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00686",
-        "value": "76928-3577",
+        "note_id": "ca-00680",
+        "value": "760737427",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00696",
-        "value": "84520 0555",
+        "note_id": "ca-00688",
+        "value": "142591916",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00702",
-        "value": "604096783",
+        "note_id": "ca-00690",
+        "value": "57638-1435",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00705",
-        "value": "66520-3389",
+        "note_id": "ca-00691",
+        "value": "36236-5405",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00708",
-        "value": "27662-0671",
+        "note_id": "ca-00706",
+        "value": "52708 3577",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00709",
-        "value": "591796780",
+        "note_id": "ca-00710",
+        "value": "96432-1082",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00714",
-        "value": "10192 8550",
+        "note_id": "ca-00715",
+        "value": "122074570",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00721",
-        "value": "004679413",
+        "note_id": "ca-00718",
+        "value": "237904607",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00730",
-        "value": "78785-0574",
+        "note_id": "ca-00725",
+        "value": "22742-1055",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00733",
-        "value": "657162069",
+        "note_id": "ca-00728",
+        "value": "962578410",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00735",
-        "value": "990788874",
+        "note_id": "ca-00729",
+        "value": "15502-3129",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00743",
-        "value": "61976-6308",
+        "note_id": "ca-00745",
+        "value": "81453 7817",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00749",
-        "value": "29910-0011",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00750",
-        "value": "26229-8483",
+        "note_id": "ca-00748",
+        "value": "61987 9259",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00751",
-        "value": "401332190",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00755",
-        "value": "90200-0244",
+        "value": "171832845",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00758",
-        "value": "28640-2542",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00762",
-        "value": "10677-9268",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00767",
-        "value": "56495 2503",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00769",
-        "value": "39637 9161",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00770",
-        "value": "78062-7075",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00771",
-        "value": "36437-2194",
+        "value": "40452 0017",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00776",
-        "value": "239570945",
+        "value": "117977207",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00782",
-        "value": "600007643",
+        "note_id": "ca-00792",
+        "value": "69689-0691",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00796",
+        "value": "45959-0197",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00798",
+        "value": "790587980",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00799",
-        "value": "522207198",
+        "value": "93913-7314",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00806",
-        "value": "73074 4485",
+        "note_id": "ca-00807",
+        "value": "262942151",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00810",
-        "value": "25946 3918",
+        "note_id": "ca-00822",
+        "value": "77144-9284",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00814",
-        "value": "119610427",
+        "note_id": "ca-00830",
+        "value": "952998489",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00817",
-        "value": "20886-8347",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00826",
-        "value": "410306004",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00836",
-        "value": "891711815",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00844",
-        "value": "22276-6544",
+        "note_id": "ca-00842",
+        "value": "40254 2775",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00847",
-        "value": "72657 4503",
+        "value": "732464648",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00854",
-        "value": "38250 4732",
+        "note_id": "ca-00866",
+        "value": "149680049",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00868",
+        "value": "01837-2453",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00869",
+        "value": "47723-4220",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00881",
-        "value": "575889261",
+        "value": "47915-4845",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00882",
-        "value": "160448610",
+        "note_id": "ca-00883",
+        "value": "58236-8711",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00889",
-        "value": "81095 3836",
+        "note_id": "ca-00890",
+        "value": "606300072",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00891",
-        "value": "241774609",
-        "type": "CA_AB_ULI"
-      },
-      {
-        "note_id": "ca-00896",
-        "value": "33235 6660",
+        "note_id": "ca-00900",
+        "value": "97208 4706",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00901",
-        "value": "376135927",
+        "value": "38172 1272",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00904",
-        "value": "438921964",
+        "note_id": "ca-00905",
+        "value": "97865 3069",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00923",
-        "value": "422635473",
+        "note_id": "ca-00918",
+        "value": "59925 7205",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00925",
-        "value": "400364236",
+        "note_id": "ca-00919",
+        "value": "32090 7650",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00926",
-        "value": "379318636",
+        "note_id": "ca-00924",
+        "value": "89261 3934",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00928",
-        "value": "813667814",
+        "note_id": "ca-00932",
+        "value": "882498433",
         "type": "CA_AB_ULI"
       },
       {
         "note_id": "ca-00933",
-        "value": "90965 1261",
+        "value": "54455-4417",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00934",
-        "value": "264746723",
+        "note_id": "ca-00937",
+        "value": "232625577",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00936",
-        "value": "724843573",
+        "note_id": "ca-00939",
+        "value": "78897 4452",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00944",
-        "value": "58716 9227",
+        "note_id": "ca-00942",
+        "value": "562453673",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00953",
-        "value": "89462-8332",
+        "note_id": "ca-00947",
+        "value": "40786 8463",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00957",
-        "value": "419463008",
+        "note_id": "ca-00949",
+        "value": "901259003",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00965",
-        "value": "612831081",
+        "note_id": "ca-00958",
+        "value": "555260065",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00970",
-        "value": "629592642",
+        "note_id": "ca-00974",
+        "value": "64157-3734",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00981",
-        "value": "98936 8172",
+        "note_id": "ca-00984",
+        "value": "160599211",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00989",
-        "value": "93637-3192",
+        "note_id": "ca-00991",
+        "value": "555159998",
         "type": "CA_AB_ULI"
       },
       {
-        "note_id": "ca-00998",
-        "value": "75907 8839",
+        "note_id": "ca-00992",
+        "value": "72947 4821",
+        "type": "CA_AB_ULI"
+      },
+      {
+        "note_id": "ca-00994",
+        "value": "421376135",
         "type": "CA_AB_ULI"
       }
     ]
@@ -4210,253 +4084,248 @@
   "Presidio + pack|ca|generated": {
     "PERSON": [
       {
-        "note_id": "ca-00109",
-        "value": "Émile Campbell",
+        "note_id": "ca-00111",
+        "value": "Émile Bouchard",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00129",
-        "value": "Émile Côté",
+        "note_id": "ca-00163",
+        "value": "Émile Pham",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00157",
-        "value": "Émile Campbell",
+        "note_id": "ca-00180",
+        "value": "Étienne Gill",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00158",
-        "value": "Émile Gagnon",
+        "note_id": "ca-00189",
+        "value": "Étienne Reyes",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00192",
-        "value": "Émile Singh",
+        "note_id": "ca-00206",
+        "value": "Thanh Cardinal",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00247",
-        "value": "Émile Singh",
+        "note_id": "ca-00239",
+        "value": "Étienne Pelletier",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00249",
-        "value": "Émile Taylor",
+        "note_id": "ca-00272",
+        "value": "Émile Kowalski",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00255",
-        "value": "Émile Chen",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00266",
-        "value": "Émile Tremblay",
+        "note_id": "ca-00290",
+        "value": "Étienne Taylor",
         "type": "PERSON"
       },
       {
         "note_id": "ca-00296",
-        "value": "Émile Tremblay",
+        "value": "Océane Tran",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00322",
-        "value": "Émile Singh",
+        "note_id": "ca-00316",
+        "value": "Geneviève Côté",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00325",
-        "value": "Émile Chen",
+        "note_id": "ca-00319",
+        "value": "Thanh Lévesque",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00360",
-        "value": "Émile Fortin",
+        "note_id": "ca-00362",
+        "value": "Océane Pham",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00364",
-        "value": "Émile Chen",
+        "note_id": "ca-00371",
+        "value": "Océane Sandhu",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00365",
-        "value": "Émile Campbell",
+        "note_id": "ca-00383",
+        "value": "Étienne MacLeod",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00413",
-        "value": "Émile Gagnon",
+        "note_id": "ca-00393",
+        "value": "Océane Cardinal",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00417",
-        "value": "Émile Gagnon",
+        "note_id": "ca-00396",
+        "value": "Océane Pham",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00442",
-        "value": "Émile Chen",
+        "note_id": "ca-00409",
+        "value": "Émile Ouellet",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00472",
-        "value": "Émile Wilson",
+        "note_id": "ca-00452",
+        "value": "Océane Beaulieu",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00483",
-        "value": "Émile Bouchard",
+        "note_id": "ca-00503",
+        "value": "Océane Sandhu",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00510",
-        "value": "Émile Singh",
+        "note_id": "ca-00509",
+        "value": "Océane Morin",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00542",
-        "value": "Émile Tremblay",
+        "note_id": "ca-00521",
+        "value": "Émile Tran",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00559",
-        "value": "Émile Wilson",
+        "note_id": "ca-00534",
+        "value": "Océane Chen",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00569",
-        "value": "Émile Tremblay",
+        "note_id": "ca-00548",
+        "value": "Étienne MacLeod",
+        "type": "PERSON"
+      },
+      {
+        "note_id": "ca-00567",
+        "value": "Étienne Ibrahim",
         "type": "PERSON"
       },
       {
         "note_id": "ca-00570",
-        "value": "Émile Chen",
+        "value": "Émile Gill",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00607",
-        "value": "Émile Côté",
+        "note_id": "ca-00589",
+        "value": "Émile Hassan",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00618",
-        "value": "Émile Stewart",
+        "note_id": "ca-00598",
+        "value": "Étienne Ibrahim",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00626",
-        "value": "Émile Singh",
+        "note_id": "ca-00629",
+        "value": "Océane Tran",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00644",
-        "value": "Émile Morin",
+        "note_id": "ca-00647",
+        "value": "Étienne Ouellet",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00694",
-        "value": "Émile Gagnon",
+        "note_id": "ca-00652",
+        "value": "Étienne MacLeod",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00699",
-        "value": "Émile Wilson",
+        "note_id": "ca-00679",
+        "value": "Émile Ali",
+        "type": "PERSON"
+      },
+      {
+        "note_id": "ca-00693",
+        "value": "Océane Ali",
+        "type": "PERSON"
+      },
+      {
+        "note_id": "ca-00740",
+        "value": "Émile Tran",
         "type": "PERSON"
       },
       {
         "note_id": "ca-00741",
-        "value": "Émile Morin",
+        "value": "Émile Khan",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00781",
-        "value": "Émile Fortin",
+        "note_id": "ca-00743",
+        "value": "Émile Tran",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00788",
-        "value": "Émile Singh",
+        "note_id": "ca-00767",
+        "value": "Océane Sandhu",
+        "type": "PERSON"
+      },
+      {
+        "note_id": "ca-00790",
+        "value": "François Tremblay",
+        "type": "PERSON"
+      },
+      {
+        "note_id": "ca-00797",
+        "value": "Océane Khan",
         "type": "PERSON"
       },
       {
         "note_id": "ca-00798",
-        "value": "Émile Singh",
+        "value": "Océane Gauthier",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00804",
-        "value": "Émile Fortin",
+        "note_id": "ca-00801",
+        "value": "Océane McCarthy",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00814",
-        "value": "Émile Gagnon",
+        "note_id": "ca-00811",
+        "value": "Émile Li",
         "type": "PERSON"
       },
       {
-        "note_id": "ca-00814",
+        "note_id": "ca-00838",
+        "value": "Émile Gauthier",
+        "type": "PERSON"
+      },
+      {
+        "note_id": "ca-00879",
+        "value": "Émile Côté",
+        "type": "PERSON"
+      },
+      {
+        "note_id": "ca-00905",
+        "value": "Étienne McCarthy",
+        "type": "PERSON"
+      },
+      {
+        "note_id": "ca-00906",
+        "value": "Étienne Gill",
+        "type": "PERSON"
+      },
+      {
+        "note_id": "ca-00943",
+        "value": "Océane Tran",
+        "type": "PERSON"
+      },
+      {
+        "note_id": "ca-00959",
+        "value": "Étienne Pelletier",
+        "type": "PERSON"
+      },
+      {
+        "note_id": "ca-00985",
+        "value": "Émile Sandhu",
+        "type": "PERSON"
+      },
+      {
+        "note_id": "ca-00997",
         "value": "Émile Roy",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00862",
-        "value": "Émile Morin",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00869",
-        "value": "Émile Roy",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00871",
-        "value": "Émile Chen",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00888",
-        "value": "Émile Fortin",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00890",
-        "value": "Émile Lavoie",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00896",
-        "value": "Émile Roy",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00902",
-        "value": "Émile Tremblay",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00922",
-        "value": "Émile Taylor",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00936",
-        "value": "Émile Bouchard",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00936",
-        "value": "Émile Tremblay",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00947",
-        "value": "Émile Morin",
-        "type": "PERSON"
-      },
-      {
-        "note_id": "ca-00950",
-        "value": "Émile Bergeron",
         "type": "PERSON"
       }
     ]

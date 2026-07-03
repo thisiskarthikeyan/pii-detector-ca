@@ -88,6 +88,46 @@ def referral_letter_ca(hospital):
     ]
 
 
+def ed_triage_note_ca(hospital):
+    return [
+        f"{hospital} — EMERGENCY DEPARTMENT TRIAGE RECORD\n\n",
+        "Arrival: ", ("SLOT", "DATE"), "   CTAS level 3\n",
+        "Patient: ", ("SLOT", "PERSON"), "   Health card: ", ("SLOT", "HEALTH_ID"), "\n",
+        "Home address: ", ("SLOT", "ADDRESS"), "\n\n",
+        "Presenting complaint: ", ("SLOT", "CLINICAL"), "\n",
+        "Triage vitals stable. Assigned to acute bed; reassessment in 30 minutes.\n",
+    ]
+
+
+def consult_note_ca(hospital):
+    # PII embedded in running prose rather than labelled header lines —
+    # deliberately harder for both NER and context-word boosting.
+    return [
+        f"{hospital} — INTERNAL MEDICINE CONSULTATION\n\n",
+        "I was asked to see ", ("SLOT", "PERSON"), " on ", ("SLOT", "DATE"),
+        " regarding ", ("SLOT", "DIAGNOSIS"),
+        ". The patient's health card number ", ("SLOT", "HEALTH_ID"),
+        " was confirmed at registration.\n\n",
+        "ASSESSMENT: ", ("SLOT", "FINDINGS"), "\n\n",
+        "PLAN: Started on ", ("SLOT", "MEDICATION"),
+        ". Will follow during admission.\n\n",
+        "Dictated by Dr. ", ("SLOT", "PERSON"), "\n",
+    ]
+
+
+def lab_requisition_ca(hospital):
+    return [
+        f"{hospital} — OUTPATIENT LABORATORY REQUISITION\n\n",
+        "Patient: ", ("SLOT", "PERSON"), "\n",
+        "DOB: ", ("SLOT", "DATE"), "\n",
+        "Health number: ", ("SLOT", "HEALTH_ID"), "\n",
+        "SIN (third-party billing): ", ("SLOT", "CA_SIN"), "\n",
+        "Mailing address: ", ("SLOT", "ADDRESS"), "\n\n",
+        "Tests ordered: CBC, electrolytes, creatinine, HbA1c.\n",
+        "Ordering physician: Dr. ", ("SLOT", "PERSON"), "\n",
+    ]
+
+
 def radiology_report_in(hospital):
     return [
         f"{hospital}\nRADIOLOGY REPORT\n\n",
@@ -130,6 +170,13 @@ def referral_letter_in(hospital):
 
 
 TEMPLATES = {
-    "ca": [radiology_report_ca, discharge_summary_ca, referral_letter_ca],
+    "ca": [
+        radiology_report_ca,
+        discharge_summary_ca,
+        referral_letter_ca,
+        ed_triage_note_ca,
+        consult_note_ca,
+        lab_requisition_ca,
+    ],
     "in": [radiology_report_in, discharge_summary_in, referral_letter_in],
 }

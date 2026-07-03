@@ -40,9 +40,18 @@ CLINICAL_HISTORIES = [
     "Hematuria, rule out renal calculus.",
 ]
 
+# CA-only additions: the India corpus is frozen (see IMPLEMENTATION_PLAN.md),
+# so new filler must not perturb the IN pool and its regeneration hashes.
+CLINICAL_HISTORIES_CA = CLINICAL_HISTORIES + [
+    "Shortness of breath on exertion, two weeks.",
+    "Postoperative follow-up, day 10 after laparoscopic cholecystectomy.",
+    "Recurrent urinary tract infections.",
+    "Poorly controlled type 2 diabetes; medication review requested.",
+    "Palpitations at rest, rule out arrhythmia.",
+]
+
 # Non-PII filler slots resolved from fixed pools.
 _STATIC_POOLS = {
-    "CLINICAL": CLINICAL_HISTORIES,
     "FINDINGS": CLINICAL_FINDINGS,
     "IMPRESSION": IMPRESSIONS,
     "DIAGNOSIS": DIAGNOSES,
@@ -57,6 +66,9 @@ _IN_ID_PROOFS = ["IN_AADHAAR", "IN_VOTER_ID", "IN_PASSPORT"]
 
 def _resolve_slot(slot_type: str, locale: str, rng: random.Random):
     """Return (text, entity_type_or_None). None = not PII (clinical filler)."""
+    if slot_type == "CLINICAL":
+        pool = CLINICAL_HISTORIES_CA if locale == "ca" else CLINICAL_HISTORIES
+        return rng.choice(pool), None
     if slot_type in _STATIC_POOLS:
         return rng.choice(_STATIC_POOLS[slot_type]), None
     if slot_type == "PERSON":

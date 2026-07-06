@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-07-03T19:25:28+00:00",
+    "generated_at": "2026-07-03T22:03:55+00:00",
     "python": "3.12.13",
     "versions": {
       "presidio-analyzer": "2.2.363",
@@ -15,7 +15,8 @@
       "generated/ca.jsonl": "2fbf7bdaf2688619cf579ffd18befa540f5fe09e9e5df50fac0565edb443a741",
       "generated/in.jsonl": "33e7a4046df86e8f9e91dd90a711de32f884aced21371d966a28084146c4d3e0",
       "negatives/ca_negatives.jsonl": "bb2b1f63b7f87f2365b002c3532130b372ab94f513331cf6f5200d06b66e31a4",
-      "hard/ca_hard.jsonl": "880b94a3afac4d1dd69dac3c7da5952ba10a87707f76811bc000b1fb12c903ec"
+      "hard/ca_hard.jsonl": "880b94a3afac4d1dd69dac3c7da5952ba10a87707f76811bc000b1fb12c903ec",
+      "addresses/ca_address_eval.jsonl": "06213d503d0f649be6307ed70ef0c1a780ab025bcb074edce207acc21745802e"
     }
   },
   "runs": [
@@ -129,10 +130,10 @@
         "ADDRESS": {
           "gold": 68,
           "detected": 68,
-          "covered": 0,
+          "covered": 66,
           "recall": 1.0,
-          "strict_recall": 0.0,
-          "typed_recall": 0.0
+          "strict_recall": 0.9705882352941176,
+          "typed_recall": 0.9705882352941176
         },
         "CA_AB_ULI": {
           "gold": 27,
@@ -194,17 +195,17 @@
       "overall": {
         "gold": 499,
         "detected": 498,
-        "covered": 422,
+        "covered": 488,
         "recall": 0.9979959919839679,
         "fn_rate": 0.002004008016032066,
-        "strict_recall": 0.845691382765531,
-        "strict_fn_rate": 0.15430861723446898,
-        "typed_recall": 0.8136272545090181
+        "strict_recall": 0.9779559118236473,
+        "strict_fn_rate": 0.022044088176352727,
+        "typed_recall": 0.9458917835671342
       },
       "span_precision": {
-        "tp": 736,
-        "total": 960,
-        "precision": 0.7666666666666667
+        "tp": 804,
+        "total": 1028,
+        "precision": 0.7821011673151751
       },
       "bootstrap_ci_95": {
         "recall": [
@@ -212,12 +213,12 @@
           1.0
         ],
         "strict_recall": [
-          0.8264,
-          0.8646
+          0.965,
+          0.9901
         ],
         "precision": [
-          0.75,
-          0.7845
+          0.7656,
+          0.7996
         ]
       }
     },
@@ -331,10 +332,10 @@
         "ADDRESS": {
           "gold": 594,
           "detected": 594,
-          "covered": 0,
+          "covered": 562,
           "recall": 1.0,
-          "strict_recall": 0.0,
-          "typed_recall": 0.0
+          "strict_recall": 0.9461279461279462,
+          "typed_recall": 0.9427609427609428
         },
         "CA_AB_ULI": {
           "gold": 231,
@@ -396,17 +397,17 @@
       "overall": {
         "gold": 4516,
         "detected": 4486,
-        "covered": 3806,
+        "covered": 4368,
         "recall": 0.9933569530558016,
         "fn_rate": 0.006643046944198372,
-        "strict_recall": 0.8427812223206377,
-        "strict_fn_rate": 0.15721877767936232,
-        "typed_recall": 0.8115589016829052
+        "strict_recall": 0.9672276350752879,
+        "strict_fn_rate": 0.03277236492471214,
+        "typed_recall": 0.9355624446412755
       },
       "span_precision": {
-        "tp": 6651,
-        "total": 8621,
-        "precision": 0.7714882264238487
+        "tp": 7241,
+        "total": 9211,
+        "precision": 0.7861252849853436
       },
       "bootstrap_ci_95": {
         "recall": [
@@ -414,12 +415,12 @@
           0.9956
         ],
         "strict_recall": [
-          0.8355,
-          0.8499
+          0.9621,
+          0.9723
         ],
         "precision": [
-          0.7657,
-          0.7775
+          0.7806,
+          0.7916
         ]
       }
     },

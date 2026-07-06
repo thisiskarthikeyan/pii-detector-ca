@@ -1,0 +1,100 @@
+{
+  "metadata": {
+    "generated_at": "2026-07-03T22:11:43+00:00",
+    "python": "3.12.13",
+    "versions": {
+      "presidio-analyzer": "2.2.363",
+      "spacy": "3.8.13",
+      "en_core_web_sm": "3.8.0"
+    },
+    "nlp_model": "en_core_web_sm",
+    "score_threshold": 0.35,
+    "corpus_checksums": {
+      "gold/ca_gold.jsonl": "cf36b3500bf7d296331f5d91e52a18a8a12a0729febcd16695666d404df62454",
+      "gold/in_gold.jsonl": "849c8d08f28a3418b528f890cb5b6051f41076ea55956b93b5ad571c91297727",
+      "generated/ca.jsonl": "2fbf7bdaf2688619cf579ffd18befa540f5fe09e9e5df50fac0565edb443a741",
+      "generated/in.jsonl": "33e7a4046df86e8f9e91dd90a711de32f884aced21371d966a28084146c4d3e0",
+      "negatives/ca_negatives.jsonl": "bb2b1f63b7f87f2365b002c3532130b372ab94f513331cf6f5200d06b66e31a4",
+      "hard/ca_hard.jsonl": "880b94a3afac4d1dd69dac3c7da5952ba10a87707f76811bc000b1fb12c903ec",
+      "addresses/ca_address_eval.jsonl": "06213d503d0f649be6307ed70ef0c1a780ab025bcb074edce207acc21745802e"
+    }
+  },
+  "results": {
+    "Stock Presidio": {
+      "overall": {
+        "gold": 300,
+        "detected": 291,
+        "covered": 0,
+        "recall": 0.97,
+        "fn_rate": 0.030000000000000027,
+        "strict_recall": 0.0,
+        "strict_fn_rate": 1.0,
+        "typed_recall": 0.0
+      },
+      "address": {
+        "gold": 300,
+        "detected": 291,
+        "covered": 0,
+        "recall": 0.97,
+        "strict_recall": 0.0
+      },
+      "span_precision": {
+        "tp": 636,
+        "total": 1236,
+        "precision": 0.5145631067961165
+      },
+      "bootstrap_ci_95": {
+        "recall": [
+          0.95,
+          0.9867
+        ],
+        "strict_recall": [
+          0.0,
+          0.0
+        ],
+        "precision": [
+          0.5008,
+          0.5276
+        ]
+      }
+    },
+    "Presidio + pack": {
+      "overall": {
+        "gold": 300,
+        "detected": 300,
+        "covered": 285,
+        "recall": 1.0,
+        "fn_rate": 0.0,
+        "strict_recall": 0.95,
+        "strict_fn_rate": 0.050000000000000044,
+        "typed_recall": 0.95
+      },
+      "address": {
+        "gold": 300,
+        "detected": 300,
+        "covered": 285,
+        "recall": 1.0,
+        "strict_recall": 0.95
+      },
+      "span_precision": {
+        "tp": 1236,
+        "total": 1836,
+        "precision": 0.673202614379085
+      },
+      "bootstrap_ci_95": {
+        "recall": [
+          1.0,
+          1.0
+        ],
+        "strict_recall": [
+          0.9233,
+          0.97
+        ],
+        "precision": [
+          0.667,
+          0.6791
+        ]
+      }
+    }
+  }
+}

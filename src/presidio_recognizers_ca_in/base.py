@@ -14,19 +14,18 @@ CASE_SENSITIVE_FLAGS = re.DOTALL | re.MULTILINE
 class ValidatedPatternRecognizer(PatternRecognizer):
     """PatternRecognizer that runs a deterministic validator on each regex match.
 
-    Validators are three-state, matching Presidio's ``validate_result`` contract:
+    ``validate_result`` implements Presidio's three-state validator contract
+    (``True``/``False``/``None``) over the same validators used by
+    ``core.scan()``. See "Validator semantics" in
+    ``docs/architecture/core_contract.md`` for the canonical description of
+    what each return value means and which validators are allowed to return
+    ``True`` — that doc is the source of truth; keep this docstring in sync
+    with it (or delete this summary) rather than letting the two diverge.
 
-    - ``True`` — the value passed a real integrity check (checksum / rigid
-      structure). Presidio raises the match score to ``MAX_SCORE``.
-    - ``False`` — the value failed the check; the match is invalidated.
-    - ``None`` — no integrity check applies (plausibility-only); the pattern's
-      own score is kept, so weak patterns still need context-word boosting to
-      reach the reporting threshold.
-
-    Checksum validators (SIN, OHIP, Aadhaar, ...) return True/False.
-    Plausibility validators (Alberta ULI, ABHA) must return None/False — never
-    True — so that a bare digit string is not boosted to near-certainty without
-    supporting context.
+    Presidio-specific detail not covered by that doc: a ``True`` result here
+    raises the match score to Presidio's own ``PatternRecognizer.MAX_SCORE``
+    (1.0), since this class overrides ``validate_result`` rather than scoring
+    directly.
     """
 
     def __init__(

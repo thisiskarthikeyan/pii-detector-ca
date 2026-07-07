@@ -1,6 +1,6 @@
 # Evaluation results
 
-Generated: 2026-07-06T21:31:07+00:00 | Python 3.12.13 | presidio-analyzer 2.2.363 | spacy 3.8.13 | en_core_web_sm 3.8.0
+Generated: 2026-07-07T04:30:54+00:00 | Python 3.12.13 | presidio-analyzer 2.2.363 | spacy 3.8.13 | en_core_web_sm 3.8.0
 
 ### Stock Presidio — locale=ca, split=gold
 

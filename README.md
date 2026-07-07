@@ -39,6 +39,25 @@ pip install presidio-recognizers-ca-in
 
 ## Usage
 
+### Framework-neutral detection (no Presidio required at runtime)
+
+```python
+from presidio_recognizers_ca_in import scan
+
+matches = scan(
+    "Patient health card 9012 345 678 BD, SIN 123-456-782.",
+    locales=["ca"],
+    threshold=0.35,
+)
+for hit in matches:
+    print(hit.entity, hit.start, hit.end, hit.text, hit.score)
+```
+
+Entity rules live in `presidio_recognizers_ca_in.core` (validators, specs, scanner).
+Presidio recognizers are thin adapters over the same specs.
+
+### Presidio integration
+
 ```python
 from presidio_analyzer import AnalyzerEngine
 from presidio_recognizers_ca_in import add_recognizers
@@ -77,6 +96,7 @@ rec = UhidRecognizer(pattern=r"\bAIIMS-\d{8}\b")
 python benchmark/generate_corpus.py --locale ca --n 1000
 python benchmark/generate_corpus.py --locale in --n 1000
 python evaluation/run_eval.py --all
+python evaluation/run_core_eval.py --all
 ```
 
 All numbers in the accompanying paper are reproducible with the commands above. Synthetic data only — no real patient data is used or included.

@@ -39,50 +39,21 @@ Presidio as an optional adapter.
 Goal: make the deterministic identifier logic reusable without importing
 Presidio.
 
-- [ ] **2A.1 Define machine-readable entity specs**
-  - Add `specs/entities/*.yaml` or `specs/entities/*.json`.
-  - Each entity spec should include:
-    - entity id (`CA_SIN`, `CA_RAMQ`, `IN_AADHAAR`, etc.);
-    - locale;
-    - pattern names, regexes, scores, and case-sensitivity;
-    - validator id (`luhn`, `bc_phn_mod11`, `ramq_structural`,
-      `plausible_9_digits`, etc.);
-    - context words and context-gating policy;
-    - default transformation policy hint (`replace`, `mask`, `block`, etc.);
-    - provenance doc path.
-  - Preserve the existing behavior exactly when specs are consumed by the
-    Presidio adapter.
-
-- [ ] **2A.2 Move validators into a core module**
-  - Create a package such as `src/presidio_recognizers_ca_in/core/`.
-  - Move or re-export checksum and structural validation functions there.
-  - Keep backwards-compatible imports from `validators.py` for the current
-    Presidio code and tests.
-  - Ensure the core module imports only standard-library dependencies.
-
-- [ ] **2A.3 Add a generic Python scan API**
-  - Implement a Presidio-free scanner:
-    - input: text, locales, entity allowlist, threshold;
-    - output: spans with entity type, start, end, score, pattern name,
-      validator outcome, and evidence category.
-  - Use Python `re` initially; preserve the same regex flags as the current
-    recognizers.
-  - Implement deterministic validators and simple context-window scoring for
-    context-gated identifiers.
-  - Add tests proving parity with current Presidio pattern-level tests for
-    identifier entities.
-
-- [ ] **2A.4 Make Presidio recognizers thin adapters**
-  - Rebuild Presidio recognizers from entity specs instead of hard-coded
-    patterns and context lists.
-  - Preserve `add_recognizers()` and `get_recognizers()` public APIs.
-  - Add regression tests proving the Presidio adapter still passes all Phase 1
-    tests and evaluation gates.
-
-- [ ] **2A.5 Document engine-neutral contract**
-  - Add `docs/architecture/core_contract.md`.
-  - Define span schema, score semantics, validator semantics, context-gating
-    behavior, and compatibility expectations for non-Presidio engines.
+- [x] **2A.1 Define machine-readable entity specs** — DONE (2026-07-06).
+  Python specs in `core/specs.py` (16 entities; YAML export deferred). Each
+  entry includes patterns, scores, context, validator binding, locale, and
+  provenance doc path.
+- [x] **2A.2 Move validators into a core module** — DONE (2026-07-06).
+  `core/validators.py` is stdlib-only; top-level `validators.py` re-exports for
+  backwards compatibility.
+- [x] **2A.3 Add a generic Python scan API** — DONE (2026-07-06).
+  `core.scan()` returns `Match` spans without Presidio/spaCy. Tests in
+  `tests/test_core_scanner.py`; eval harness `evaluation/run_core_eval.py`.
+- [x] **2A.4 Make Presidio recognizers thin adapters** — DONE (2026-07-06).
+  All recognizer classes now subclass `adapters.presidio.SpecRecognizer` and
+  load from `core/specs.py`. Public Presidio APIs unchanged.
+- [x] **2A.5 Document engine-neutral contract** — DONE (2026-07-06).
+  `docs/architecture/core_contract.md`.
 
 ---
 

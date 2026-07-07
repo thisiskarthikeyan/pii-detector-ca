@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-07-03T06:42:11+00:00",
+    "generated_at": "2026-07-06T21:31:54+00:00",
     "python": "3.12.13",
     "versions": {
       "presidio-analyzer": "2.2.363",
@@ -10,11 +10,13 @@
     "nlp_model": "en_core_web_sm",
     "score_threshold": 0.35,
     "corpus_checksums": {
-      "gold/ca_gold.jsonl": "d938c3450420cb5bf9a11395c3a17ec1b4db8105dd3b394a9031ecd968b4e54f",
+      "gold/ca_gold.jsonl": "bf672562c54f6783567b980c87994afe38c2556f3b8d6cfa0aedd607d71f7582",
       "gold/in_gold.jsonl": "849c8d08f28a3418b528f890cb5b6051f41076ea55956b93b5ad571c91297727",
-      "generated/ca.jsonl": "9a5880369ad3ef5d6bc88e636de967c44fed7ecce28ab1a0b5df15f69255316e",
+      "generated/ca.jsonl": "0c04e9dd4d5bc0a62275b6574f96644865ec95d3b239e873904b429adcc7e916",
       "generated/in.jsonl": "33e7a4046df86e8f9e91dd90a711de32f884aced21371d966a28084146c4d3e0",
-      "negatives/ca_negatives.jsonl": "bb2b1f63b7f87f2365b002c3532130b372ab94f513331cf6f5200d06b66e31a4"
+      "negatives/ca_negatives.jsonl": "bb2b1f63b7f87f2365b002c3532130b372ab94f513331cf6f5200d06b66e31a4",
+      "hard/ca_hard.jsonl": "bc7581e266cd15585cbc891c6562597678b6f8128be25dfad41af3527efa362e",
+      "addresses/ca_address_eval.jsonl": "06213d503d0f649be6307ed70ef0c1a780ab025bcb074edce207acc21745802e"
     }
   },
   "results": {

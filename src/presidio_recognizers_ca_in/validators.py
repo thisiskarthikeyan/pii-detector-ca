@@ -120,11 +120,14 @@ _RAMQ_RE = re.compile(r"([A-Za-zÀ-ÖØ-öø-ÿ]{4})(\d{2})(\d{2})(\d{2})(\d{2})
 
 
 def ca_ramq_valid(value: str) -> bool:
-    """Quebec RAMQ number: 4 letters + 8 digits encoding sex-offset birth month.
+    """Quebec health insurance number (NAM): 4 letters + 8 digits.
 
-    Format: LLLL YYMM DD SS where MM is 01-12 (male) or 51-62 (female)
-    and DD is a plausible day of month. There is no public checksum, so
-    validation is structural.
+    Composition per RAMQ: first 3 letters of the surname at birth, first
+    letter of the first name, then YY MM DD of birth (50 is added to MM for
+    women) and a 2-digit administrative code. So MM is 01-12 or 51-62 and
+    DD is a day of month (validated as 01-31; RAMQ does not publish a
+    per-month day rule). There is no public checksum, so validation is
+    structural. See docs/identifiers/ca_ramq.md for provenance.
     """
     cleaned = normalize(value)
     m = _RAMQ_RE.fullmatch(cleaned)

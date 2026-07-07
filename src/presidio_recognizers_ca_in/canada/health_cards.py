@@ -57,7 +57,11 @@ class OhipRecognizer(ValidatedPatternRecognizer):
 
 
 class RamqRecognizer(ValidatedPatternRecognizer):
-    """Quebec: 4 letters + 8 digits, e.g. TREM 1234 5678 (LLLL YYMM DDSS)."""
+    """Quebec NAM: 4 letters + 8 digits, e.g. TREM 6551 2301.
+
+    Letters are 3 surname letters + first-name initial; digits encode
+    YYMMDD of birth (month +50 for women) + 2-digit administrative code.
+    """
 
     def __init__(self):
         super().__init__(

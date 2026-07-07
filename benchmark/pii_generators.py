@@ -113,13 +113,25 @@ def gen_ca_ohip(rng: random.Random) -> str:
     return formatted + version
 
 
+def _ramq_letters(last: str, first: str) -> str:
+    """RAMQ NAM letter block: 3 letters of the surname at birth + first-name
+    initial (per RAMQ's published composition). Apostrophes/hyphens are
+    dropped; surnames shorter than 3 letters are X-padded (synthetic
+    convention — RAMQ does not document the short-name rule publicly)."""
+    surname = "".join(c for c in last if c.isalpha())[:3].ljust(3, "X")
+    return (surname + first[0]).upper()
+
+
 def gen_ca_ramq(rng: random.Random) -> str:
     last = rng.choice(CANADIAN_LAST)
-    letters = (last[:3] + rng.choice("ABCDEFGJLMPRST")).upper()[:4]
-    letters = "".join(c for c in letters if c.isalpha()).ljust(4, "X")
+    first = gen_ca_first_name(rng)
+    letters = _ramq_letters(last, first)
     yy = f"{rng.randint(30, 99):02d}"
+    # Month of birth, +50 for women (RAMQ sex-offset encoding).
     month = rng.randint(1, 12) + rng.choice([0, 50])
     dd = f"{rng.randint(1, 28):02d}"
+    # Final two digits: RAMQ administrative code (distinguishes people whose
+    # first 10 characters collide).
     seq = f"{rng.randint(1, 99):02d}"
     digits = f"{yy}{month:02d}{dd}{seq}"
     if rng.random() < 0.5:
@@ -233,15 +245,17 @@ def _statcan_first_names() -> tuple[list[str], list[int]]:
     return _STATCAN_CACHE
 
 
+def gen_ca_first_name(rng: random.Random) -> str:
+    if rng.random() < _ACCENT_SUPPLEMENT_RATE:
+        return rng.choice(CANADIAN_FIRST_ACCENTED)
+    names, cum = _statcan_first_names()
+    return rng.choices(names, cum_weights=cum, k=1)[0]
+
+
 def gen_person(rng: random.Random, locale: str) -> str:
     if locale == "in":
         return f"{rng.choice(INDIAN_FIRST)} {rng.choice(INDIAN_LAST)}"
-    if rng.random() < _ACCENT_SUPPLEMENT_RATE:
-        first = rng.choice(CANADIAN_FIRST_ACCENTED)
-    else:
-        names, cum = _statcan_first_names()
-        first = rng.choices(names, cum_weights=cum, k=1)[0]
-    return f"{first} {rng.choice(CANADIAN_LAST)}"
+    return f"{gen_ca_first_name(rng)} {rng.choice(CANADIAN_LAST)}"
 
 
 def gen_date(rng: random.Random) -> str:

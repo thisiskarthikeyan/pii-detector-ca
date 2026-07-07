@@ -229,16 +229,38 @@ Applies to both locales; build before deepening either track.
   - Per-province recognizers (or documented format profiles) for SK, MB, NS, NB, NL,
     PE, YT, NT, NU — replacing/augmenting the generic context-gated fallback. Verify
     each format against official sources.
-- [ ] **3.6 RAMQ realism** — generator: 3 surname letters + 1 first-name letter;
-  verify structural rules (sex-offset month, day ranges) against RAMQ documentation.
+- [x] **3.6 RAMQ realism** — DONE (2026-07-06). `gen_ca_ramq` now builds the
+  letter block per RAMQ's published composition: 3 surname letters (shared
+  `_ramq_letters` helper; apostrophes/hyphens dropped, X-padded) + a
+  first-name initial drawn from the census-weighted first-name distribution
+  (new `gen_ca_first_name`, shared with `gen_person`). Hard-split `_raw_ramq`
+  uses the same helper over the surname pool. Structural rules verified
+  against RAMQ documentation (card-usage page + pharmacists' manual): 12-char
+  NAM = 3 surname letters + first-name initial + YY + MM (+50 for women, so
+  01-12/51-62) + DD + 2-digit administrative code — validator's month rule
+  confirmed; day stays 01-31 (no per-month rule published); final two digits
+  unvalidated (no public checksum; "chiffre-preuve" algorithm not public).
+  Findings recorded in `docs/identifiers/ca_ramq.md`. CA corpus + hard split
+  regenerated (IN hashes unchanged), manifest updated, full eval re-run: all
+  identifiers still 1.000, all 53 gate checks pass (hard-split
+  unusual_separator 0.64 and ocr_confusable 0.48 drifted up with the new
+  letter blocks; floors unchanged).
 - [ ] **3.7 French-language Quebec notes** — **DEFERRED (post-1.0 release)**
   - French clinical note templates + French context-word evaluation (currently the
     French context terms are implemented but never exercised). Requires a French
     spaCy model in the eval matrix. Moved out of the initial Canada release scope;
     revisit after Phase 5/6 or as a follow-up release.
-- [ ] **3.8 CA identifier spec provenance docs**
-  - `docs/identifiers/ca_*.md`: authoritative source (Service Canada, RAMQ, BC HIBC,
-    Alberta Health, provincial ministries), exact rule implemented, known gaps.
+- [x] **3.8 CA identifier spec provenance docs** — DONE (2026-07-06).
+  `docs/identifiers/` (README index + 8 docs: SIN, OHIP, RAMQ, BC PHN, AB ULI,
+  generic health card, postal code, street address), each recording the
+  authoritative source (Service Canada, Ontario MOH HCV manual + technical
+  spec, RAMQ, BC MoH Software Compliance Standards check-digit routine,
+  Alberta Netcare/AHS, Canada Post), the exact rule implemented
+  (pattern + validator), and known gaps. Where a rule has no official public
+  spec (SIN Luhn, ULI structure, RAMQ short-name convention) the doc says so
+  explicitly. Verification findings: OHIP HCV schema requires first digit
+  non-zero (not enforced by our validator — noted as gap); BC PHN weights
+  and 10/11-invalid rule match the published routine exactly.
 - [x] **3.9 CA_STREET_ADDRESS recognizer + non-circular address evaluation** — DONE
   - Motivation: ADDRESS was the dominant leak (strict recall 0.000 on all CA gold
     addresses — spaCy masked the city, CA_POSTAL_CODE the code, civic + street

@@ -48,6 +48,10 @@ from presidio_recognizers_ca_in.validators import (  # noqa: E402
     luhn_check_digit,
 )
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from pii_generators import CANADIAN_LAST, _ramq_letters  # noqa: E402
+
 VARIANTS = [
     "control",
     "no_context",
@@ -72,7 +76,8 @@ def _raw_ohip(rng: random.Random) -> str:
 
 
 def _raw_ramq(rng: random.Random) -> str:
-    letters = "".join(rng.choices("ABCDEFGHJLMNPRST", k=4))
+    # Realistic letter block: 3 surname letters + first-name initial (3.6).
+    letters = _ramq_letters(rng.choice(CANADIAN_LAST), rng.choice("AEJLMS"))
     yy = f"{rng.randint(30, 99):02d}"
     month = rng.randint(1, 12) + rng.choice([0, 50])
     dd = f"{rng.randint(1, 28):02d}"

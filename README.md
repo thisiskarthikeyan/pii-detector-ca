@@ -1,6 +1,6 @@
 # presidio-recognizers-ca-in
 
-Checksum-validated [Microsoft Presidio](https://microsoft.github.io/presidio/) recognizers for **Canadian** and **Indian** identifiers, plus a synthetic clinical-text benchmark and evaluation harness.
+Checksum-validated [Microsoft Presidio](https://microsoft.github.io/presidio/) recognizers for **Canadian** and identifiers, plus a synthetic clinical-text benchmark and evaluation harness. The project has placeholders to add **Indian** identifiers in subsequent phases if prioritized
 
 Most clinical de-identification tooling is trained and tested on US identifier formats. This package closes the locale gap for two underserved regions with deterministic, checksum-backed recognizers that plug directly into any Presidio `AnalyzerEngine`.
 

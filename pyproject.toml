@@ -1,7 +1,7 @@
 [project]
 name = "presidio-recognizers-ca-in"
 version = "0.1.0"
-description = "Checksum-validated Microsoft Presidio recognizers for Canadian and Indian identifiers, with a synthetic clinical-text benchmark"
+description = "Checksum-validated Microsoft Presidio recognizers for Canadian health and government identifiers (Indian identifiers experimental), with a synthetic clinical-text benchmark"
 readme = "README.md"
 license = { file = "LICENSE" }
 authors = [{ name = "Karthik" }]
@@ -12,7 +12,11 @@ classifiers = [
     "Intended Audience :: Healthcare Industry",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Topic :: Text Processing :: Linguistic",
 ]
 dependencies = [
@@ -32,7 +36,10 @@ dev = [
 ]
 
 [project.urls]
-Repository = "https://github.com/karthik/presidio-recognizers-ca-in"
+Homepage = "https://github.com/thisiskarthikeyan/pii-detector"
+Repository = "https://github.com/thisiskarthikeyan/pii-detector"
+Issues = "https://github.com/thisiskarthikeyan/pii-detector/issues"
+Changelog = "https://github.com/thisiskarthikeyan/pii-detector/blob/main/CHANGELOG.md"
 
 [build-system]
 requires = ["hatchling"]

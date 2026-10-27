@@ -17,6 +17,12 @@ First public release, Canada only. (Pre-release history: the package was develop
 - Evaluation harness: leak-oriented and strict recall, bootstrap 95% CIs, three baselines (stock Presidio, Presidio with its CA built-ins enabled, Presidio + pack), and a CI threshold gate in a locked environment.
 - Provenance docs for every identifier (`docs/identifiers/`), a core contract doc, and a non-technical user manual.
 
+### Changed (pre-release)
+
+- `CA_AB_ULI` now requires Alberta-specific context ("alberta", "uli", "ahcip", "netcare"). A 9-digit number under generic "health card" wording is reported as `CA_HEALTH_CARD` only; the generic recognizer gained separated-form patterns (5-4, 3-3-3, 4-3-3) so those renderings are still covered. ULI typed-exact recall on the benchmark is 0 by design (values are labelled under generic headers); leak recall stays 1.0.
+- "card" is not a context token: it boosted credit-card chunks ("payment card on file") by +200 FPs/300 notes on the negatives corpus.
+- `evaluation/run_eval.py` reports a third system, "Presidio + CA builtins", and `results_en_core_web_lg.*` are regenerated for the Canada-only corpus.
+
 ### Fixed (pre-release)
 
 - `CA_OHIP`: the separated pattern was compiled case-insensitively, so a lowercase English word following the number ("… 897 on file") was absorbed into the span as a bogus version code at score 1.0. Version codes are now matched case-sensitively, and the validator enforces the MOH HCV schema's non-zero first digit.

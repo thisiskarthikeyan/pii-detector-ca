@@ -21,9 +21,14 @@ item 3.5.
   never fired on "health card" text at all.)
 - No validator: with no published structure there is nothing deterministic
   to check.
-- Overlap: under "health card" context a 9-digit number surfaces as both
-  `CA_AB_ULI` and `CA_HEALTH_CARD`. For masking this is harmless; for typed
-  output, prefer the province-specific label when known.
+- Separated forms (`\d{3,6}[- ]\d{3,6}`, `\d{3,4}[- ]\d{3}[- ]\d{3,4}`) are
+  matched at the same floor score so the 5-4 Alberta rendering and 3-3-3 /
+  4-3-3 renderings are covered.
+- Attribution: a 9-digit number under generic "health card" wording is
+  reported as `CA_HEALTH_CARD` only; `CA_AB_ULI` requires Alberta-specific
+  context ("alberta", "uli", "ahcip", "netcare"). In the benchmark, ULI
+  values are labelled under generic headers, so `CA_AB_ULI` typed-exact
+  recall is 0 by design while leak recall stays 1.0 via this recognizer.
 
 ## Known gaps
 

@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-10-27T03:07:35+00:00",
+    "generated_at": "2026-10-27T03:26:32+00:00",
     "python": "3.12.3",
     "versions": {
       "presidio-analyzer": "2.2.365",
@@ -426,24 +426,24 @@
         },
         "unusual_separator": {
           "gold": 50,
-          "detected": 28,
+          "detected": 30,
           "covered": 20,
-          "recall": 0.56,
+          "recall": 0.6,
           "strict_recall": 0.4
         },
         "line_wrap": {
           "gold": 50,
-          "detected": 20,
+          "detected": 27,
           "covered": 0,
-          "recall": 0.4,
+          "recall": 0.54,
           "strict_recall": 0.0
         },
         "ocr_confusable": {
           "gold": 50,
-          "detected": 20,
-          "covered": 0,
-          "recall": 0.4,
-          "strict_recall": 0.0
+          "detected": 24,
+          "covered": 1,
+          "recall": 0.48,
+          "strict_recall": 0.02
         },
         "dictation": {
           "gold": 50,
@@ -507,12 +507,10 @@
         },
         "CA_AB_ULI|unusual_separator": {
           "gold": 10,
-          "detected": 5,
+          "detected": 7,
           "covered": 2,
           "missed": [
             "49728.5376",
-            "678 85551 9",
-            "307 74768 4",
             "98432/5187",
             "98388/0306"
           ]
@@ -531,17 +529,9 @@
         },
         "CA_BC_PHN|line_wrap": {
           "gold": 10,
-          "detected": 3,
+          "detected": 10,
           "covered": 0,
-          "missed": [
-            "9750 309\n905",
-            "9047 796\n492",
-            "9493\n098 183",
-            "9155 720\n029",
-            "9698\n205 467",
-            "9425\n571 653",
-            "9996 734\n131"
-          ]
+          "missed": []
         },
         "CA_BC_PHN|no_context": {
           "gold": 10,
@@ -551,15 +541,11 @@
         },
         "CA_BC_PHN|ocr_confusable": {
           "gold": 10,
-          "detected": 4,
-          "covered": 0,
+          "detected": 8,
+          "covered": 1,
           "missed": [
             "9228 l40 444",
-            "9323 O43 581",
-            "9483 909 9l8",
-            "972l 252 596",
-            "9289 641 7l3",
-            "9O01 601 244"
+            "9323 O43 581"
           ]
         },
         "CA_BC_PHN|unusual_separator": {

@@ -1,0 +1,622 @@
+{
+  "metadata": {
+    "generated_at": "2026-10-27T03:25:15+00:00",
+    "python": "3.12.3",
+    "versions": {
+      "presidio-analyzer": "2.2.365",
+      "spacy": "3.8.18",
+      "en_core_web_lg": "3.8.0"
+    },
+    "nlp_model": "en_core_web_lg",
+    "score_threshold": 0.35,
+    "corpus_checksums": {
+      "gold/ca_gold.jsonl": "2d8c507488a1cb06d7362f7b3a002ec19990d28b2adead909a19d2f3b0f51fe6",
+      "generated/ca.jsonl": "f87a7c2599bca71e17a961718828da92a1bb0d57b00ef63633366b8141606c65",
+      "negatives/ca_negatives.jsonl": "bb2b1f63b7f87f2365b002c3532130b372ab94f513331cf6f5200d06b66e31a4",
+      "hard/ca_hard.jsonl": "e5c296c7f9e42c9baec1eb6852e400d23ff9e315855edd46172b483eb0252d1b",
+      "addresses/ca_address_eval.jsonl": "06213d503d0f649be6307ed70ef0c1a780ab025bcb074edce207acc21745802e"
+    }
+  },
+  "runs": [
+    {
+      "system": "Stock Presidio",
+      "split": "gold",
+      "nlp_model": "en_core_web_lg",
+      "entities": {
+        "ADDRESS": {
+          "gold": 65,
+          "detected": 63,
+          "covered": 0,
+          "recall": 0.9692307692307692,
+          "strict_recall": 0.0,
+          "typed_recall": 0.0
+        },
+        "CA_AB_ULI": {
+          "gold": 22,
+          "detected": 7,
+          "covered": 7,
+          "recall": 0.3181818181818182,
+          "strict_recall": 0.3181818181818182,
+          "typed_recall": 0.0
+        },
+        "CA_BC_PHN": {
+          "gold": 24,
+          "detected": 24,
+          "covered": 24,
+          "recall": 1.0,
+          "strict_recall": 1.0,
+          "typed_recall": 0.0
+        },
+        "CA_OHIP": {
+          "gold": 26,
+          "detected": 18,
+          "covered": 7,
+          "recall": 0.6923076923076923,
+          "strict_recall": 0.2692307692307692,
+          "typed_recall": 0.0
+        },
+        "CA_RAMQ": {
+          "gold": 28,
+          "detected": 6,
+          "covered": 1,
+          "recall": 0.21428571428571427,
+          "strict_recall": 0.03571428571428571,
+          "typed_recall": 0.0
+        },
+        "CA_SIN": {
+          "gold": 29,
+          "detected": 1,
+          "covered": 1,
+          "recall": 0.034482758620689655,
+          "strict_recall": 0.034482758620689655,
+          "typed_recall": 0.0
+        },
+        "DATE": {
+          "gold": 132,
+          "detected": 132,
+          "covered": 125,
+          "recall": 1.0,
+          "strict_recall": 0.946969696969697,
+          "typed_recall": 0.9393939393939394
+        },
+        "PERSON": {
+          "gold": 167,
+          "detected": 165,
+          "covered": 163,
+          "recall": 0.9880239520958084,
+          "strict_recall": 0.9760479041916168,
+          "typed_recall": 0.8922155688622755
+        }
+      },
+      "overall": {
+        "gold": 493,
+        "detected": 416,
+        "covered": 328,
+        "recall": 0.8438133874239351,
+        "fn_rate": 0.15618661257606492,
+        "strict_recall": 0.665314401622718,
+        "strict_fn_rate": 0.33468559837728196,
+        "typed_recall": 0.5537525354969574
+      },
+      "span_precision": {
+        "tp": 521,
+        "total": 741,
+        "precision": 0.7031039136302294
+      },
+      "bootstrap_ci_95": {
+        "recall": [
+          0.8165,
+          0.8719
+        ],
+        "strict_recall": [
+          0.6318,
+          0.6969
+        ],
+        "precision": [
+          0.6795,
+          0.7295
+        ]
+      }
+    },
+    {
+      "system": "Presidio + CA builtins",
+      "split": "gold",
+      "nlp_model": "en_core_web_lg",
+      "entities": {
+        "ADDRESS": {
+          "gold": 65,
+          "detected": 63,
+          "covered": 0,
+          "recall": 0.9692307692307692,
+          "strict_recall": 0.0,
+          "typed_recall": 0.0
+        },
+        "CA_AB_ULI": {
+          "gold": 22,
+          "detected": 7,
+          "covered": 7,
+          "recall": 0.3181818181818182,
+          "strict_recall": 0.3181818181818182,
+          "typed_recall": 0.0
+        },
+        "CA_BC_PHN": {
+          "gold": 24,
+          "detected": 24,
+          "covered": 24,
+          "recall": 1.0,
+          "strict_recall": 1.0,
+          "typed_recall": 0.0
+        },
+        "CA_OHIP": {
+          "gold": 26,
+          "detected": 18,
+          "covered": 7,
+          "recall": 0.6923076923076923,
+          "strict_recall": 0.2692307692307692,
+          "typed_recall": 0.0
+        },
+        "CA_RAMQ": {
+          "gold": 28,
+          "detected": 6,
+          "covered": 1,
+          "recall": 0.21428571428571427,
+          "strict_recall": 0.03571428571428571,
+          "typed_recall": 0.0
+        },
+        "CA_SIN": {
+          "gold": 29,
+          "detected": 29,
+          "covered": 29,
+          "recall": 1.0,
+          "strict_recall": 1.0,
+          "typed_recall": 1.0
+        },
+        "DATE": {
+          "gold": 132,
+          "detected": 132,
+          "covered": 125,
+          "recall": 1.0,
+          "strict_recall": 0.946969696969697,
+          "typed_recall": 0.9393939393939394
+        },
+        "PERSON": {
+          "gold": 167,
+          "detected": 165,
+          "covered": 163,
+          "recall": 0.9880239520958084,
+          "strict_recall": 0.9760479041916168,
+          "typed_recall": 0.8922155688622755
+        }
+      },
+      "overall": {
+        "gold": 493,
+        "detected": 444,
+        "covered": 356,
+        "recall": 0.9006085192697769,
+        "fn_rate": 0.09939148073022308,
+        "strict_recall": 0.7221095334685599,
+        "strict_fn_rate": 0.2778904665314401,
+        "typed_recall": 0.6125760649087221
+      },
+      "span_precision": {
+        "tp": 550,
+        "total": 770,
+        "precision": 0.7142857142857143
+      },
+      "bootstrap_ci_95": {
+        "recall": [
+          0.8784,
+          0.9249
+        ],
+        "strict_recall": [
+          0.6949,
+          0.75
+        ],
+        "precision": [
+          0.6922,
+          0.7397
+        ]
+      }
+    },
+    {
+      "system": "Presidio + pack",
+      "split": "gold",
+      "nlp_model": "en_core_web_lg",
+      "entities": {
+        "ADDRESS": {
+          "gold": 65,
+          "detected": 65,
+          "covered": 61,
+          "recall": 1.0,
+          "strict_recall": 0.9384615384615385,
+          "typed_recall": 0.9076923076923077
+        },
+        "CA_AB_ULI": {
+          "gold": 22,
+          "detected": 22,
+          "covered": 22,
+          "recall": 1.0,
+          "strict_recall": 1.0,
+          "typed_recall": 0.0
+        },
+        "CA_BC_PHN": {
+          "gold": 24,
+          "detected": 24,
+          "covered": 24,
+          "recall": 1.0,
+          "strict_recall": 1.0,
+          "typed_recall": 1.0
+        },
+        "CA_OHIP": {
+          "gold": 26,
+          "detected": 26,
+          "covered": 26,
+          "recall": 1.0,
+          "strict_recall": 1.0,
+          "typed_recall": 1.0
+        },
+        "CA_RAMQ": {
+          "gold": 28,
+          "detected": 28,
+          "covered": 28,
+          "recall": 1.0,
+          "strict_recall": 1.0,
+          "typed_recall": 1.0
+        },
+        "CA_SIN": {
+          "gold": 29,
+          "detected": 29,
+          "covered": 29,
+          "recall": 1.0,
+          "strict_recall": 1.0,
+          "typed_recall": 1.0
+        },
+        "DATE": {
+          "gold": 132,
+          "detected": 132,
+          "covered": 125,
+          "recall": 1.0,
+          "strict_recall": 0.946969696969697,
+          "typed_recall": 0.9393939393939394
+        },
+        "PERSON": {
+          "gold": 167,
+          "detected": 165,
+          "covered": 163,
+          "recall": 0.9880239520958084,
+          "strict_recall": 0.9760479041916168,
+          "typed_recall": 0.8922155688622755
+        }
+      },
+      "overall": {
+        "gold": 493,
+        "detected": 491,
+        "covered": 478,
+        "recall": 0.9959432048681541,
+        "fn_rate": 0.0040567951318458695,
+        "strict_recall": 0.9695740365111561,
+        "strict_fn_rate": 0.030425963488843855,
+        "typed_recall": 0.8904665314401623
+      },
+      "span_precision": {
+        "tp": 834,
+        "total": 1054,
+        "precision": 0.7912713472485768
+      },
+      "bootstrap_ci_95": {
+        "recall": [
+          0.9898,
+          1.0
+        ],
+        "strict_recall": [
+          0.9549,
+          0.982
+        ],
+        "precision": [
+          0.7736,
+          0.8108
+        ]
+      }
+    },
+    {
+      "system": "Stock Presidio",
+      "split": "generated",
+      "nlp_model": "en_core_web_lg",
+      "entities": {
+        "ADDRESS": {
+          "gold": 637,
+          "detected": 628,
+          "covered": 0,
+          "recall": 0.9858712715855573,
+          "strict_recall": 0.0,
+          "typed_recall": 0.0
+        },
+        "CA_AB_ULI": {
+          "gold": 255,
+          "detected": 85,
+          "covered": 80,
+          "recall": 0.3333333333333333,
+          "strict_recall": 0.3137254901960784,
+          "typed_recall": 0.0
+        },
+        "CA_BC_PHN": {
+          "gold": 209,
+          "detected": 209,
+          "covered": 209,
+          "recall": 1.0,
+          "strict_recall": 1.0,
+          "typed_recall": 0.0
+        },
+        "CA_OHIP": {
+          "gold": 205,
+          "detected": 133,
+          "covered": 35,
+          "recall": 0.6487804878048781,
+          "strict_recall": 0.17073170731707318,
+          "typed_recall": 0.0
+        },
+        "CA_RAMQ": {
+          "gold": 231,
+          "detected": 77,
+          "covered": 22,
+          "recall": 0.3333333333333333,
+          "strict_recall": 0.09523809523809523,
+          "typed_recall": 0.0
+        },
+        "CA_SIN": {
+          "gold": 313,
+          "detected": 13,
+          "covered": 11,
+          "recall": 0.04153354632587859,
+          "strict_recall": 0.03514376996805112,
+          "typed_recall": 0.0
+        },
+        "DATE": {
+          "gold": 1178,
+          "detected": 1178,
+          "covered": 1119,
+          "recall": 1.0,
+          "strict_recall": 0.9499151103565365,
+          "typed_recall": 0.9397283531409168
+        },
+        "PERSON": {
+          "gold": 1484,
+          "detected": 1454,
+          "covered": 1447,
+          "recall": 0.9797843665768194,
+          "strict_recall": 0.9750673854447439,
+          "typed_recall": 0.8685983827493261
+        }
+      },
+      "overall": {
+        "gold": 4512,
+        "detected": 3777,
+        "covered": 2923,
+        "recall": 0.8371010638297872,
+        "fn_rate": 0.16289893617021278,
+        "strict_recall": 0.6478280141843972,
+        "strict_fn_rate": 0.35217198581560283,
+        "typed_recall": 0.5310283687943262
+      },
+      "span_precision": {
+        "tp": 4732,
+        "total": 6740,
+        "precision": 0.7020771513353116
+      },
+      "bootstrap_ci_95": {
+        "recall": [
+          0.8283,
+          0.8457
+        ],
+        "strict_recall": [
+          0.6371,
+          0.6586
+        ],
+        "precision": [
+          0.6949,
+          0.7089
+        ]
+      }
+    },
+    {
+      "system": "Presidio + CA builtins",
+      "split": "generated",
+      "nlp_model": "en_core_web_lg",
+      "entities": {
+        "ADDRESS": {
+          "gold": 637,
+          "detected": 628,
+          "covered": 0,
+          "recall": 0.9858712715855573,
+          "strict_recall": 0.0,
+          "typed_recall": 0.0
+        },
+        "CA_AB_ULI": {
+          "gold": 255,
+          "detected": 85,
+          "covered": 80,
+          "recall": 0.3333333333333333,
+          "strict_recall": 0.3137254901960784,
+          "typed_recall": 0.0
+        },
+        "CA_BC_PHN": {
+          "gold": 209,
+          "detected": 209,
+          "covered": 209,
+          "recall": 1.0,
+          "strict_recall": 1.0,
+          "typed_recall": 0.0
+        },
+        "CA_OHIP": {
+          "gold": 205,
+          "detected": 133,
+          "covered": 35,
+          "recall": 0.6487804878048781,
+          "strict_recall": 0.17073170731707318,
+          "typed_recall": 0.0
+        },
+        "CA_RAMQ": {
+          "gold": 231,
+          "detected": 77,
+          "covered": 22,
+          "recall": 0.3333333333333333,
+          "strict_recall": 0.09523809523809523,
+          "typed_recall": 0.0
+        },
+        "CA_SIN": {
+          "gold": 313,
+          "detected": 313,
+          "covered": 313,
+          "recall": 1.0,
+          "strict_recall": 1.0,
+          "typed_recall": 1.0
+        },
+        "DATE": {
+          "gold": 1178,
+          "detected": 1178,
+          "covered": 1119,
+          "recall": 1.0,
+          "strict_recall": 0.9499151103565365,
+          "typed_recall": 0.9397283531409168
+        },
+        "PERSON": {
+          "gold": 1484,
+          "detected": 1454,
+          "covered": 1447,
+          "recall": 0.9797843665768194,
+          "strict_recall": 0.9750673854447439,
+          "typed_recall": 0.8685983827493261
+        }
+      },
+      "overall": {
+        "gold": 4512,
+        "detected": 4077,
+        "covered": 3225,
+        "recall": 0.9035904255319149,
+        "fn_rate": 0.09640957446808507,
+        "strict_recall": 0.7147606382978723,
+        "strict_fn_rate": 0.2852393617021277,
+        "typed_recall": 0.6003989361702128
+      },
+      "span_precision": {
+        "tp": 5045,
+        "total": 7053,
+        "precision": 0.715298454558344
+      },
+      "bootstrap_ci_95": {
+        "recall": [
+          0.8965,
+          0.9103
+        ],
+        "strict_recall": [
+          0.7062,
+          0.7232
+        ],
+        "precision": [
+          0.7082,
+          0.7217
+        ]
+      }
+    },
+    {
+      "system": "Presidio + pack",
+      "split": "generated",
+      "nlp_model": "en_core_web_lg",
+      "entities": {
+        "ADDRESS": {
+          "gold": 637,
+          "detected": 637,
+          "covered": 604,
+          "recall": 1.0,
+          "strict_recall": 0.9481946624803768,
+          "typed_recall": 0.9372056514913658
+        },
+        "CA_AB_ULI": {
+          "gold": 255,
+          "detected": 255,
+          "covered": 255,
+          "recall": 1.0,
+          "strict_recall": 1.0,
+          "typed_recall": 0.01568627450980392
+        },
+        "CA_BC_PHN": {
+          "gold": 209,
+          "detected": 209,
+          "covered": 209,
+          "recall": 1.0,
+          "strict_recall": 1.0,
+          "typed_recall": 1.0
+        },
+        "CA_OHIP": {
+          "gold": 205,
+          "detected": 205,
+          "covered": 205,
+          "recall": 1.0,
+          "strict_recall": 1.0,
+          "typed_recall": 1.0
+        },
+        "CA_RAMQ": {
+          "gold": 231,
+          "detected": 231,
+          "covered": 231,
+          "recall": 1.0,
+          "strict_recall": 1.0,
+          "typed_recall": 1.0
+        },
+        "CA_SIN": {
+          "gold": 313,
+          "detected": 313,
+          "covered": 313,
+          "recall": 1.0,
+          "strict_recall": 1.0,
+          "typed_recall": 1.0
+        },
+        "DATE": {
+          "gold": 1178,
+          "detected": 1178,
+          "covered": 1119,
+          "recall": 1.0,
+          "strict_recall": 0.9499151103565365,
+          "typed_recall": 0.9397283531409168
+        },
+        "PERSON": {
+          "gold": 1484,
+          "detected": 1454,
+          "covered": 1447,
+          "recall": 0.9797843665768194,
+          "strict_recall": 0.9750673854447439,
+          "typed_recall": 0.8685983827493261
+        }
+      },
+      "overall": {
+        "gold": 4512,
+        "detected": 4482,
+        "covered": 4383,
+        "recall": 0.9933510638297872,
+        "fn_rate": 0.0066489361702127825,
+        "strict_recall": 0.9714095744680851,
+        "strict_fn_rate": 0.02859042553191493,
+        "typed_recall": 0.8765514184397163
+      },
+      "span_precision": {
+        "tp": 7728,
+        "total": 9736,
+        "precision": 0.7937551355792933
+      },
+      "bootstrap_ci_95": {
+        "recall": [
+          0.991,
+          0.9956
+        ],
+        "strict_recall": [
+          0.9668,
+          0.9761
+        ],
+        "precision": [
+          0.7884,
+          0.7986
+        ]
+      }
+    }
+  ]
+}

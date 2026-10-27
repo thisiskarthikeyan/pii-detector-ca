@@ -3,8 +3,9 @@ message: "If you use this software, please cite it using the metadata below."
 title: "pii-detector-ca: Checksum-validated recognizers and a synthetic benchmark for Canadian clinical de-identification"
 type: software
 authors:
-  - given-names: Karthik
-    # TODO: family-names and orcid before tagging v0.1.0 / minting the Zenodo DOI.
+  - family-names: Murugaiah
+    given-names: Karthikeyan
+    # TODO: orcid before minting the Zenodo DOI.
     email: blue1agave@gmail.com
     alias: thisiskarthikeyan
 version: 0.1.0

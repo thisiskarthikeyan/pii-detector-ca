@@ -1,6 +1,6 @@
 # Core scanner evaluation
 
-Generated: 2026-10-27T03:07:42+00:00 | engine=core.scan
+Generated: 2026-10-27T03:26:39+00:00 | engine=core.scan
 
 ### Core scanner — split=gold
 

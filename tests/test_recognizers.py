@@ -157,10 +157,24 @@ class TestEngineContext:
         res = analyzer.analyze(text=text, language="en", score_threshold=self.THRESHOLD)
         return {r.entity_type for r in res}
 
-    def test_health_card_context_surfaces_generic_and_uli(self, analyzer):
-        hits = self._hits(analyzer, "Health card 574839216 recorded at registration.")
-        assert "CA_AB_ULI" in hits
-        assert "CA_HEALTH_CARD" in hits
+    def test_generic_health_card_context_is_not_attributed_to_alberta(self, analyzer):
+        # "health card" alone cannot attribute a 9-digit number to a province:
+        # report the generic label only, never CA_AB_ULI.
+        for text in [
+            "Health card 574839216 recorded at registration.",
+            "Health card 57483-9216 recorded at registration.",
+        ]:
+            hits = self._hits(analyzer, text)
+            assert "CA_HEALTH_CARD" in hits, text
+            assert "CA_AB_ULI" not in hits, text
+
+    def test_alberta_context_surfaces_uli(self, analyzer):
+        for text in [
+            "Alberta health card 574839216 recorded.",
+            "ULI 57483-9216 on file.",
+            "AHCIP number 574839216.",
+        ]:
+            assert "CA_AB_ULI" in self._hits(analyzer, text), text
 
     def test_french_context_surfaces_generic(self, analyzer):
         hits = self._hits(analyzer, "Numéro d'assurance maladie 574839216 présenté.")

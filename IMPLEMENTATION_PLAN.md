@@ -329,9 +329,8 @@ the two packages share validators, the spec schema and the Presidio adapter.
   template slot → eval threshold → spec doc.
 - [x] **5.3 SECURITY.md** — DONE (2026-10-27); uses GitHub private vulnerability
   reporting, which must be enabled in repo settings once public. private disclosure channel for recall/leak findings.
-- [x] **5.4 Housekeeping** — DONE (2026-10-27). Email/maintainer filled; **family
-  name and ORCID still missing** in `pyproject.toml` and `CITATION.cff` — fill
-  before tagging.
+- [x] **5.4 Housekeeping** — DONE (2026-10-27). Author "Karthikeyan Murugaiah" +
+  email in `pyproject.toml`/`CITATION.cff`; ORCID still to add before the DOI.
 - [x] **5.4a Rename to `pii-detector-ca`, remove India** — DONE (2026-10-27).
   Distribution `pii-detector-ca`, import `pii_detector_ca`; `locales=` removed
   from the API; `exclude=` added to `add_recognizers` for the Presidio built-in
@@ -349,22 +348,31 @@ pre-Phase-2/3 numbers, 15 recognizers / 3 note types) and must be rewritten, not
 patched. Headline contribution: provincial health-card coverage + benchmark
 methodology; SIN/postal are upstream now (see top of file).
 
-- [ ] **6.1 Regenerate all §5 tables** from current results; add CIs, strict
-  leak metric, FP-rate table, "Presidio + CA builtins" column, `en_core_web_lg`
-  baseline column (regenerate `results_en_core_web_lg.*` — deleted at the rename).
-- [ ] **6.2 Acknowledge benchmark circularity** in §4/§6; position the stock-Presidio
-  gap as the robust finding; use FP/hard splits as non-circular evidence.
-- [ ] **6.3 Ethics / broader-impact statement** — synthetic data only, checksum-valid
-  collision caveat, dual-use note, not compliance certification.
+- [x] **6.1 Regenerate all §5 tables** — DONE (2026-10-27). `paper/paper.md`
+  rewritten (v0.2) from current results: three baselines incl. "Presidio + CA
+  builtins", CIs, strict recall, negatives, adversarial, address holdout, lg,
+  seed variance, collision floors. Structured for JAMIA Open *Research and
+  Applications* (≤ 4,000 words).
+- [ ] **6.1a pyDeid baseline run** — pyDeid (Sundrelingam et al., JAMIA Open
+  2025; MIT; `GEMINI-Medicine/pyDeid`, `deid_string()` API) is regex-only for
+  SIN/OHIP/postal with no checksum. Run it on the evaluation split, negatives
+  and hard split and add a column; the paper currently characterises it from
+  source only (Limitations). Not run in the sandboxed session (external code).
+- [x] **6.2 Acknowledge benchmark circularity** — DONE in v0.2 (Discussion).
+- [x] **6.3 Ethics / broader-impact statement** — DONE in v0.2.
 - [ ] **6.4 Datasheet for the benchmark** (Gebru-style).
 - [ ] **6.5 Complete references** — verify EMNLP 2025 / Communications Medicine 2026
   anchors; add identifier spec citations; Presidio, i2b2/n2c2, Verhoeff.
-- [ ] **6.6 Report checksum collision floors** (7.85% SIN / 10.29% OHIP on random
-  strings) as a stated limitation of "checksum as precision lever".
-- [ ] **6.7 Soften untested claims** — French context words are now exercised by
-  engine-level tests but no French-prose corpus exists (3.7).
-- [ ] **6.8 Venue mechanics** — target venue, template, page limit, anonymity rules,
-  reproducibility appendix (single script from clean checkout to all tables).
+- [x] **6.6 Report checksum collision floors** — DONE in v0.2 (Results).
+- [x] **6.7 Soften untested claims** — DONE in v0.2 (Limitations).
+- [ ] **6.8 Venue mechanics** — Primary: JAMIA Open *Research and Applications*
+  (4,000 words, structured abstract ≤ 250, 4 tables / 6 figures, APC ~US$3,625
+  list — confirm; preprints allowed; pyDeid published there Jan 2025). Fallback:
+  arXiv cs.CL now + ClinicalNLP 2027 (2026 deadline was 16 Feb; expect ~Feb 2027).
+  JOSS is **not** eligible until the repo has 6 months of public history
+  (~April 2027) and requires an AI-usage disclosure. Needs: ORCID, Zenodo DOI
+  (5.7), v0.1.0 tag, figures (none yet — at minimum the Table 3 heatmap and a
+  leak-vs-strict bar chart).
 
 ---
 

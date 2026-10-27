@@ -20,9 +20,11 @@ from .validators import (
     ca_street_address_valid,
 )
 
+# "card" alone is deliberately NOT a context token: "payment card on file:
+# 4111 1111 ..." would boost credit-card chunks (measured: +200 FPs/300 notes
+# on the negatives corpus). "health" is specific enough on its own.
 _HEALTH_CONTEXT_EN = (
     "health",
-    "card",
     "hcn",
     "phn",
     "health card",
@@ -112,16 +114,30 @@ _ENTITY_SPECS: dict[str, EntitySpec] = {
     "CA_AB_ULI": EntitySpec(
         entity="CA_AB_ULI",
         patterns=(
+            # Base scores sit above CA_HEALTH_CARD's so that, when both fire on
+            # the same span under Alberta context, Presidio's duplicate removal
+            # keeps the province-specific label.
             PatternSpec("ab_uli_separated", r"\b\d{5}[- ]\d{4}\b", 0.2),
-            PatternSpec("ab_uli_compact", r"\b\d{9}\b", 0.05),
+            PatternSpec("ab_uli_compact", r"\b\d{9}\b", 0.1),
         ),
-        context=_HEALTH_CONTEXT_EN + ("uli", "alberta", "ahcip", "alberta health"),
+        # Alberta-specific context only. Generic "health card" wording cannot
+        # attribute a 9-digit number to a province, so such matches are
+        # reported as CA_HEALTH_CARD instead (see ca_ab_uli.md).
+        context=("uli", "alberta", "ahcip", "netcare", "alberta health"),
         validator=ca_ab_uli_plausible,
         provenance_doc="docs/identifiers/ca_ab_uli.md",
     ),
     "CA_HEALTH_CARD": EntitySpec(
         entity="CA_HEALTH_CARD",
-        patterns=(PatternSpec("ca_health_generic", r"\b[A-Z]{0,2}\d{6,12}\b", 0.01),),
+        patterns=(
+            PatternSpec("ca_health_generic", r"\b[A-Z]{0,2}\d{6,12}\b", 0.01),
+            # Common separated renderings (5-4 as on Alberta cards, 3-3-3,
+            # 4-3-3); all context-gated at the same floor score.
+            PatternSpec("ca_health_generic_sep2", r"\b\d{3,6}[- ]\d{3,6}\b", 0.01),
+            PatternSpec(
+                "ca_health_generic_sep3", r"\b\d{3,4}[- ]\d{3}[- ]\d{3,4}\b", 0.01
+            ),
+        ),
         context=_HEALTH_CONTEXT_EN
         + _HEALTH_CONTEXT_FR
         + (

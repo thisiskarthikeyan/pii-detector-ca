@@ -4,8 +4,8 @@ version = "0.1.0"
 description = "Checksum-validated detectors for Canadian health and government identifiers (SIN, OHIP, RAMQ, BC PHN, Alberta ULI, postal codes, street addresses): standalone or as Microsoft Presidio recognizers, with a synthetic clinical-text benchmark"
 readme = "README.md"
 license = { file = "LICENSE" }
-authors = [{ name = "Karthik", email = "blue1agave@gmail.com" }]
-maintainers = [{ name = "Karthik", email = "blue1agave@gmail.com" }]
+authors = [{ name = "Karthikeyan Murugaiah", email = "blue1agave@gmail.com" }]
+maintainers = [{ name = "Karthikeyan Murugaiah", email = "blue1agave@gmail.com" }]
 requires-python = ">=3.10"
 keywords = ["presidio", "pii", "phi", "de-identification", "canada", "clinical-nlp", "health-card", "sin"]
 classifiers = [

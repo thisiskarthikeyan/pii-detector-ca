@@ -1,6 +1,8 @@
 # User Manual
 
-**For people who want to find Canadian and Indian ID numbers in text — without needing a technical background.**
+**For people who want to find Canadian ID numbers in text — without needing a technical background.**
+
+> Canada is the supported locale. The Indian rules described below are **experimental** (proposed future work): they work, but they have not been tested as thoroughly as the Canadian ones. Do not rely on them for real Indian documents yet.
 
 This guide explains what the software does, how to try it on your own text, and how to read the results. It avoids research and engineering jargon.
 
@@ -49,7 +51,7 @@ Most of this manual focuses on the **simple scan**, because that is the easiest 
 | `CA_POSTAL_CODE` | Canadian postal code (e.g. K1A 0B1) |
 | `CA_STREET_ADDRESS` | Full mailing/residence address ending in province + postal code |
 
-### India
+### India (experimental)
 
 | What it looks for | Plain name |
 |---|---|
@@ -86,8 +88,12 @@ Please read this section carefully.
 
 You need Python 3.10 or newer.
 
+The package is not on PyPI yet. Install it from the source code:
+
 ```bash
-pip install presidio-recognizers-ca-in
+git clone https://github.com/thisiskarthikeyan/pii-detector.git
+cd pii-detector
+pip install -e .
 ```
 
 For the full Presidio pipeline (names, dates, etc.), you also need Presidio and a spaCy English model. That setup is more involved; see the main [README](../README.md).
@@ -112,8 +118,8 @@ Open Python and run:
 from presidio_recognizers_ca_in import scan
 
 text = """
-Referral note: Ontario health card 5269 870 123 AB on file.
-SIN on intake form: 046-454-286.
+Referral note: Ontario health card 7577 752 616 AB on file.
+SIN on intake form: 239-698-863.
 """
 
 matches = scan(text, locales=["ca"], threshold=0.35)
@@ -152,7 +158,7 @@ Each match is one piece of text the software thinks is an identifier.
 ### Example interpretation
 
 ```
-Found: '046-454-286'
+Found: '239-698-863'
   Type: CA_SIN
   Confidence: 1.00
 ```
@@ -160,7 +166,7 @@ Found: '046-454-286'
 **Plain reading:** “The software found something formatted like a Social Insurance Number, and the check-digit math checks out, so it is very confident.”
 
 ```
-Found: '5269 870 123 AB'
+Found: '7577 752 616 AB'
   Type: CA_OHIP
   Confidence: 1.00
 ```
@@ -195,7 +201,7 @@ A valid SIN must pass a check-digit calculation. Example that should be **found*
 ```python
 from presidio_recognizers_ca_in import scan
 
-text = "Employee SIN: 046-454-286"
+text = "Employee SIN: 239-698-863"
 hits = scan(text, locales=["ca"])
 assert any(h.entity == "CA_SIN" and h.score >= 0.9 for h in hits)
 print("PASS: valid SIN detected")
@@ -294,7 +300,7 @@ That means every automatic minimum-quality bar passed.
 | Your documents | Recommended setting |
 |---|---|
 | Canadian clinics, billing, admin | `locales=["ca"]` |
-| Indian hospitals, billing, admin | `locales=["in"]` |
+| Indian hospitals, billing, admin | `locales=["in"]` (experimental) |
 | Mixed operations (rare) | `locales=["ca", "in"]` — accept more cross-matches |
 
 When integrating with Presidio:

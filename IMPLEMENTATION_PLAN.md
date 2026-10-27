@@ -281,6 +281,11 @@ Applies to both locales; build before deepening either track.
 
 ## Phase 4 — India track (after Canada track is solid)
 
+**Status (2026-10-27): proposed future work.** Scope decision for the 0.1.0 release
+and first paper: Canada-first. India recognizers stay in the package but are
+labeled *experimental* in README, user manual, pyproject, and CHANGELOG; no India
+claims are made as supported results. Nothing below is scheduled.
+
 - [ ] **4.0 Revisit provisional India coverage from the shared-infra phase**
   - Re-validate and deepen everything India-related that was added while India was
     frozen: thresholds.json `in` floors (set from a shallow benchmark), India entries
@@ -307,17 +312,21 @@ Applies to both locales; build before deepening either track.
 
 ## Phase 5 — Documentation, release engineering
 
-- [ ] **5.1 README scope disclaimer** — not a compliance guarantee (PIPEDA/PHIPA/DPDP);
+- [x] **5.1 README scope disclaimer** — DONE (2026-10-27). *What this is not* section
+  + benchmark-circularity caveat; examples use `locales=["ca"]`; doc snippets verified
+  executable. Original item: not a compliance guarantee (PIPEDA/PHIPA/DPDP);
   synthetic-benchmark caveat; recommend locale-scoped registration
   (`get_recognizers(["ca"])`) to avoid cross-locale false positives.
-- [ ] **5.2 CONTRIBUTING.md** — extension recipe: validator → recognizer → generator →
+- [x] **5.2 CONTRIBUTING.md** — DONE (2026-10-27). extension recipe: validator → recognizer → generator →
   template slot → eval threshold → spec doc.
-- [ ] **5.3 SECURITY.md** — private disclosure channel for recall/leak findings.
-- [ ] **5.4 Housekeeping** — fix placeholder repo URL/author in `pyproject.toml`;
+- [x] **5.3 SECURITY.md** — DONE (2026-10-27); uses GitHub private vulnerability
+  reporting, which must be enabled in repo settings once public. private disclosure channel for recall/leak findings.
+- [x] **5.4 Housekeeping** — DONE (2026-10-27); author name still "Karthik" only. fix placeholder repo URL/author in `pyproject.toml`;
   ensure `__pycache__`/`.pyc` untracked; document generated-data policy.
 - [ ] **5.5 PyPI release** — 0.1.0 via trusted publishing; tag-triggered workflow.
-- [ ] **5.6 CHANGELOG.md** + semver tags.
-- [ ] **5.7 CITATION.cff + Zenodo DOI** archived at the paper's evaluated version.
+- [ ] **5.6 CHANGELOG.md** + semver tags. — CHANGELOG added (2026-10-27); `v0.1.0`
+  tag pending release.
+- [ ] **5.7 CITATION.cff + Zenodo DOI** — CITATION.cff added (2026-10-27); DOI pending; archive at the paper's evaluated version.
 
 ## Phase 6 — Paper finalization
 

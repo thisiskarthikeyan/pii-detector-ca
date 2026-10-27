@@ -1,51 +1,45 @@
 # presidio-recognizers-ca-in
 
-Checksum-validated [Microsoft Presidio](https://microsoft.github.io/presidio/) recognizers for **Canadian** and identifiers, plus a synthetic clinical-text benchmark and evaluation harness. The project has placeholders to add **Indian** identifiers in subsequent phases if prioritized
+Checksum-validated [Microsoft Presidio](https://microsoft.github.io/presidio/) recognizers for **Canadian** health and government identifiers, plus a synthetic clinical-text benchmark and evaluation harness.
 
-Most clinical de-identification tooling is trained and tested on US identifier formats. This package closes the locale gap for two underserved regions with deterministic, checksum-backed recognizers that plug directly into any Presidio `AnalyzerEngine`.
+Most clinical de-identification tooling is built and tested on US identifier formats. Stock Presidio has no concept of an Ontario health card, a Quebec RAMQ number, or a Social Insurance Number, so these pass through a de-identification pipeline silently. This package closes that gap with deterministic, checksum-backed recognizers that plug into any Presidio `AnalyzerEngine`, or run standalone with no Presidio/spaCy dependency at runtime.
 
-## Supported entities
+> **Scope and status.** Canada is the supported, evaluated locale for 0.1.0. Indian identifier recognizers ship in the package as **experimental** (see [Proposed: India](#proposed-india-experimental)) and have not been through the same evaluation.
 
-### Canada
+## Supported entities (Canada)
 
-| Entity | Identifier | Validation |
-|---|---|---|
-| `CA_SIN` | Social Insurance Number | Luhn checksum |
-| `CA_OHIP` | Ontario health card (10 digits + version code) | Luhn (mod-10) |
-| `CA_RAMQ` | Quebec health insurance number | Structural (name/DOB encoding) |
-| `CA_BC_PHN` | British Columbia Personal Health Number | Mod-11 weighted checksum |
-| `CA_AB_ULI` | Alberta Unique Lifetime Identifier | Pattern + context gated |
-| `CA_POSTAL_CODE` | Canadian postal code | Structural (letter-class rules) |
-| `CA_STREET_ADDRESS` | Full civic/mailing address | Structural (postal + province anchor) |
-
-### India
-
-| Entity | Identifier | Validation |
-|---|---|---|
-| `IN_AADHAAR` | Aadhaar number | Verhoeff checksum |
-| `IN_ABHA` | Ayushman Bharat Health Account | Pattern + context gated |
-| `IN_PAN` | Permanent Account Number | Structural (holder-type letter) |
-| `IN_UHID` | Hospital UHID (configurable) | Configurable pattern + context |
-| `IN_MOBILE` | Indian mobile number | Structural (+91 / leading 6-9) |
-| `IN_PIN_CODE` | Postal PIN code | Pattern + context gated |
-| `IN_VOTER_ID` | Voter ID (EPIC) | Structural |
-| `IN_PASSPORT` | Indian passport number | Structural |
+| Entity | Identifier | Validation | Spec |
+|---|---|---|---|
+| `CA_SIN` | Social Insurance Number | Luhn checksum | [doc](docs/identifiers/ca_sin.md) |
+| `CA_OHIP` | Ontario health card (10 digits + version code) | Luhn (mod-10) | [doc](docs/identifiers/ca_ohip.md) |
+| `CA_RAMQ` | Quebec health insurance number | Structural (name/DOB encoding) | [doc](docs/identifiers/ca_ramq.md) |
+| `CA_BC_PHN` | British Columbia Personal Health Number | Mod-11 weighted checksum | [doc](docs/identifiers/ca_bc_phn.md) |
+| `CA_AB_ULI` | Alberta Unique Lifetime Identifier | Pattern + context gated | [doc](docs/identifiers/ca_ab_uli.md) |
+| `CA_HEALTH_CARD` | Other provinces/territories (generic) | Context gated only | [doc](docs/identifiers/ca_health_card_generic.md) |
+| `CA_POSTAL_CODE` | Canadian postal code | Structural (letter-class rules) | [doc](docs/identifiers/ca_postal_code.md) |
+| `CA_STREET_ADDRESS` | Full civic/mailing address | Structural (postal + province anchor) | [doc](docs/identifiers/ca_street_address.md) |
 
 ## Install
 
+Not yet on PyPI. Install from source:
+
 ```bash
-pip install presidio-recognizers-ca-in
+git clone https://github.com/thisiskarthikeyan/pii-detector.git
+cd pii-detector
+pip install -e .
 ```
+
+The Presidio integration also needs a spaCy model: `python -m spacy download en_core_web_sm` (see the snippet below for why `sm` is configured explicitly). The standalone `scan()` API needs neither.
 
 ## Usage
 
-### Framework-neutral detection (no Presidio required at runtime)
+### Standalone detection (no Presidio required at runtime)
 
 ```python
 from presidio_recognizers_ca_in import scan
 
 matches = scan(
-    "Patient health card 9012 345 678 BD, SIN 123-456-782.",
+    "Patient health card 7577 752 616 AB, SIN 123-456-782.",
     locales=["ca"],
     threshold=0.35,
 )
@@ -53,54 +47,77 @@ for hit in matches:
     print(hit.entity, hit.start, hit.end, hit.text, hit.score)
 ```
 
-Entity rules live in `presidio_recognizers_ca_in.core` (validators, specs, scanner).
-Presidio recognizers are thin adapters over the same specs.
+Entity rules live in `presidio_recognizers_ca_in.core` (validators, specs, scanner); the Presidio recognizers are thin adapters over the same specs. See [docs/architecture/core_contract.md](docs/architecture/core_contract.md).
 
 ### Presidio integration
 
 ```python
 from presidio_analyzer import AnalyzerEngine
+from presidio_analyzer.nlp_engine import NlpEngineProvider
 from presidio_recognizers_ca_in import add_recognizers
 
-analyzer = AnalyzerEngine()
-add_recognizers(analyzer.registry)
+# Same NLP engine as the published evaluation. A bare AnalyzerEngine()
+# defaults to en_core_web_lg (~400 MB) and downloads it on first use.
+nlp_engine = NlpEngineProvider(nlp_configuration={
+    "nlp_engine_name": "spacy",
+    "models": [{"lang_code": "en", "model_name": "en_core_web_sm"}],
+}).create_engine()
+
+analyzer = AnalyzerEngine(nlp_engine=nlp_engine, supported_languages=["en"])
+add_recognizers(analyzer.registry, locales=["ca"])
 
 results = analyzer.analyze(
-    text="Patient health card 9012 345 678 BD, Aadhaar 2345 6789 0123.",
+    text="Patient health card 7577 752 616 AB, SIN 123-456-782.",
     language="en",
 )
+for r in results:
+    print(r.entity_type, r.start, r.end, round(r.score, 2))
 ```
 
-Or get the recognizer instances directly:
+**Always pass `locales=["ca"]` for Canadian text.** The default (`locales=None`) currently registers the experimental Indian recognizers too, which adds false positives on Canadian documents (e.g. 10-digit numbers that look like Indian mobile numbers). The default is kept for 0.1.0 so the published evaluation stays reproducible; it may change to Canada-only in a later release.
 
-```python
-from presidio_recognizers_ca_in import get_recognizers
+A non-technical walkthrough is in [docs/user_manual.md](docs/user_manual.md).
 
-for rec in get_recognizers():
-    print(rec.supported_entities)
-```
+## What this is not
 
-Per-facility UHID formats (matching hospital-specific MRN schemes):
-
-```python
-from presidio_recognizers_ca_in.india import UhidRecognizer
-
-rec = UhidRecognizer(pattern=r"\bAIIMS-\d{8}\b")
-```
+- **Not a compliance guarantee.** Using this package does not by itself satisfy PIPEDA, PHIPA, provincial health-information acts, or any other regulation. It is one detection layer; keep human review and your organization's privacy process in the loop.
+- **Not a full de-identifier.** It detects identifiers. Person names, dates, and free-text clues come from Presidio's underlying NLP engine (spaCy), which this package does not improve. Most remaining misses on the benchmark are non-Anglophone person names.
+- **Not validated on real clinical text.** All reported numbers come from a synthetic benchmark (below). Real notes carry OCR noise, dictation artifacts, and formats a template generator cannot anticipate.
+- **Checksum-valid ≠ real.** A string that passes Luhn or mod-11 is likely an identifier, not certainly one, and checksumless types (Alberta ULI, generic health cards) rely on nearby context words.
 
 ## Benchmark
 
-`benchmark/` contains a synthetic clinical-note generator (radiology reports, discharge summaries, referral letters) with span-labeled PII injection for both locales, and `evaluation/` contains the harness that compares stock Presidio against Presidio + this pack.
+`benchmark/` contains a seeded, deterministic generator for synthetic clinical notes (radiology reports, discharge summaries, referral letters, and more) with span-labeled PII injection. It also has a false-positive negatives corpus, an adversarial hard split, and a street-address holdout built from the StatCan Open Database of Addresses. `evaluation/` compares stock Presidio against Presidio + this pack; results are committed under `evaluation/results/`.
 
 ```bash
+pip install -e ".[dev]" && pip install -r evaluation/requirements-eval.txt
 python benchmark/generate_corpus.py --locale ca --n 1000
-python benchmark/generate_corpus.py --locale in --n 1000
+python benchmark/generate_negatives.py --locale ca --n 300
+python benchmark/generate_hard.py --per-cell 10
+python benchmark/generate_address_eval.py --n 300
+python benchmark/check_determinism.py
 python evaluation/run_eval.py --all
-python evaluation/run_core_eval.py --all
+python evaluation/run_negatives.py
+python evaluation/run_hard.py
+python evaluation/run_address_eval.py
+python evaluation/check_thresholds.py
 ```
 
-All numbers in the accompanying paper are reproducible with the commands above. Synthetic data only — no real patient data is used or included.
+CI runs this exact sequence in a locked environment (`uv.lock` + pinned spaCy model) and fails on any regression below `evaluation/thresholds.json`.
+
+**Benchmark caveat:** the corpus is generated by the same project that wrote the recognizers, so in-distribution recall is partly circular. The robust findings are the stock-Presidio gap and the results on the negatives, hard, and address-holdout splits. Synthetic data only. No real patient data is used or included.
+
+## Proposed: India (experimental)
+
+The package also contains recognizers for Indian identifiers: `IN_AADHAAR` (Verhoeff), `IN_ABHA`, `IN_PAN`, `IN_UHID` (configurable per facility), `IN_MOBILE`, `IN_PIN_CODE`, `IN_VOTER_ID`, `IN_PASSPORT`. They are usable via `locales=["in"]`, but they are **proposed future work, not a supported feature**: there is no India false-positive corpus, no adversarial split, no gold-split review, and no provenance documentation yet, and India benchmark numbers should be treated as provisional. The validation roadmap is Phase 4 of [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md). Contributions from people with Indian clinical-data expertise are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Contributing, security, citation
+
+- [CONTRIBUTING.md](CONTRIBUTING.md): dev setup and the recipe for adding an identifier.
+- [SECURITY.md](SECURITY.md): report missed identifiers (leaks) privately, never with real data.
+- [CITATION.cff](CITATION.cff): how to cite this software.
+- [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 
-MIT
+MIT. Benchmark data derived from Statistics Canada sources is used under the Open Government Licence – Canada; see the READMEs in `benchmark/data/oda/` and `benchmark/data/statcan_names/`.

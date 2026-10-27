@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+title: "presidio-recognizers-ca-in: Checksum-validated recognizers and a synthetic benchmark for Canadian clinical de-identification"
+type: software
+authors:
+  - given-names: Karthik
+    alias: thisiskarthikeyan
+version: 0.1.0
+license: MIT
+repository-code: "https://github.com/thisiskarthikeyan/pii-detector"
+abstract: >-
+  Checksum-validated Microsoft Presidio recognizers for Canadian health and
+  government identifiers (SIN, provincial health cards, postal codes, street
+  addresses), a framework-neutral scan API, and a reproducible synthetic
+  clinical-text benchmark with evaluation harness. Indian identifiers are
+  included as experimental.
+keywords:
+  - de-identification
+  - PII
+  - PHI
+  - clinical NLP
+  - Presidio
+  - Canada

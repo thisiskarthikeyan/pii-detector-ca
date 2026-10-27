@@ -5,8 +5,8 @@ slot tuple ("SLOT", entity_type). The assembler fills slots via the
 generators in pii_generators.py and records exact character spans, so the
 corpus is span-labeled by construction — no post-hoc annotation.
 
-Slot types used across locales: PERSON, DATE, ADDRESS plus the
-locale-specific identifier entities.
+Slot types: PERSON, DATE, DOB (a DATE entity with a birth-year range),
+ADDRESS, HEALTH_ID (rotates across provincial formats) and CA_SIN.
 """
 
 CLINICAL_FINDINGS = [
@@ -53,7 +53,7 @@ def radiology_report_ca(hospital):
         f"{hospital}\nDEPARTMENT OF DIAGNOSTIC IMAGING\n\n",
         "Patient: ", ("SLOT", "PERSON"), "\n",
         "Health card: ", ("SLOT", "HEALTH_ID"), "\n",
-        "DOB: ", ("SLOT", "DATE"), "\n",
+        "DOB: ", ("SLOT", "DOB"), "\n",
         "Exam date: ", ("SLOT", "DATE"), "\n",
         "Referring physician: Dr. ", ("SLOT", "PERSON"), "\n\n",
         "CLINICAL HISTORY: ", ("SLOT", "CLINICAL"), "\n\n",
@@ -119,7 +119,7 @@ def lab_requisition_ca(hospital):
     return [
         f"{hospital} — OUTPATIENT LABORATORY REQUISITION\n\n",
         "Patient: ", ("SLOT", "PERSON"), "\n",
-        "DOB: ", ("SLOT", "DATE"), "\n",
+        "DOB: ", ("SLOT", "DOB"), "\n",
         "Health number: ", ("SLOT", "HEALTH_ID"), "\n",
         "SIN (third-party billing): ", ("SLOT", "CA_SIN"), "\n",
         "Mailing address: ", ("SLOT", "ADDRESS"), "\n\n",
@@ -128,55 +128,11 @@ def lab_requisition_ca(hospital):
     ]
 
 
-def radiology_report_in(hospital):
-    return [
-        f"{hospital}\nRADIOLOGY REPORT\n\n",
-        "Patient name: ", ("SLOT", "PERSON"), "\n",
-        "UHID: ", ("SLOT", "IN_UHID"), "\n",
-        "ABHA no: ", ("SLOT", "IN_ABHA"), "\n",
-        "Study date: ", ("SLOT", "DATE"), "\n",
-        "Referred by: Dr. ", ("SLOT", "PERSON"), "\n\n",
-        "CLINICAL DETAILS: ", ("SLOT", "CLINICAL"), "\n\n",
-        "OBSERVATIONS: ", ("SLOT", "FINDINGS"), "\n\n",
-        "IMPRESSION: ", ("SLOT", "IMPRESSION"), "\n",
-    ]
-
-
-def discharge_summary_in(hospital):
-    return [
-        f"{hospital} — DISCHARGE SUMMARY\n\n",
-        "Patient: ", ("SLOT", "PERSON"), "  (UHID ", ("SLOT", "IN_UHID"), ")\n",
-        "Aadhaar: ", ("SLOT", "IN_AADHAAR"), "\n",
-        "Mobile: ", ("SLOT", "IN_MOBILE"), "\n",
-        "Address: ", ("SLOT", "ADDRESS"), "\n",
-        "Date of admission: ", ("SLOT", "DATE"), "   Date of discharge: ", ("SLOT", "DATE"), "\n\n",
-        "Final diagnosis: ", ("SLOT", "DIAGNOSIS"), ".\n",
-        "Hospital course was uneventful. Discharged on ", ("SLOT", "MEDICATION"), ". ",
-        "Review in OPD after 14 days; bring this summary and ID proof (",
-        ("SLOT", "ID_PROOF"), ").\n",
-    ]
-
-
-def referral_letter_in(hospital):
-    return [
-        "Dear Doctor,\n\n",
-        "Re: ", ("SLOT", "PERSON"), ", ABHA ", ("SLOT", "IN_ABHA"), "\n\n",
-        "I am referring this patient (contact ", ("SLOT", "IN_MOBILE"),
-        ", PAN on record ", ("SLOT", "IN_PAN"), " for insurance) for further ",
-        "management of ", ("SLOT", "DIAGNOSIS"), ". ",
-        "Recent imaging dated ", ("SLOT", "DATE"), " demonstrated: ", ("SLOT", "FINDINGS"), "\n\n",
-        "With regards,\nDr. ", ("SLOT", "PERSON"), f"\n{hospital}\n",
-    ]
-
-
-TEMPLATES = {
-    "ca": [
-        radiology_report_ca,
-        discharge_summary_ca,
-        referral_letter_ca,
-        ed_triage_note_ca,
-        consult_note_ca,
-        lab_requisition_ca,
-    ],
-    "in": [radiology_report_in, discharge_summary_in, referral_letter_in],
-}
+TEMPLATES = [
+    radiology_report_ca,
+    discharge_summary_ca,
+    referral_letter_ca,
+    ed_triage_note_ca,
+    consult_note_ca,
+    lab_requisition_ca,
+]

@@ -18,7 +18,6 @@ class EntitySpec:
     """Single identifier definition: patterns, context policy, and validator."""
 
     entity: str
-    locale: str
     patterns: tuple[PatternSpec, ...]
     context: tuple[str, ...] = ()
     validator: Callable[[str], bool | None] | None = None

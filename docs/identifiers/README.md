@@ -4,7 +4,7 @@ One document per Canadian recognizer (plan item 3.8). Each records the
 authoritative source for the identifier's format, the exact rule this
 package implements (pattern + validator), and known gaps between the two.
 
-Purpose: the checksum and structure rules in `src/presidio_recognizers_ca_in/`
+Purpose: the checksum and structure rules in `src/pii_detector_ca/`
 should be auditable against official documentation, not folklore. When a rule
 cannot be sourced from an official publication, the doc says so explicitly.
 
@@ -19,5 +19,6 @@ cannot be sourced from an official publication, the doc says so explicitly.
 | [ca_postal_code.md](ca_postal_code.md) | `CA_POSTAL_CODE` | `CaPostalCodeRecognizer` | structural (pattern) |
 | [ca_street_address.md](ca_street_address.md) | `CA_STREET_ADDRESS` | `CaStreetAddressRecognizer` | structural |
 
-India equivalents (UIDAI, ABDM/NHA, Income Tax Dept, ECI, MEA) are plan
-item 4.8 and will be added when the India track opens.
+Upstream note: Presidio ≥ 2.2.363 ships its own `CA_SIN` recognizer and
+≥ 2.2.365 a `CA_POSTAL_CODE` recognizer (both disabled by default). The
+six health-card and address entities have no upstream equivalent.

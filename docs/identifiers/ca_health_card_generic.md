@@ -11,12 +11,19 @@ item 3.5.
 
 ## Rule implemented
 
-- Pattern (`canada/health_cards.py`, `GenericCaHealthCardRecognizer`):
-  0–2 uppercase letters + 6–12 digits, score **0.01** — far below the 0.35
-  reporting threshold, so a match surfaces only with strong context-word
-  boosting ("health card", "medicare number", "msp", French equivalents).
+- Pattern (`core/specs.py`, `CA_HEALTH_CARD`): 0–2 uppercase letters +
+  6–12 digits, score **0.01** — far below the 0.35 reporting threshold, so a
+  match surfaces only with context-word boosting.
+- Context: single tokens, because Presidio's lemma enhancer matches one token
+  at a time — "health", "card", "hcn", "phn", "medicare", "msp" (BC),
+  "hsn" (SK), "phin" (MB), "mcp" (NL), and French "maladie", "assurance",
+  "soleil", "ramq". (Before this list carried single tokens the recognizer
+  never fired on "health card" text at all.)
 - No validator: with no published structure there is nothing deterministic
   to check.
+- Overlap: under "health card" context a 9-digit number surfaces as both
+  `CA_AB_ULI` and `CA_HEALTH_CARD`. For masking this is harmless; for typed
+  output, prefer the province-specific label when known.
 
 ## Known gaps
 

@@ -20,12 +20,19 @@
 
 ## Rule implemented
 
-- Pattern (`canada/sin.py`): 3-3-3 digit groups separated by space or dash
+- Pattern (`core/specs.py`, `CA_SIN`): 3-3-3 digit groups separated by space or dash
   (score 0.4), or 9 contiguous digits (score 0.1, needs checksum + context).
-- Validator (`ca_sin_valid` in `validators.py`): exactly 9 digits after
+- Validator (`ca_sin_valid` in `core/validators.py`): exactly 9 digits after
   separator stripping, first digit not 0 or 8, Luhn (mod-10) checksum valid.
 - Context words: "sin", "social insurance", "social insurance number",
   "numéro d'assurance sociale", "nas".
+
+## Upstream equivalent
+
+Presidio ≥ 2.2.363 ships `CaSinRecognizer` (`CA_SIN`, Luhn, English/French
+context), disabled by default. This package's recognizer adds the first-digit
+exclusion (0/8) and shares the entity name; enable one or the other
+(`add_recognizers(registry, exclude=["CA_SIN"])`).
 
 ## Known gaps
 
@@ -34,5 +41,5 @@
   formal validation spec. A checksum-valid value is not evidence the SIN
   was ever issued.
 - Any Luhn-valid 9-digit string with an eligible first digit is accepted;
-  ~10% of random 9-digit strings collide (measured on the negatives corpus).
+  ~8% of random 9-digit strings collide (measured: 7.85% over 20,000 random strings).
 - Region semantics of the first digit are not used for validation.

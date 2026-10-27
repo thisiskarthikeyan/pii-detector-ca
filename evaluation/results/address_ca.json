@@ -1,21 +1,19 @@
 {
   "metadata": {
-    "generated_at": "2026-07-07T04:32:47+00:00",
-    "python": "3.12.13",
+    "generated_at": "2026-10-27T03:07:41+00:00",
+    "python": "3.12.3",
     "versions": {
-      "presidio-analyzer": "2.2.363",
-      "spacy": "3.8.13",
+      "presidio-analyzer": "2.2.365",
+      "spacy": "3.8.18",
       "en_core_web_sm": "3.8.0"
     },
     "nlp_model": "en_core_web_sm",
     "score_threshold": 0.35,
     "corpus_checksums": {
-      "gold/ca_gold.jsonl": "bf672562c54f6783567b980c87994afe38c2556f3b8d6cfa0aedd607d71f7582",
-      "gold/in_gold.jsonl": "849c8d08f28a3418b528f890cb5b6051f41076ea55956b93b5ad571c91297727",
-      "generated/ca.jsonl": "0c04e9dd4d5bc0a62275b6574f96644865ec95d3b239e873904b429adcc7e916",
-      "generated/in.jsonl": "33e7a4046df86e8f9e91dd90a711de32f884aced21371d966a28084146c4d3e0",
+      "gold/ca_gold.jsonl": "2d8c507488a1cb06d7362f7b3a002ec19990d28b2adead909a19d2f3b0f51fe6",
+      "generated/ca.jsonl": "f87a7c2599bca71e17a961718828da92a1bb0d57b00ef63633366b8141606c65",
       "negatives/ca_negatives.jsonl": "bb2b1f63b7f87f2365b002c3532130b372ab94f513331cf6f5200d06b66e31a4",
-      "hard/ca_hard.jsonl": "bc7581e266cd15585cbc891c6562597678b6f8128be25dfad41af3527efa362e",
+      "hard/ca_hard.jsonl": "e5c296c7f9e42c9baec1eb6852e400d23ff9e315855edd46172b483eb0252d1b",
       "addresses/ca_address_eval.jsonl": "06213d503d0f649be6307ed70ef0c1a780ab025bcb074edce207acc21745802e"
     }
   },
@@ -77,9 +75,9 @@
         "strict_recall": 0.95
       },
       "span_precision": {
-        "tp": 1236,
-        "total": 1836,
-        "precision": 0.673202614379085
+        "tp": 1235,
+        "total": 1835,
+        "precision": 0.6730245231607629
       },
       "bootstrap_ci_95": {
         "recall": [
@@ -91,8 +89,8 @@
           0.97
         ],
         "precision": [
-          0.667,
-          0.6791
+          0.6667,
+          0.679
         ]
       }
     }

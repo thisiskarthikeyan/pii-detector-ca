@@ -6,16 +6,23 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [0.1.0] - unreleased
 
-First public release. Canada is the supported locale; India is experimental.
+First public release, Canada only. (Pre-release history: the package was developed as `presidio-recognizers-ca-in` with experimental Indian recognizers; those were removed before 0.1.0 and will return as a separate `pii-detector-in` package once they have their own benchmark.)
 
 ### Added
 
 - Canadian recognizers: `CA_SIN` (Luhn), `CA_OHIP` (Luhn + version code), `CA_RAMQ` (structural), `CA_BC_PHN` (mod-11), `CA_AB_ULI` (context gated), `CA_HEALTH_CARD` (generic, context gated), `CA_POSTAL_CODE`, `CA_STREET_ADDRESS`.
-- Experimental Indian recognizers: `IN_AADHAAR` (Verhoeff), `IN_ABHA`, `IN_PAN`, `IN_UHID` (configurable), `IN_MOBILE`, `IN_PIN_CODE`, `IN_VOTER_ID`, `IN_PASSPORT`. Not yet validated to the same standard as Canada.
-- Framework-neutral core (`presidio_recognizers_ca_in.core`): stdlib-only validators, entity specs, and a `scan()` API that runs without Presidio or spaCy. Presidio recognizers are thin adapters over the same specs.
-- Synthetic clinical-note benchmark: a seeded, deterministic generator with a determinism manifest, a Canadian false-positive negatives corpus, an adversarial hard split, and a street-address holdout derived from the StatCan Open Database of Addresses.
-- Evaluation harness: leak-oriented and strict recall, bootstrap 95% CIs, a stock-Presidio baseline (`en_core_web_sm` and `en_core_web_lg`), and a CI threshold gate in a locked environment.
-- Provenance docs for every Canadian identifier (`docs/identifiers/`), a core contract doc, and a non-technical user manual.
+- Framework-neutral core (`pii_detector_ca.core`): stdlib-only validators, entity specs, and a `scan()` API that runs without Presidio or spaCy. Presidio recognizers are thin adapters over the same specs.
+- `add_recognizers(registry, exclude=[...])` / `get_recognizers(exclude=[...])` to skip entities that Presidio's own (default-disabled) `CA_SIN` / `CA_POSTAL_CODE` recognizers already cover.
+- Synthetic clinical-note benchmark: a seeded, deterministic generator with a determinism manifest, a false-positive negatives corpus, an adversarial hard split, and a street-address holdout derived from the StatCan Open Database of Addresses.
+- Evaluation harness: leak-oriented and strict recall, bootstrap 95% CIs, three baselines (stock Presidio, Presidio with its CA built-ins enabled, Presidio + pack), and a CI threshold gate in a locked environment.
+- Provenance docs for every identifier (`docs/identifiers/`), a core contract doc, and a non-technical user manual.
+
+### Fixed (pre-release)
+
+- `CA_OHIP`: the separated pattern was compiled case-insensitively, so a lowercase English word following the number ("… 897 on file") was absorbed into the span as a bogus version code at score 1.0. Version codes are now matched case-sensitively, and the validator enforces the MOH HCV schema's non-zero first digit.
+- `CA_HEALTH_CARD` and the French context terms never fired through Presidio: its lemma context enhancer matches single tokens, and the context lists were multi-word phrases. Single-token context words ("health", "card", "maladie", "msp", "hsn", …) added.
+- Core-scanner evaluation counted correct `CA_STREET_ADDRESS` / `CA_POSTAL_CODE` predictions as false positives because `ADDRESS` gold was filtered out; predictions are now type-mapped and `ADDRESS` kept.
+- Benchmark realism: dates of birth were drawn from the encounter-date range (including future dates); RAMQ letter blocks did not match the patient named in the note; RAMQ birth years stopped at 1999.
 
 [Unreleased]: https://github.com/thisiskarthikeyan/pii-detector/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/thisiskarthikeyan/pii-detector/releases/tag/v0.1.0

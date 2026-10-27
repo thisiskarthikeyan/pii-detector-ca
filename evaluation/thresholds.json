@@ -5,11 +5,7 @@
     "(regex + checksum on a fixed-seed corpus) and must stay at 1.0.",
     "PERSON/DATE/ADDRESS depend on the spaCy NLP engine and get floors",
     "slightly below current measured values to absorb model-version drift.",
-    "Applies to both gold and generated splits.",
-    "SCOPE NOTE: initial pass is Canada-only (see IMPLEMENTATION_PLAN.md).",
-    "The 'in' block is a FREEZE gate protecting current India behavior from",
-    "regressions; its floors are provisional and will be re-derived in",
-    "Phase 4 (item 4.0) when the India track starts."
+    "Applies to both gold and generated splits."
   ],
   "system": "Presidio + pack",
   "_min_span_precision_comment": "Re-pinned 0.78 -> 0.75 after 3.3 CA benchmark diversity (measured ca 0.761-0.770, in 0.795-0.799). The drop is spaCy built-in noise on richer templates (ORGANIZATION on hospital headers, DATE_TIME on durations); pack entities contribute zero benchmark FPs — pack precision is gated separately by negatives_max_fp_per_100_notes.",
@@ -25,37 +21,21 @@
   },
   "address_min_strict_recall": {
     "_comment": "Strict recall on the ODA holdout address corpus (results/address_ca.json). Measured 2026-07-03: pack 0.950; main-benchmark CA gold ADDRESS strict 0.971 after CA_STREET_ADDRESS recognizer.",
-    "Presidio + pack": 0.90
+    "Presidio + pack": 0.9
   },
   "negatives_max_fp_per_100_notes": {
-    "_comment": "FP ceilings on the PII-free confusables corpus (results/negatives_ca.json). Measured 2026-07-03: all-locales 43.67, ca-only 12.67; residual FPs are irreducible checksum collisions on random digit strings.",
-    "pack (all locales)": 55,
-    "pack (ca only)": 20
+    "_comment": "FP ceiling on the PII-free confusables corpus (results/negatives_ca.json). Residual FPs are irreducible checksum collisions on random digit strings (~8% of random 9-digit strings pass SIN, ~10% of random 10-digit strings pass OHIP).",
+    "pack": 20
   },
   "min_recall": {
-    "ca": {
-      "CA_SIN": 1.0,
-      "CA_OHIP": 1.0,
-      "CA_RAMQ": 1.0,
-      "CA_BC_PHN": 1.0,
-      "CA_AB_ULI": 1.0,
-      "DATE": 0.98,
-      "ADDRESS": 0.98,
-      "PERSON": 0.9,
-      "TOTAL": 0.97
-    },
-    "in": {
-      "IN_AADHAAR": 1.0,
-      "IN_ABHA": 1.0,
-      "IN_PAN": 1.0,
-      "IN_UHID": 1.0,
-      "IN_MOBILE": 1.0,
-      "IN_VOTER_ID": 1.0,
-      "IN_PASSPORT": 1.0,
-      "DATE": 0.98,
-      "ADDRESS": 0.98,
-      "PERSON": 0.82,
-      "TOTAL": 0.94
-    }
+    "CA_SIN": 1.0,
+    "CA_OHIP": 1.0,
+    "CA_RAMQ": 1.0,
+    "CA_BC_PHN": 1.0,
+    "CA_AB_ULI": 1.0,
+    "DATE": 0.98,
+    "ADDRESS": 0.98,
+    "PERSON": 0.9,
+    "TOTAL": 0.97
   }
 }

@@ -1,7 +1,7 @@
 """Framework-neutral identifier detection core (stdlib only).
 
 Use ``scan()`` for Presidio-free detection. Presidio integration lives in
-``presidio_recognizers_ca_in.adapters.presidio``.
+``pii_detector_ca.adapters.presidio``.
 """
 
 from .scanner import DEFAULT_THRESHOLD, MAX_SCORE, scan

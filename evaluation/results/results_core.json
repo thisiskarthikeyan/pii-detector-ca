@@ -1,230 +1,80 @@
 {
   "metadata": {
-    "generated_at": "2026-07-07T04:32:48+00:00",
+    "generated_at": "2026-10-27T03:07:42+00:00",
     "engine": "core.scan",
     "score_threshold": 0.35
   },
   "runs": [
     {
       "system": "Core scanner",
-      "locale": "ca",
       "split": "gold",
       "entities": {
+        "ADDRESS": {
+          "gold": 65,
+          "detected": 65,
+          "covered": 59,
+          "recall": 1.0,
+          "strict_recall": 0.9076923076923077
+        },
         "CA_AB_ULI": {
-          "gold": 21,
+          "gold": 22,
           "detected": 0,
           "covered": 0,
           "recall": 0.0,
           "strict_recall": 0.0
         },
         "CA_BC_PHN": {
-          "gold": 23,
-          "detected": 23,
-          "covered": 23,
-          "recall": 1.0,
-          "strict_recall": 1.0
-        },
-        "CA_OHIP": {
           "gold": 24,
           "detected": 24,
           "covered": 24,
           "recall": 1.0,
           "strict_recall": 1.0
         },
-        "CA_RAMQ": {
-          "gold": 32,
-          "detected": 32,
-          "covered": 32,
-          "recall": 1.0,
-          "strict_recall": 1.0
-        },
-        "CA_SIN": {
-          "gold": 35,
-          "detected": 35,
-          "covered": 35,
-          "recall": 1.0,
-          "strict_recall": 1.0
-        }
-      },
-      "overall": {
-        "gold": 135,
-        "detected": 114,
-        "covered": 114,
-        "recall": 0.8444444444444444,
-        "fn_rate": 0.15555555555555556,
-        "strict_recall": 0.8444444444444444,
-        "strict_fn_rate": 0.15555555555555556,
-        "typed_recall": 0.8444444444444444
-      },
-      "span_precision": {
-        "tp": 115,
-        "total": 256,
-        "precision": 0.44921875
-      },
-      "bootstrap_ci_95": {
-        "recall": [
-          0.782,
-          0.9015
-        ],
-        "strict_recall": [
-          0.782,
-          0.9015
-        ],
-        "precision": [
-          0.4167,
-          0.4815
-        ]
-      }
-    },
-    {
-      "system": "Core scanner",
-      "locale": "ca",
-      "split": "generated",
-      "entities": {
-        "CA_AB_ULI": {
-          "gold": 227,
-          "detected": 7,
-          "covered": 7,
-          "recall": 0.030837004405286344,
-          "strict_recall": 0.030837004405286344
-        },
-        "CA_BC_PHN": {
-          "gold": 226,
-          "detected": 226,
-          "covered": 226,
-          "recall": 1.0,
-          "strict_recall": 1.0
-        },
         "CA_OHIP": {
-          "gold": 224,
-          "detected": 224,
-          "covered": 224,
+          "gold": 26,
+          "detected": 26,
+          "covered": 26,
           "recall": 1.0,
           "strict_recall": 1.0
         },
         "CA_RAMQ": {
-          "gold": 223,
-          "detected": 223,
-          "covered": 223,
+          "gold": 28,
+          "detected": 28,
+          "covered": 28,
           "recall": 1.0,
           "strict_recall": 1.0
         },
         "CA_SIN": {
-          "gold": 302,
-          "detected": 302,
-          "covered": 302,
+          "gold": 29,
+          "detected": 29,
+          "covered": 29,
           "recall": 1.0,
           "strict_recall": 1.0
         }
       },
       "overall": {
-        "gold": 1202,
-        "detected": 982,
-        "covered": 982,
-        "recall": 0.8169717138103162,
-        "fn_rate": 0.1830282861896838,
-        "strict_recall": 0.8169717138103162,
-        "strict_fn_rate": 0.1830282861896838,
-        "typed_recall": 0.8111480865224625
+        "gold": 194,
+        "detected": 172,
+        "covered": 166,
+        "recall": 0.8865979381443299,
+        "fn_rate": 0.11340206185567014,
+        "strict_recall": 0.8556701030927835,
+        "strict_fn_rate": 0.14432989690721654,
+        "typed_recall": 0.8556701030927835
       },
       "span_precision": {
-        "tp": 1004,
-        "total": 2228,
-        "precision": 0.4506283662477558
-      },
-      "bootstrap_ci_95": {
-        "recall": [
-          0.7959,
-          0.838
-        ],
-        "strict_recall": [
-          0.7959,
-          0.838
-        ],
-        "precision": [
-          0.4386,
-          0.4629
-        ]
-      }
-    },
-    {
-      "system": "Core scanner",
-      "locale": "in",
-      "split": "gold",
-      "entities": {
-        "IN_AADHAAR": {
-          "gold": 41,
-          "detected": 41,
-          "covered": 41,
-          "recall": 1.0,
-          "strict_recall": 1.0
-        },
-        "IN_ABHA": {
-          "gold": 67,
-          "detected": 39,
-          "covered": 30,
-          "recall": 0.582089552238806,
-          "strict_recall": 0.44776119402985076
-        },
-        "IN_MOBILE": {
-          "gold": 74,
-          "detected": 74,
-          "covered": 74,
-          "recall": 1.0,
-          "strict_recall": 1.0
-        },
-        "IN_PAN": {
-          "gold": 41,
-          "detected": 41,
-          "covered": 41,
-          "recall": 1.0,
-          "strict_recall": 1.0
-        },
-        "IN_PASSPORT": {
-          "gold": 12,
-          "detected": 12,
-          "covered": 12,
-          "recall": 1.0,
-          "strict_recall": 1.0
-        },
-        "IN_UHID": {
-          "gold": 59,
-          "detected": 24,
-          "covered": 0,
-          "recall": 0.4067796610169492,
-          "strict_recall": 0.0
-        },
-        "IN_VOTER_ID": {
-          "gold": 13,
-          "detected": 13,
-          "covered": 13,
-          "recall": 1.0,
-          "strict_recall": 1.0
-        }
-      },
-      "overall": {
-        "gold": 307,
-        "detected": 244,
-        "covered": 211,
-        "recall": 0.7947882736156352,
-        "fn_rate": 0.2052117263843648,
-        "strict_recall": 0.6872964169381107,
-        "strict_fn_rate": 0.3127035830618893,
-        "typed_recall": 0.6872964169381107
-      },
-      "span_precision": {
-        "tp": 248,
-        "total": 248,
+        "tp": 238,
+        "total": 238,
         "precision": 1.0
       },
       "bootstrap_ci_95": {
         "recall": [
-          0.7509,
-          0.8354
+          0.8404,
+          0.9275
         ],
         "strict_recall": [
-          0.6364,
-          0.7299
+          0.804,
+          0.9026
         ],
         "precision": [
           1.0,
@@ -234,82 +84,74 @@
     },
     {
       "system": "Core scanner",
-      "locale": "in",
       "split": "generated",
       "entities": {
-        "IN_AADHAAR": {
-          "gold": 345,
-          "detected": 345,
-          "covered": 345,
+        "ADDRESS": {
+          "gold": 637,
+          "detected": 637,
+          "covered": 597,
+          "recall": 1.0,
+          "strict_recall": 0.9372056514913658
+        },
+        "CA_AB_ULI": {
+          "gold": 255,
+          "detected": 10,
+          "covered": 10,
+          "recall": 0.0392156862745098,
+          "strict_recall": 0.0392156862745098
+        },
+        "CA_BC_PHN": {
+          "gold": 209,
+          "detected": 209,
+          "covered": 209,
           "recall": 1.0,
           "strict_recall": 1.0
         },
-        "IN_ABHA": {
-          "gold": 634,
-          "detected": 445,
-          "covered": 304,
-          "recall": 0.7018927444794952,
-          "strict_recall": 0.4794952681388013
-        },
-        "IN_MOBILE": {
-          "gold": 592,
-          "detected": 592,
-          "covered": 592,
+        "CA_OHIP": {
+          "gold": 205,
+          "detected": 205,
+          "covered": 205,
           "recall": 1.0,
           "strict_recall": 1.0
         },
-        "IN_PAN": {
-          "gold": 326,
-          "detected": 326,
-          "covered": 326,
+        "CA_RAMQ": {
+          "gold": 231,
+          "detected": 231,
+          "covered": 231,
           "recall": 1.0,
           "strict_recall": 1.0
         },
-        "IN_PASSPORT": {
-          "gold": 97,
-          "detected": 97,
-          "covered": 97,
-          "recall": 1.0,
-          "strict_recall": 1.0
-        },
-        "IN_UHID": {
-          "gold": 574,
-          "detected": 232,
-          "covered": 0,
-          "recall": 0.40418118466898956,
-          "strict_recall": 0.0
-        },
-        "IN_VOTER_ID": {
-          "gold": 90,
-          "detected": 90,
-          "covered": 90,
+        "CA_SIN": {
+          "gold": 313,
+          "detected": 313,
+          "covered": 313,
           "recall": 1.0,
           "strict_recall": 1.0
         }
       },
       "overall": {
-        "gold": 2658,
-        "detected": 2127,
-        "covered": 1754,
-        "recall": 0.8002257336343115,
-        "fn_rate": 0.1997742663656885,
-        "strict_recall": 0.6598946576373212,
-        "strict_fn_rate": 0.34010534236267875,
-        "typed_recall": 0.6598946576373212
+        "gold": 1850,
+        "detected": 1605,
+        "covered": 1565,
+        "recall": 0.8675675675675676,
+        "fn_rate": 0.1324324324324324,
+        "strict_recall": 0.845945945945946,
+        "strict_fn_rate": 0.15405405405405403,
+        "typed_recall": 0.8405405405405405
       },
       "span_precision": {
-        "tp": 2200,
-        "total": 2200,
+        "tp": 2252,
+        "total": 2252,
         "precision": 1.0
       },
       "bootstrap_ci_95": {
         "recall": [
-          0.7847,
-          0.8151
+          0.8537,
+          0.8824
         ],
         "strict_recall": [
-          0.6433,
-          0.6765
+          0.8306,
+          0.8626
         ],
         "precision": [
           1.0,

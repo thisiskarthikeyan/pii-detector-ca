@@ -40,7 +40,7 @@ Goal: make the deterministic identifier logic reusable without importing
 Presidio.
 
 - [x] **2A.1 Define machine-readable entity specs** — DONE (2026-07-06).
-  Python specs in `core/specs.py` (16 entities; YAML export deferred). Each
+  Python specs in `core/specs.py` (8 Canadian entities since the 2026-10-27 India removal; YAML export deferred). Each
   entry includes patterns, scores, context, validator binding, locale, and
   provenance doc path.
 - [x] **2A.2 Move validators into a core module** — DONE (2026-07-06).
@@ -304,7 +304,7 @@ but make these small positioning changes when convenient:
 - Avoid describing recognizers as the only product surface; describe the
   reusable identifier rules, validators, provenance docs, and benchmark as the
   durable project assets.
-- Keep Canada-first and India-freeze policies unchanged.
+- Canada only; India is a separate future package that would depend on an extracted core.
 - Keep all current evaluation gates unchanged; they become the compatibility
   contract for future non-Presidio engines.
 - Add a short pointer from `IMPLEMENTATION_PLAN.md` to this Phase 2 plan after

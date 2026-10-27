@@ -1,18 +1,14 @@
-"""Property-based tests (Hypothesis) for checksum validators and corpus generators.
+"""Property-based tests (Hypothesis) for the checksum validator and corpus generators.
 
 Three families of properties:
 
 1. Check-digit uniqueness: for any digit base, exactly one of the ten possible
-   check digits validates (Luhn and Verhoeff are both permutation-complete).
+   check digits validates (Luhn is permutation-complete).
 2. Single-digit error detection: corrupting any one digit of a valid value
-   must break validation (the design guarantee of both checksums).
+   must break validation (the design guarantee of the checksum).
 3. Generator/validator agreement: every value the corpus generators produce
    must pass (or at least not fail) the corresponding package validator, in
    every surface format the generator emits.
-
-Scope note: the initial pass is Canada-only (see IMPLEMENTATION_PLAN.md).
-India entries here act as a freeze gate on current behavior; they are
-provisional and will be revisited/expanded in Phase 4 (item 4.0).
 """
 
 from __future__ import annotations
@@ -33,27 +29,17 @@ from pii_generators import (  # noqa: E402
     gen_ca_ohip,
     gen_ca_ramq,
     gen_ca_sin,
-    gen_in_aadhaar,
-    gen_in_abha,
-    gen_in_mobile,
-    gen_in_pan,
 )
 
-from presidio_recognizers_ca_in.validators import (  # noqa: E402
+from pii_detector_ca.validators import (  # noqa: E402
     ca_ab_uli_plausible,
     ca_bc_phn_valid,
     ca_ohip_valid,
     ca_ramq_valid,
     ca_sin_valid,
-    in_aadhaar_valid,
-    in_abha_plausible,
-    in_mobile_valid,
-    in_pan_valid,
     luhn_check_digit,
     luhn_valid,
     normalize,
-    verhoeff_check_digit,
-    verhoeff_valid,
 )
 
 digits_st = st.text(alphabet="0123456789", min_size=8, max_size=11)
@@ -64,11 +50,6 @@ class TestCheckDigitUniqueness:
     def test_luhn_exactly_one_check_digit_validates(self, base):
         valid = [d for d in "0123456789" if luhn_valid(base + d)]
         assert valid == [luhn_check_digit(base)]
-
-    @given(base=digits_st)
-    def test_verhoeff_exactly_one_check_digit_validates(self, base):
-        valid = [d for d in "0123456789" if verhoeff_valid(base + d)]
-        assert valid == [verhoeff_check_digit(base)]
 
 
 class TestSingleDigitErrorDetection:
@@ -83,17 +64,6 @@ class TestSingleDigitErrorDetection:
         assert corrupted != full
         assert not luhn_valid(corrupted)
 
-    @given(
-        base=st.text(alphabet="0123456789", min_size=11, max_size=11),
-        pos=st.integers(min_value=0, max_value=11),
-        delta=st.integers(min_value=1, max_value=9),
-    )
-    def test_verhoeff_detects_any_single_digit_substitution(self, base, pos, delta):
-        full = base + verhoeff_check_digit(base)
-        corrupted = full[:pos] + str((int(full[pos]) + delta) % 10) + full[pos + 1 :]
-        assert corrupted != full
-        assert not verhoeff_valid(corrupted)
-
 
 # (generator, validator, must_pass): plausibility validators return None for
 # plausible values, so for those we only require "not False".
@@ -102,11 +72,7 @@ GENERATOR_VALIDATOR_PAIRS = [
     (gen_ca_ohip, ca_ohip_valid, True),
     (gen_ca_ramq, ca_ramq_valid, True),
     (gen_ca_bc_phn, ca_bc_phn_valid, True),
-    (gen_in_aadhaar, in_aadhaar_valid, True),
-    (gen_in_pan, in_pan_valid, True),
-    (gen_in_mobile, in_mobile_valid, True),
     (gen_ca_ab_uli, ca_ab_uli_plausible, False),
-    (gen_in_abha, in_abha_plausible, False),
 ]
 
 
@@ -133,3 +99,10 @@ class TestGeneratorValidatorAgreement:
         cleaned = normalize(value)
         assert len(cleaned) == 9 and cleaned.isdigit()
         assert cleaned[0] not in "08"
+
+    @given(seed=st.integers(min_value=0, max_value=2**32 - 1))
+    @settings(max_examples=50)
+    def test_ramq_letters_follow_patient_name(self, seed):
+        rng = random.Random(seed)
+        value = gen_ca_ramq(rng, surname="Tremblay", first_name="Émile")
+        assert normalize(value)[:4] == "TREÉ"

@@ -1199,7 +1199,7 @@ wheels = [
 ]
 
 [[package]]
-name = "presidio-recognizers-ca-in"
+name = "pii-detector-ca"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

@@ -1,3 +1,10 @@
+> **STALE DRAFT — do not quote.** This draft predates the 2026-10-27 scope change
+> (Canada only; package renamed `pii-detector-ca`; India removed) and the
+> Phase 2/3 evaluation. Every number, count and claim below is superseded by
+> `evaluation/results/`; in particular Presidio ≥ 2.2.363 now ships its own
+> (default-disabled) `CA_SIN` recognizer, so the SIN gap claimed here no longer
+> holds. Rewrite per IMPLEMENTATION_PLAN.md Phase 6.
+
 # Closing the Locale Gap: Checksum-Validated Recognizers and a Synthetic Benchmark for Canadian and Indian Clinical De-identification
 
 **Draft v0.1 — target: clinical NLP workshop (ClinicalNLP / LOUHI / ML4H); fallback arXiv preprint**

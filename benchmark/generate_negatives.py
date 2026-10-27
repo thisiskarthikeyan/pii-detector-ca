@@ -16,11 +16,8 @@ with confusable non-PII numerics:
 Any pack-entity prediction on this corpus is a false positive. The corpus
 is deterministic (seeded) and covered by the determinism manifest.
 
-India note (see IMPLEMENTATION_PLAN.md): the initial pass is Canada-only;
---locale in is intentionally not implemented until Phase 4 (item 4.1).
-
 Usage:
-    python benchmark/generate_negatives.py --locale ca --n 300
+    python benchmark/generate_negatives.py --n 300
 """
 
 from __future__ import annotations
@@ -33,7 +30,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from presidio_recognizers_ca_in.validators import luhn_check_digit  # noqa: E402
+from pii_detector_ca.validators import luhn_check_digit  # noqa: E402
 
 HOSPITALS = [
     "Toronto General Hospital", "Foothills Medical Centre",
@@ -160,28 +157,21 @@ TEMPLATES = [billing_note, lab_report_note, admin_note]
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--locale", choices=["ca", "in"], default="ca")
     parser.add_argument("--n", type=int, default=300)
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
 
-    if args.locale != "ca":
-        sys.exit(
-            "The negatives corpus is Canada-only in the initial pass "
-            "(see IMPLEMENTATION_PLAN.md Phase 4, item 4.1)."
-        )
-
     rng = random.Random(args.seed)
     out_dir = Path(__file__).parent / "data" / "negatives"
     out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / f"{args.locale}_negatives.jsonl"
+    out_path = out_dir / "ca_negatives.jsonl"
 
     with open(out_path, "w", encoding="utf-8") as f:
         for i in range(args.n):
             template = TEMPLATES[i % len(TEMPLATES)]
             note = {
-                "id": f"{args.locale}-neg-{i:05d}",
-                "locale": args.locale,
+                "id": f"ca-neg-{i:05d}",
+                "locale": "ca",
                 "note_type": template.__name__,
                 "text": template(rng.choice(HOSPITALS), rng),
                 "entities": [],

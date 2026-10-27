@@ -17,23 +17,22 @@
 
 ## Rule implemented
 
-- Pattern (`canada/health_cards.py`, `OhipRecognizer`): 4-3-3 digit groups
-  with optional 1–2 trailing uppercase letters (score 0.4), or 10 contiguous
-  digits + optional letters (score 0.15).
-- Validator (`ca_ohip_valid`): 10 digits plus 0–2 letters after separator
-  stripping; Luhn (mod-10) checksum on the 10 digits. The version code is
-  accepted but not semantically checked (it identifies the card issue, not
-  the person).
+- Pattern (`core/specs.py`, `CA_OHIP`): first digit 1–9, then 4-3-3 digit
+  groups with optional 1–2 trailing uppercase letters (score 0.4), or 10
+  contiguous digits + optional letters (score 0.15). Compiled
+  **case-sensitively**: version codes are uppercase on every card issue, and
+  with IGNORECASE a lowercase English word following the number ("… 897 on
+  file") was absorbed into the span as a bogus version code.
+- Validator (`ca_ohip_valid`): `[1-9]\d{9}` plus 0–2 uppercase letters after
+  separator stripping; Luhn (mod-10) checksum on the 10 digits. The version
+  code is accepted but not semantically checked (it identifies the card
+  issue, not the person).
 - Context: shared health-card context ("health card", "hcn", …) plus
   "ohip", "ontario health".
 
 ## Known gaps
 
-- The HCV schema requires a non-zero first digit (`[1-9]\d{9}`); the
-  validator does not enforce this. Impact is limited to a slightly higher
-  collision rate on random digit strings.
-- Version-code letters are matched case-sensitively in the separated pattern
-  but any-case in the validator; lowercase version codes in the wild would
-  pass validation only if the pattern matched them first.
+- Lowercase version codes (e.g. from case-folded OCR output) are not
+  matched; the trade-off is deliberate (see pattern note above).
 - Mod-10 pass ≠ issued number (the manual is explicit about this); real
   eligibility requires the ministry's HCV service.

@@ -20,12 +20,12 @@
 - No public checksum or structure beyond "9 digits" is documented, so this
   recognizer is **context-gated**: pattern scores are set below the 0.35
   reporting threshold and only context-word boosting can surface a match.
-- Patterns (`canada/health_cards.py`, `AlbertaUliRecognizer`): 5-4 digit
+- Patterns (`core/specs.py`): 5-4 digit
   groups (score 0.2) or 9 contiguous digits (score 0.05).
 - Validator (`ca_ab_uli_plausible`): returns `False` for wrong shape or a
   single repeated digit (e.g. 000000000), `None` otherwise — never `True`,
   so the match keeps its low pattern score and context gating governs
-  (three-state validator contract, see `base.py`).
+  (three-state validator contract, see `docs/architecture/core_contract.md`).
 - Context includes single tokens ("health", "card", "uli") because
   Presidio's lemma-based context enhancer matches token-by-token;
   multi-word phrases alone never fire.

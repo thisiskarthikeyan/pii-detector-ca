@@ -61,15 +61,16 @@ def scan_entity(
 def scan(
     text: str,
     *,
-    locales: list[str] | None = None,
     entities: list[str] | None = None,
     threshold: float = DEFAULT_THRESHOLD,
 ) -> list[Match]:
-    """Detect locale-specific identifiers without Presidio or spaCy."""
-    specs = get_entity_specs(locales)
-    if entities is not None:
-        allowed = set(entities)
-        specs = [spec for spec in specs if spec.entity in allowed]
+    """Detect Canadian identifiers without Presidio or spaCy.
+
+    Pattern + validator only: no context-word boosting is applied, so
+    context-gated entities (``CA_AB_ULI``, ``CA_HEALTH_CARD``) never reach the
+    default threshold here. Use the Presidio integration for those.
+    """
+    specs = get_entity_specs(entities)
 
     best: dict[tuple[str, int, int], Match] = {}
     for spec in specs:

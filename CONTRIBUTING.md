@@ -44,7 +44,7 @@ Work through these in order. A PR that skips a step will be asked to add it.
 
 ## Changing evaluation results
 
-Committed files under `evaluation/results/` back the paper's numbers. If your change moves them, regenerate them in the locked environment (`uv sync --locked`), commit them in the same PR, and explain the delta in the PR description. Lowering a threshold needs a stated reason. "It failed" is not one.
+Committed files under `evaluation/results/` back the paper's numbers (manuscript on the `paper` branch). If your change moves them, regenerate them in the locked environment (`uv sync --locked`), commit them in the same PR, and explain the delta in the PR description. Lowering a threshold needs a stated reason. "It failed" is not one.
 
 ## Pull requests
 

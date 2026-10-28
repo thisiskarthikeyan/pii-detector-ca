@@ -343,13 +343,16 @@ the two packages share validators, the spec schema and the Presidio adapter.
 
 ## Phase 6 — Paper finalization
 
-Decision (2026-10-27): Canada-only paper. `paper/paper.md` is stale (two-locale,
+The manuscript is kept on the `paper` branch (`paper/paper.md`), not on `main`,
+so the package release history stays free of draft churn.
+
+Decision (2026-10-27): Canada-only paper. the paper draft (branch `paper`, `paper/paper.md`) is stale (two-locale,
 pre-Phase-2/3 numbers, 15 recognizers / 3 note types) and must be rewritten, not
 patched. Headline contribution: provincial health-card coverage + benchmark
 methodology; SIN/postal are upstream now (see top of file).
 
-- [x] **6.1 Regenerate all §5 tables** — DONE (2026-10-27). `paper/paper.md`
-  rewritten (v0.2) from current results: three baselines incl. "Presidio + CA
+- [x] **6.1 Regenerate all §5 tables** — DONE (2026-10-27). `paper/paper.md` on
+  branch `paper` rewritten (v0.2) from current results: three baselines incl. "Presidio + CA
   builtins", CIs, strict recall, negatives, adversarial, address holdout, lg,
   seed variance, collision floors. Structured for JAMIA Open *Research and
   Applications* (≤ 4,000 words).

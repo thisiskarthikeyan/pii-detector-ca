@@ -53,10 +53,9 @@ build-backend = "hatchling.build"
 packages = ["src/pii_detector_ca"]
 
 [tool.hatch.build.targets.sdist]
-# Ship the code, tests, docs and benchmark/eval scripts; not the paper draft,
-# committed results, corpus data or planning documents.
+# Ship the code, tests, docs and benchmark/eval scripts; not committed
+# results, corpus data or planning documents.
 exclude = [
-    "paper/",
     "evaluation/results/",
     "benchmark/data/",
     ".github/",

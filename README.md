@@ -1,4 +1,4 @@
-# presidio-recognizers-ca-in
+# pii-detector-ca
 
 Checksum-validated [Microsoft Presidio](https://microsoft.github.io/presidio/) recognizers for **Canadian** health and government identifiers, plus a synthetic clinical-text benchmark and evaluation harness.
 

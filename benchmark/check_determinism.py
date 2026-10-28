@@ -24,9 +24,7 @@ MANIFEST = DATA_DIR / "checksums.json"
 
 CORPUS_FILES = [
     "gold/ca_gold.jsonl",
-    "gold/in_gold.jsonl",
     "generated/ca.jsonl",
-    "generated/in.jsonl",
     "negatives/ca_negatives.jsonl",
     "hard/ca_hard.jsonl",
     "addresses/ca_address_eval.jsonl",
@@ -46,10 +44,7 @@ def compute_checksums() -> dict[str, str]:
     for rel in CORPUS_FILES:
         path = DATA_DIR / rel
         if not path.exists():
-            sys.exit(
-                f"ERROR: {path} missing — run benchmark/generate_corpus.py for both "
-                f"locales first (--locale ca / --locale in)."
-            )
+            sys.exit(f"ERROR: {path} missing — run the benchmark generators first.")
         checksums[rel] = sha256_of(path)
     return checksums
 

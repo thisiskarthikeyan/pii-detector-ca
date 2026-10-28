@@ -1,4 +1,4 @@
-"""Checksum and structural validators for locale-specific identifiers.
+"""Checksum and structural validators for Canadian identifiers.
 
 Framework-neutral: no Presidio or spaCy dependency. Used by the generic
 ``core.scanner`` and by Presidio adapters.
@@ -32,51 +32,6 @@ def luhn_valid(digits: str) -> bool:
     return total % 10 == 0
 
 
-# Verhoeff tables (dihedral group D5).
-_VERHOEFF_D = [
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [1, 2, 3, 4, 0, 6, 7, 8, 9, 5],
-    [2, 3, 4, 0, 1, 7, 8, 9, 5, 6],
-    [3, 4, 0, 1, 2, 8, 9, 5, 6, 7],
-    [4, 0, 1, 2, 3, 9, 5, 6, 7, 8],
-    [5, 9, 8, 7, 6, 0, 4, 3, 2, 1],
-    [6, 5, 9, 8, 7, 1, 0, 4, 3, 2],
-    [7, 6, 5, 9, 8, 2, 1, 0, 4, 3],
-    [8, 7, 6, 5, 9, 3, 2, 1, 0, 4],
-    [9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
-]
-_VERHOEFF_P = [
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [1, 5, 7, 6, 2, 8, 3, 0, 9, 4],
-    [5, 8, 0, 3, 7, 9, 6, 1, 4, 2],
-    [8, 9, 1, 6, 0, 4, 3, 5, 2, 7],
-    [9, 4, 5, 3, 1, 2, 6, 8, 7, 0],
-    [4, 2, 8, 6, 5, 7, 3, 9, 0, 1],
-    [2, 7, 9, 3, 8, 0, 6, 4, 1, 5],
-    [7, 0, 4, 6, 9, 1, 3, 2, 5, 8],
-]
-
-
-def verhoeff_valid(digits: str) -> bool:
-    """Verhoeff checksum used by Aadhaar."""
-    if not digits.isdigit():
-        return False
-    c = 0
-    for i, ch in enumerate(reversed(digits)):
-        c = _VERHOEFF_D[c][_VERHOEFF_P[i % 8][int(ch)]]
-    return c == 0
-
-
-def verhoeff_check_digit(digits: str) -> str:
-    """Compute the Verhoeff check digit for a digit string (used by the corpus generator)."""
-    c = 0
-    for i, ch in enumerate(reversed(digits)):
-        c = _VERHOEFF_D[c][_VERHOEFF_P[(i + 1) % 8][int(ch)]]
-    # Find the digit that brings the checksum to 0.
-    inv = [0, 4, 3, 2, 1, 5, 6, 7, 8, 9]
-    return str(inv[c])
-
-
 def luhn_check_digit(digits: str) -> str:
     """Compute the Luhn check digit for a digit string (used by the corpus generator)."""
     total = 0
@@ -101,9 +56,14 @@ def ca_sin_valid(value: str) -> bool:
 
 
 def ca_ohip_valid(value: str) -> bool:
-    """Ontario health number: 10 digits (Luhn-valid), optional 1-2 letter version code."""
+    """Ontario health number: 10 digits (Luhn-valid), optional 1-2 letter version code.
+
+    The MOH HCV schema requires a non-zero first digit (``[1-9]\\d{9}``); the
+    version code is uppercase on every card issue, so lowercase letters are
+    not accepted as part of the identifier (see docs/identifiers/ca_ohip.md).
+    """
     cleaned = normalize(value)
-    m = re.fullmatch(r"(\d{10})([A-Za-z]{0,2})", cleaned)
+    m = re.fullmatch(r"([1-9]\d{9})([A-Z]{0,2})", cleaned)
     if not m:
         return False
     return luhn_valid(m.group(1))
@@ -196,51 +156,3 @@ def ca_street_address_valid(value: str) -> bool:
     if re.match(r"^\d{1,6},", head):
         return True
     return False
-
-
-def in_aadhaar_valid(value: str) -> bool:
-    """Aadhaar: 12 digits, first digit 2-9, Verhoeff-valid."""
-    digits = normalize(value)
-    if len(digits) != 12 or not digits.isdigit():
-        return False
-    if digits[0] in "01":
-        return False
-    return verhoeff_valid(digits)
-
-
-# Fourth PAN character encodes holder type (P=person, C=company, ...).
-_PAN_HOLDER_TYPES = set("PCFHATBLJG")
-_PAN_RE = re.compile(r"[A-Z]{5}[0-9]{4}[A-Z]")
-
-
-def in_pan_valid(value: str) -> bool:
-    """PAN: AAAPA9999A structure with a valid holder-type fourth letter."""
-    cleaned = normalize(value).upper()
-    if not _PAN_RE.fullmatch(cleaned):
-        return False
-    return cleaned[3] in _PAN_HOLDER_TYPES
-
-
-def in_abha_plausible(value: str) -> bool | None:
-    """ABHA plausibility: 14 digits; no public checksum.
-
-    Returns False to reject implausible values and None otherwise (never
-    True), so ABHA matches keep their pattern score and surface only with
-    context-word support. See ``ca_ab_uli_plausible``.
-    """
-    digits = normalize(value)
-    if len(digits) != 14 or not digits.isdigit():
-        return False
-    if len(set(digits)) == 1:
-        return False
-    return None
-
-
-def in_mobile_valid(value: str) -> bool:
-    """Indian mobile: optional +91/0 prefix then 10 digits starting 6-9."""
-    digits = normalize(value)
-    if digits.startswith("91") and len(digits) == 12:
-        digits = digits[2:]
-    elif digits.startswith("0") and len(digits) == 11:
-        digits = digits[1:]
-    return len(digits) == 10 and digits.isdigit() and digits[0] in "6789"

@@ -1,13 +1,16 @@
 """Evaluate the framework-neutral core scanner (no Presidio / spaCy).
 
 Runs the same benchmark corpora as ``run_eval.py`` but uses ``core.scan()``
-for pack identifier detection only. PERSON/DATE recall from spaCy is expected
-to be zero here; identifier entities should match the Presidio pattern-level
-behavior exercised in tests.
+for pack identifier detection only. Gold is restricted to the entities the
+core can own (pack identifiers plus ADDRESS, which CA_STREET_ADDRESS maps
+to); PERSON/DATE need spaCy and are excluded from both gold and precision.
+Context-gated entities (CA_AB_ULI) are expected to score ~0 here because the
+core applies no context boosting — that is a documented property of
+``scan()``, not a regression.
 
 Usage:
     python evaluation/run_core_eval.py --all
-    python evaluation/run_core_eval.py --locale ca --split gold
+    python evaluation/run_core_eval.py --split gold
 """
 
 from __future__ import annotations
@@ -22,40 +25,42 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 sys.path.insert(0, str(REPO / "evaluation"))
 
-from metrics import Span, bootstrap_ci, evaluate_notes, overall  # noqa: E402
+from metrics import TYPE_MAP, Span, bootstrap_ci, evaluate_notes, overall  # noqa: E402
 
-from presidio_recognizers_ca_in.core import scan  # noqa: E402
-from presidio_recognizers_ca_in.core.specs import ENTITY_IDS  # noqa: E402
+from pii_detector_ca.core import scan  # noqa: E402
+from pii_detector_ca.core.specs import ENTITY_IDS  # noqa: E402
 
 DEFAULT_THRESHOLD = 0.35
+# Gold entity types the core scanner can own (pack ids, with
+# CA_STREET_ADDRESS reported under the gold label ADDRESS).
+CORE_GOLD_TYPES = frozenset(TYPE_MAP.get(e, e) for e in ENTITY_IDS)
 
 
-def load_notes(locale: str, split: str) -> list[dict]:
+def load_notes(split: str) -> list[dict]:
     if split == "gold":
-        path = REPO / "benchmark" / "data" / "gold" / f"{locale}_gold.jsonl"
+        path = REPO / "benchmark" / "data" / "gold" / "ca_gold.jsonl"
     else:
-        path = REPO / "benchmark" / "data" / "generated" / f"{locale}.jsonl"
+        path = REPO / "benchmark" / "data" / "generated" / "ca.jsonl"
     with open(path, encoding="utf-8") as f:
         return [json.loads(line) for line in f]
 
 
-def predict_core(notes: list[dict], locale: str) -> list[list[Span]]:
+def predict_core(notes: list[dict]) -> list[list[Span]]:
     predictions: list[list[Span]] = []
     for note in notes:
-        matches = scan(
-            note["text"],
-            locales=[locale],
-            threshold=DEFAULT_THRESHOLD,
+        matches = scan(note["text"], threshold=DEFAULT_THRESHOLD)
+        predictions.append(
+            [Span(m.start, m.end, TYPE_MAP.get(m.entity, m.entity)) for m in matches]
         )
-        predictions.append([Span(m.start, m.end, m.entity) for m in matches])
     return predictions
 
 
-def format_table(locale: str, split: str, stats: dict, precision: dict, ci: dict) -> str:
+def format_table(split: str, stats: dict, precision: dict, ci: dict) -> str:
     lines = [
-        f"### Core scanner — locale={locale}, split={split}",
+        f"### Core scanner — split={split}",
         "",
-        "Identifier entities only (framework-neutral core; no spaCy PERSON/DATE).",
+        "Pack identifier entities + ADDRESS only (framework-neutral core; "
+        "no spaCy PERSON/DATE). CA_AB_ULI is context-gated and expected ~0 here.",
         "",
         "| Entity | Gold | Detected (overlap) | Recall | Strict recall | FN rate |",
         "|---|---|---|---|---|---|",
@@ -82,25 +87,23 @@ def format_table(locale: str, split: str, stats: dict, precision: dict, ci: dict
     return "\n".join(lines)
 
 
-def run(locale: str, split: str, out_lines: list[str], runs: list[dict]) -> None:
-    notes = load_notes(locale, split)
+def run(split: str, out_lines: list[str], runs: list[dict]) -> None:
+    notes = load_notes(split)
     pack_notes = [
         {
             **note,
-            "entities": [ent for ent in note["entities"] if ent["type"] in ENTITY_IDS],
+            "entities": [ent for ent in note["entities"] if ent["type"] in CORE_GOLD_TYPES],
         }
         for note in notes
     ]
-    preds = predict_core(notes, locale)
-    pack_preds = [[span for span in spans if span.type in ENTITY_IDS] for spans in preds]
-    stats, precision, per_note = evaluate_notes(pack_notes, pack_preds)
+    preds = predict_core(notes)
+    stats, precision, per_note = evaluate_notes(pack_notes, preds)
     ci = bootstrap_ci(per_note)
-    out_lines.append(format_table(locale, split, stats, precision, ci))
+    out_lines.append(format_table(split, stats, precision, ci))
     o = overall(stats)
     runs.append(
         {
             "system": "Core scanner",
-            "locale": locale,
             "split": split,
             "entities": {
                 entity: {
@@ -118,16 +121,15 @@ def run(locale: str, split: str, out_lines: list[str], runs: list[dict]) -> None
         }
     )
     print(
-        f"Core scanner       {locale}/{split}: pack-id recall={o['recall']:.3f} "
+        f"Core scanner       {split}: pack-id recall={o['recall']:.3f} "
         f"strict={o['strict_recall']:.3f} fn={o['fn_rate']:.3f}"
     )
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--locale", choices=["ca", "in"])
     parser.add_argument("--split", choices=["gold", "generated"], default="gold")
-    parser.add_argument("--all", action="store_true")
+    parser.add_argument("--all", action="store_true", help="both splits")
     args = parser.parse_args()
 
     results_dir = REPO / "evaluation" / "results"
@@ -146,14 +148,8 @@ def main() -> None:
     ]
     runs: list[dict] = []
 
-    if args.all:
-        for locale in ["ca", "in"]:
-            for split in ["gold", "generated"]:
-                run(locale, split, out_lines, runs)
-    else:
-        if not args.locale:
-            parser.error("--locale required unless --all")
-        run(args.locale, args.split, out_lines, runs)
+    for split in ["gold", "generated"] if args.all else [args.split]:
+        run(split, out_lines, runs)
 
     (results_dir / "results_core.md").write_text("\n".join(out_lines), encoding="utf-8")
     (results_dir / "results_core.json").write_text(

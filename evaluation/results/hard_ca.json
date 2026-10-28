@@ -1,21 +1,19 @@
 {
   "metadata": {
-    "generated_at": "2026-07-07T04:32:38+00:00",
-    "python": "3.12.13",
+    "generated_at": "2026-10-27T03:26:32+00:00",
+    "python": "3.12.3",
     "versions": {
-      "presidio-analyzer": "2.2.363",
-      "spacy": "3.8.13",
+      "presidio-analyzer": "2.2.365",
+      "spacy": "3.8.18",
       "en_core_web_sm": "3.8.0"
     },
     "nlp_model": "en_core_web_sm",
     "score_threshold": 0.35,
     "corpus_checksums": {
-      "gold/ca_gold.jsonl": "bf672562c54f6783567b980c87994afe38c2556f3b8d6cfa0aedd607d71f7582",
-      "gold/in_gold.jsonl": "849c8d08f28a3418b528f890cb5b6051f41076ea55956b93b5ad571c91297727",
-      "generated/ca.jsonl": "0c04e9dd4d5bc0a62275b6574f96644865ec95d3b239e873904b429adcc7e916",
-      "generated/in.jsonl": "33e7a4046df86e8f9e91dd90a711de32f884aced21371d966a28084146c4d3e0",
+      "gold/ca_gold.jsonl": "2d8c507488a1cb06d7362f7b3a002ec19990d28b2adead909a19d2f3b0f51fe6",
+      "generated/ca.jsonl": "f87a7c2599bca71e17a961718828da92a1bb0d57b00ef63633366b8141606c65",
       "negatives/ca_negatives.jsonl": "bb2b1f63b7f87f2365b002c3532130b372ab94f513331cf6f5200d06b66e31a4",
-      "hard/ca_hard.jsonl": "bc7581e266cd15585cbc891c6562597678b6f8128be25dfad41af3527efa362e",
+      "hard/ca_hard.jsonl": "e5c296c7f9e42c9baec1eb6852e400d23ff9e315855edd46172b483eb0252d1b",
       "addresses/ca_address_eval.jsonl": "06213d503d0f649be6307ed70ef0c1a780ab025bcb074edce207acc21745802e"
     }
   },
@@ -24,107 +22,112 @@
       "by_variant": {
         "control": {
           "gold": 50,
-          "detected": 31,
-          "covered": 26,
-          "recall": 0.62,
-          "strict_recall": 0.52
+          "detected": 34,
+          "covered": 28,
+          "recall": 0.68,
+          "strict_recall": 0.56
         },
         "no_context": {
           "gold": 50,
-          "detected": 38,
+          "detected": 37,
           "covered": 29,
-          "recall": 0.76,
+          "recall": 0.74,
           "strict_recall": 0.58
         },
         "unusual_separator": {
           "gold": 50,
-          "detected": 31,
-          "covered": 24,
-          "recall": 0.62,
-          "strict_recall": 0.48
+          "detected": 27,
+          "covered": 20,
+          "recall": 0.54,
+          "strict_recall": 0.4
         },
         "line_wrap": {
           "gold": 50,
-          "detected": 17,
+          "detected": 20,
           "covered": 0,
-          "recall": 0.34,
+          "recall": 0.4,
           "strict_recall": 0.0
         },
         "ocr_confusable": {
           "gold": 50,
-          "detected": 24,
-          "covered": 5,
-          "recall": 0.48,
-          "strict_recall": 0.1
+          "detected": 20,
+          "covered": 0,
+          "recall": 0.4,
+          "strict_recall": 0.0
         },
         "dictation": {
           "gold": 50,
-          "detected": 26,
-          "covered": 20,
-          "recall": 0.52,
-          "strict_recall": 0.4
+          "detected": 24,
+          "covered": 21,
+          "recall": 0.48,
+          "strict_recall": 0.42
         }
       },
       "cells": {
         "CA_AB_ULI|control": {
           "gold": 10,
           "detected": 9,
-          "covered": 8,
+          "covered": 7,
           "missed": [
-            "55344-7616"
+            "99264-5238"
           ]
         },
         "CA_AB_ULI|dictation": {
           "gold": 10,
-          "detected": 4,
-          "covered": 1,
+          "detected": 2,
+          "covered": 2,
           "missed": [
-            "5 5 6 3 5 0 6 1 2",
-            "8 9 3 8 3 4 2 9 1",
-            "1 7 9 3 0 2 8 1 9",
-            "2 1 4 6 9 0 5 9 0",
-            "9 1 6 8 0 8 8 1 9",
-            "2 4 1 6 6 6 4 8 4"
+            "9 0 6 8 7 1 5 2 4",
+            "9 0 0 1 8 0 5 4 9",
+            "2 2 3 8 7 7 3 2 0",
+            "2 7 5 1 1 4 4 5 9",
+            "2 3 2 1 1 6 8 6 0",
+            "8 3 0 2 3 5 6 2 9",
+            "8 9 1 8 3 6 6 5 2",
+            "8 0 0 9 4 1 9 8 3"
           ]
         },
         "CA_AB_ULI|line_wrap": {
           "gold": 10,
-          "detected": 4,
+          "detected": 5,
           "covered": 0,
           "missed": [
             "37138\n1771",
             "05613\n2796",
             "80175\n3931",
             "55720\n8941",
-            "60803\n3384",
-            "91357\n6634"
+            "60803\n3384"
           ]
         },
         "CA_AB_ULI|no_context": {
           "gold": 10,
-          "detected": 9,
-          "covered": 8,
+          "detected": 8,
+          "covered": 7,
           "missed": [
+            "55344-7616",
             "68941-3564"
           ]
         },
         "CA_AB_ULI|ocr_confusable": {
           "gold": 10,
-          "detected": 9,
-          "covered": 1,
+          "detected": 8,
+          "covered": 0,
           "missed": [
-            "9l202 8484"
+            "00446 377l",
+            "1O435 8237"
           ]
         },
         "CA_AB_ULI|unusual_separator": {
           "gold": 10,
-          "detected": 6,
-          "covered": 4,
+          "detected": 4,
+          "covered": 2,
           "missed": [
-            "25959.8174",
-            "98388/0306",
-            "13362.6704",
-            "55403.1864"
+            "49728.5376",
+            "678 85551 9",
+            "307 74768 4",
+            "98432/5187",
+            "70 680914 9",
+            "98388/0306"
           ]
         },
         "CA_BC_PHN|control": {
@@ -144,13 +147,13 @@
           "detected": 3,
           "covered": 0,
           "missed": [
-            "9879 474\n326",
-            "9457 719\n292",
-            "9363 564\n216",
-            "9228\n140 444",
-            "9323\n043 581",
-            "9483 909\n918",
-            "9338\n487 735"
+            "9750 309\n905",
+            "9047 796\n492",
+            "9493\n098 183",
+            "9155 720\n029",
+            "9698\n205 467",
+            "9425\n571 653",
+            "9996 734\n131"
           ]
         },
         "CA_BC_PHN|no_context": {
@@ -161,14 +164,15 @@
         },
         "CA_BC_PHN|ocr_confusable": {
           "gold": 10,
-          "detected": 5,
-          "covered": 3,
+          "detected": 4,
+          "covered": 0,
           "missed": [
-            "9827 O53 663",
-            "9623 7O9 424",
-            "9280 96O 439",
-            "9O01 447 588",
-            "9625 6l8 029"
+            "9228 l40 444",
+            "9323 O43 581",
+            "9483 909 9l8",
+            "972l 252 596",
+            "9289 641 7l3",
+            "9O01 601 244"
           ]
         },
         "CA_BC_PHN|unusual_separator": {
@@ -179,19 +183,16 @@
         },
         "CA_OHIP|control": {
           "gold": 10,
-          "detected": 8,
-          "covered": 8,
-          "missed": [
-            "3710 029 673",
-            "4561-890-254"
-          ]
+          "detected": 10,
+          "covered": 10,
+          "missed": []
         },
         "CA_OHIP|dictation": {
           "gold": 10,
           "detected": 9,
           "covered": 9,
           "missed": [
-            "4 1 6 0 7 2 4 3 3 4"
+            "4 8 8 9 8 6 6 0 9 3"
           ]
         },
         "CA_OHIP|line_wrap": {
@@ -199,52 +200,55 @@
           "detected": 3,
           "covered": 0,
           "missed": [
-            "6439 813\n327",
-            "6963 457\n020",
-            "1159 598\n281",
-            "9288 407\n266",
-            "9837 054\n668",
-            "8912\n085 928",
-            "8146 794\n717"
+            "6929\n643 986",
+            "4332\n608 308",
+            "3278 352\n194",
+            "5731 919\n873",
+            "9370 546\n658",
+            "2646 936\n662",
+            "5610 091\n257"
           ]
         },
         "CA_OHIP|no_context": {
-          "gold": 10,
-          "detected": 9,
-          "covered": 9,
-          "missed": [
-            "5400 432 091"
-          ]
-        },
-        "CA_OHIP|ocr_confusable": {
-          "gold": 10,
-          "detected": 5,
-          "covered": 0,
-          "missed": [
-            "3939 6O2 995",
-            "O269 039 723",
-            "O757 475 157",
-            "490O 602 659",
-            "964O 047 313"
-          ]
-        },
-        "CA_OHIP|unusual_separator": {
           "gold": 10,
           "detected": 10,
           "covered": 10,
           "missed": []
         },
-        "CA_RAMQ|control": {
+        "CA_OHIP|ocr_confusable": {
           "gold": 10,
-          "detected": 4,
+          "detected": 2,
           "covered": 0,
           "missed": [
-            "STEM-4911-0699",
-            "NGUM-8761-2881",
+            "6593 3l1 845",
+            "l039 728 553",
+            "91O4 354 262",
+            "86O9 841 740",
+            "66O2 653 955",
+            "96O7 867 729",
+            "8080 O78 556",
+            "615l 483 515"
+          ]
+        },
+        "CA_OHIP|unusual_separator": {
+          "gold": 10,
+          "detected": 8,
+          "covered": 7,
+          "missed": [
+            "2281/961/926",
+            "2469/072/314"
+          ]
+        },
+        "CA_RAMQ|control": {
+          "gold": 10,
+          "detected": 5,
+          "covered": 1,
+          "missed": [
+            "SIDJ-1203-0419",
+            "NGUM-0458-2881",
             "FORL-3858-2139",
             "IBRA-7509-1060",
-            "ROYA-7705-2112",
-            "SANS-5201-2357"
+            "ROYA-7705-2112"
           ]
         },
         "CA_RAMQ|dictation": {
@@ -252,57 +256,56 @@
           "detected": 1,
           "covered": 0,
           "missed": [
-            "G A U S 9 2 0 4 0 5 1 0",
-            "Z H A E 8 6 5 2 2 2 4 5",
-            "C Ô T M 9 9 5 5 2 8 2 1",
+            "D H I L 7 0 6 1 0 8 1 5",
+            "G A G S 5 3 5 8 1 8 1 6",
+            "B E A J 8 7 5 4 2 3 6 3",
+            "B E R A 4 7 5 2 0 6 9 2",
+            "Z H A A 7 0 6 1 2 3 0 9",
             "M C C E 7 6 0 9 0 4 2 6",
             "L A V E 9 3 5 1 1 8 7 4",
-            "D H I L 4 6 1 0 0 3 4 0",
-            "S A N S 9 1 5 9 2 5 5 3",
-            "H A S A 4 6 0 6 1 5 6 0",
-            "R E Y J 4 6 0 9 2 5 1 7"
+            "D H I L 0 0 0 3 0 3 4 0",
+            "S A N S 9 1 5 9 2 5 5 3"
           ]
         },
         "CA_RAMQ|line_wrap": {
           "gold": 10,
-          "detected": 7,
+          "detected": 9,
           "covered": 0,
           "missed": [
-            "CHES 4360\n0506",
-            "BEAA 5455\n2807",
-            "PELA 7757\n2457"
+            "FORJ 8451\n0874"
           ]
         },
         "CA_RAMQ|no_context": {
           "gold": 10,
-          "detected": 10,
+          "detected": 9,
           "covered": 2,
-          "missed": []
+          "missed": [
+            "GILL-7311-2681"
+          ]
         },
         "CA_RAMQ|ocr_confusable": {
           "gold": 10,
-          "detected": 5,
-          "covered": 1,
+          "detected": 6,
+          "covered": 0,
           "missed": [
-            "LÉVE 9362 l267",
-            "BÉLA 4056 1O58",
-            "ROYE 3854 l250",
-            "KOWE 8756 l598",
-            "HASE 9756 1l84"
+            "LIXL 8657 O664",
+            "OUEL 0762 O689",
+            "SIDL 3562 2O56",
+            "ZHAJ 7708 19l8"
           ]
         },
         "CA_RAMQ|unusual_separator": {
           "gold": 10,
           "detected": 3,
-          "covered": 0,
+          "covered": 1,
           "missed": [
             "ZHAM.6662.0869",
-            "CAME47052 1 62",
-            "REYA/6602/0958",
-            "F ORL4154 1204",
-            "SANJ.6007.1229",
-            "KHAS.9707.2537",
-            "OU EA 36542180"
+            "CAME07 53028 3",
+            "WILS.9652.0398",
+            "WONA.8059.0850",
+            "DHIE/3306/2792",
+            "LÉVE/4751/2761",
+            "FORM.0759.0437"
           ]
         },
         "CA_SIN|control": {
@@ -416,38 +419,38 @@
         },
         "no_context": {
           "gold": 50,
-          "detected": 49,
-          "covered": 48,
-          "recall": 0.98,
-          "strict_recall": 0.96
+          "detected": 48,
+          "covered": 47,
+          "recall": 0.96,
+          "strict_recall": 0.94
         },
         "unusual_separator": {
           "gold": 50,
-          "detected": 32,
-          "covered": 24,
-          "recall": 0.64,
-          "strict_recall": 0.48
+          "detected": 30,
+          "covered": 20,
+          "recall": 0.6,
+          "strict_recall": 0.4
         },
         "line_wrap": {
           "gold": 50,
-          "detected": 17,
+          "detected": 27,
           "covered": 0,
-          "recall": 0.34,
+          "recall": 0.54,
           "strict_recall": 0.0
         },
         "ocr_confusable": {
           "gold": 50,
           "detected": 24,
-          "covered": 5,
+          "covered": 1,
           "recall": 0.48,
-          "strict_recall": 0.1
+          "strict_recall": 0.02
         },
         "dictation": {
           "gold": 50,
-          "detected": 26,
-          "covered": 20,
-          "recall": 0.52,
-          "strict_recall": 0.4
+          "detected": 24,
+          "covered": 21,
+          "recall": 0.48,
+          "strict_recall": 0.42
         }
       },
       "cells": {
@@ -459,55 +462,57 @@
         },
         "CA_AB_ULI|dictation": {
           "gold": 10,
-          "detected": 4,
-          "covered": 1,
+          "detected": 2,
+          "covered": 2,
           "missed": [
-            "5 5 6 3 5 0 6 1 2",
-            "8 9 3 8 3 4 2 9 1",
-            "1 7 9 3 0 2 8 1 9",
-            "2 1 4 6 9 0 5 9 0",
-            "9 1 6 8 0 8 8 1 9",
-            "2 4 1 6 6 6 4 8 4"
+            "9 0 6 8 7 1 5 2 4",
+            "9 0 0 1 8 0 5 4 9",
+            "2 2 3 8 7 7 3 2 0",
+            "2 7 5 1 1 4 4 5 9",
+            "2 3 2 1 1 6 8 6 0",
+            "8 3 0 2 3 5 6 2 9",
+            "8 9 1 8 3 6 6 5 2",
+            "8 0 0 9 4 1 9 8 3"
           ]
         },
         "CA_AB_ULI|line_wrap": {
           "gold": 10,
-          "detected": 4,
+          "detected": 5,
           "covered": 0,
           "missed": [
             "37138\n1771",
             "05613\n2796",
             "80175\n3931",
             "55720\n8941",
-            "60803\n3384",
-            "91357\n6634"
+            "60803\n3384"
           ]
         },
         "CA_AB_ULI|no_context": {
           "gold": 10,
-          "detected": 9,
-          "covered": 8,
+          "detected": 8,
+          "covered": 7,
           "missed": [
+            "55344-7616",
             "68941-3564"
           ]
         },
         "CA_AB_ULI|ocr_confusable": {
           "gold": 10,
-          "detected": 9,
-          "covered": 1,
+          "detected": 8,
+          "covered": 0,
           "missed": [
-            "9l202 8484"
+            "00446 377l",
+            "1O435 8237"
           ]
         },
         "CA_AB_ULI|unusual_separator": {
           "gold": 10,
-          "detected": 6,
-          "covered": 4,
+          "detected": 7,
+          "covered": 2,
           "missed": [
-            "25959.8174",
-            "98388/0306",
-            "13362.6704",
-            "55403.1864"
+            "49728.5376",
+            "98432/5187",
+            "98388/0306"
           ]
         },
         "CA_BC_PHN|control": {
@@ -524,17 +529,9 @@
         },
         "CA_BC_PHN|line_wrap": {
           "gold": 10,
-          "detected": 3,
+          "detected": 10,
           "covered": 0,
-          "missed": [
-            "9879 474\n326",
-            "9457 719\n292",
-            "9363 564\n216",
-            "9228\n140 444",
-            "9323\n043 581",
-            "9483 909\n918",
-            "9338\n487 735"
-          ]
+          "missed": []
         },
         "CA_BC_PHN|no_context": {
           "gold": 10,
@@ -544,14 +541,11 @@
         },
         "CA_BC_PHN|ocr_confusable": {
           "gold": 10,
-          "detected": 5,
-          "covered": 3,
+          "detected": 8,
+          "covered": 1,
           "missed": [
-            "9827 O53 663",
-            "9623 7O9 424",
-            "9280 96O 439",
-            "9O01 447 588",
-            "9625 6l8 029"
+            "9228 l40 444",
+            "9323 O43 581"
           ]
         },
         "CA_BC_PHN|unusual_separator": {
@@ -571,7 +565,7 @@
           "detected": 9,
           "covered": 9,
           "missed": [
-            "4 1 6 0 7 2 4 3 3 4"
+            "4 8 8 9 8 6 6 0 9 3"
           ]
         },
         "CA_OHIP|line_wrap": {
@@ -579,13 +573,13 @@
           "detected": 3,
           "covered": 0,
           "missed": [
-            "6439 813\n327",
-            "6963 457\n020",
-            "1159 598\n281",
-            "9288 407\n266",
-            "9837 054\n668",
-            "8912\n085 928",
-            "8146 794\n717"
+            "6929\n643 986",
+            "4332\n608 308",
+            "3278 352\n194",
+            "5731 919\n873",
+            "9370 546\n658",
+            "2646 936\n662",
+            "5610 091\n257"
           ]
         },
         "CA_OHIP|no_context": {
@@ -596,21 +590,27 @@
         },
         "CA_OHIP|ocr_confusable": {
           "gold": 10,
-          "detected": 5,
+          "detected": 2,
           "covered": 0,
           "missed": [
-            "3939 6O2 995",
-            "O269 039 723",
-            "O757 475 157",
-            "490O 602 659",
-            "964O 047 313"
+            "6593 3l1 845",
+            "l039 728 553",
+            "91O4 354 262",
+            "86O9 841 740",
+            "66O2 653 955",
+            "96O7 867 729",
+            "8080 O78 556",
+            "615l 483 515"
           ]
         },
         "CA_OHIP|unusual_separator": {
           "gold": 10,
-          "detected": 10,
-          "covered": 10,
-          "missed": []
+          "detected": 8,
+          "covered": 7,
+          "missed": [
+            "2281/961/926",
+            "2469/072/314"
+          ]
         },
         "CA_RAMQ|control": {
           "gold": 10,
@@ -623,25 +623,23 @@
           "detected": 1,
           "covered": 0,
           "missed": [
-            "G A U S 9 2 0 4 0 5 1 0",
-            "Z H A E 8 6 5 2 2 2 4 5",
-            "C Ô T M 9 9 5 5 2 8 2 1",
+            "D H I L 7 0 6 1 0 8 1 5",
+            "G A G S 5 3 5 8 1 8 1 6",
+            "B E A J 8 7 5 4 2 3 6 3",
+            "B E R A 4 7 5 2 0 6 9 2",
+            "Z H A A 7 0 6 1 2 3 0 9",
             "M C C E 7 6 0 9 0 4 2 6",
             "L A V E 9 3 5 1 1 8 7 4",
-            "D H I L 4 6 1 0 0 3 4 0",
-            "S A N S 9 1 5 9 2 5 5 3",
-            "H A S A 4 6 0 6 1 5 6 0",
-            "R E Y J 4 6 0 9 2 5 1 7"
+            "D H I L 0 0 0 3 0 3 4 0",
+            "S A N S 9 1 5 9 2 5 5 3"
           ]
         },
         "CA_RAMQ|line_wrap": {
           "gold": 10,
-          "detected": 7,
+          "detected": 9,
           "covered": 0,
           "missed": [
-            "CHES 4360\n0506",
-            "BEAA 5455\n2807",
-            "PELA 7757\n2457"
+            "FORJ 8451\n0874"
           ]
         },
         "CA_RAMQ|no_context": {
@@ -652,27 +650,27 @@
         },
         "CA_RAMQ|ocr_confusable": {
           "gold": 10,
-          "detected": 5,
-          "covered": 1,
+          "detected": 6,
+          "covered": 0,
           "missed": [
-            "LÉVE 9362 l267",
-            "BÉLA 4056 1O58",
-            "ROYE 3854 l250",
-            "KOWE 8756 l598",
-            "HASE 9756 1l84"
+            "LIXL 8657 O664",
+            "OUEL 0762 O689",
+            "SIDL 3562 2O56",
+            "ZHAJ 7708 19l8"
           ]
         },
         "CA_RAMQ|unusual_separator": {
           "gold": 10,
-          "detected": 4,
-          "covered": 0,
+          "detected": 3,
+          "covered": 1,
           "missed": [
             "ZHAM.6662.0869",
-            "CAME47052 1 62",
-            "REYA/6602/0958",
-            "F ORL4154 1204",
-            "SANJ.6007.1229",
-            "KHAS.9707.2537"
+            "CAME07 53028 3",
+            "WILS.9652.0398",
+            "WONA.8059.0850",
+            "DHIE/3306/2792",
+            "LÉVE/4751/2761",
+            "FORM.0759.0437"
           ]
         },
         "CA_SIN|control": {

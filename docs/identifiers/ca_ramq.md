@@ -21,7 +21,7 @@
 
 ## Rule implemented
 
-- Pattern (`canada/health_cards.py`, `RamqRecognizer`): 4 uppercase letters
+- Pattern (`core/specs.py`): 4 uppercase letters
   (accented allowed — CÔT, GAG) + 8 digits, optionally in 4-4-4 groups
   (score 0.4). Matching is **case-sensitive**: with Presidio's default
   IGNORECASE, any lowercase 4-letter word followed by 8 digits ("card 4111

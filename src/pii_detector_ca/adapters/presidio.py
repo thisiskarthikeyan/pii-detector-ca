@@ -39,14 +39,8 @@ class SpecRecognizer(ValidatedPatternRecognizer):
 
     entity_id: ClassVar[str]
 
-    def __init__(
-        self,
-        *,
-        pattern: str | None = None,
-        score: float | None = None,
-    ) -> None:
-        spec = get_entity_spec(self.entity_id, pattern=pattern, score=score)
-        super().__init__(**_recognizer_kwargs(spec))
+    def __init__(self) -> None:
+        super().__init__(**_recognizer_kwargs(get_entity_spec(self.entity_id)))
 
 
 def recognizers_from_specs(specs: list[EntitySpec]) -> list[ValidatedPatternRecognizer]:

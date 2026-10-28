@@ -1,81 +1,31 @@
 {
   "metadata": {
-    "generated_at": "2026-07-07T04:32:28+00:00",
-    "python": "3.12.13",
+    "generated_at": "2026-10-27T03:24:22+00:00",
+    "python": "3.12.3",
     "versions": {
-      "presidio-analyzer": "2.2.363",
-      "spacy": "3.8.13",
+      "presidio-analyzer": "2.2.365",
+      "spacy": "3.8.18",
       "en_core_web_sm": "3.8.0"
     },
     "nlp_model": "en_core_web_sm",
     "score_threshold": 0.35,
     "corpus_checksums": {
-      "gold/ca_gold.jsonl": "bf672562c54f6783567b980c87994afe38c2556f3b8d6cfa0aedd607d71f7582",
-      "gold/in_gold.jsonl": "849c8d08f28a3418b528f890cb5b6051f41076ea55956b93b5ad571c91297727",
-      "generated/ca.jsonl": "0c04e9dd4d5bc0a62275b6574f96644865ec95d3b239e873904b429adcc7e916",
-      "generated/in.jsonl": "33e7a4046df86e8f9e91dd90a711de32f884aced21371d966a28084146c4d3e0",
+      "gold/ca_gold.jsonl": "2d8c507488a1cb06d7362f7b3a002ec19990d28b2adead909a19d2f3b0f51fe6",
+      "generated/ca.jsonl": "f87a7c2599bca71e17a961718828da92a1bb0d57b00ef63633366b8141606c65",
       "negatives/ca_negatives.jsonl": "bb2b1f63b7f87f2365b002c3532130b372ab94f513331cf6f5200d06b66e31a4",
-      "hard/ca_hard.jsonl": "bc7581e266cd15585cbc891c6562597678b6f8128be25dfad41af3527efa362e",
+      "hard/ca_hard.jsonl": "e5c296c7f9e42c9baec1eb6852e400d23ff9e315855edd46172b483eb0252d1b",
       "addresses/ca_address_eval.jsonl": "06213d503d0f649be6307ed70ef0c1a780ab025bcb074edce207acc21745802e"
     }
   },
   "results": {
-    "pack (all locales)": {
+    "pack": {
       "notes": 300,
-      "fp_total": 131,
-      "fp_per_100_notes": 43.67,
-      "notes_affected": 107,
+      "fp_total": 37,
+      "fp_per_100_notes": 12.33,
+      "notes_affected": 36,
       "fp_by_entity": {
         "CA_BC_PHN": 3,
-        "CA_OHIP": 16,
-        "CA_SIN": 19,
-        "IN_AADHAAR": 8,
-        "IN_MOBILE": 85
-      },
-      "examples": {
-        "IN_MOBILE": [
-          "7211755002",
-          "9792171419",
-          "7286459114",
-          "8849418478",
-          "7861973435"
-        ],
-        "CA_SIN": [
-          "422525832",
-          "721-441-525",
-          "690219647",
-          "167-007-335",
-          "674-646-294"
-        ],
-        "IN_AADHAAR": [
-          "4800 8495 5006",
-          "5294 0255 5543",
-          "5295 0310 5968",
-          "4751 4230 6924",
-          "4011 4689 6469"
-        ],
-        "CA_OHIP": [
-          "6517396112",
-          "4543095923",
-          "7559439455",
-          "7174956008",
-          "3757340603"
-        ],
-        "CA_BC_PHN": [
-          "9466067701",
-          "9304275177",
-          "9007387844"
-        ]
-      }
-    },
-    "pack (ca only)": {
-      "notes": 300,
-      "fp_total": 38,
-      "fp_per_100_notes": 12.67,
-      "notes_affected": 37,
-      "fp_by_entity": {
-        "CA_BC_PHN": 3,
-        "CA_OHIP": 16,
+        "CA_OHIP": 15,
         "CA_SIN": 19
       },
       "examples": {

@@ -1,4 +1,4 @@
-"""Generators for checksum-valid identifiers and locale-plausible PII values.
+"""Generators for checksum-valid Canadian identifiers and plausible PII values.
 
 Every generator returns (surface_text, entity_type). Identifier generators
 produce values that pass this package's validators, in a randomly chosen
@@ -16,23 +16,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from presidio_recognizers_ca_in.validators import (  # noqa: E402
+from pii_detector_ca.validators import (  # noqa: E402
     ca_bc_phn_valid,
     luhn_check_digit,
-    verhoeff_check_digit,
 )
 
 # --- Name pools -------------------------------------------------------------
 
-INDIAN_FIRST = [
-    "Priya", "Rahul", "Ananya", "Vikram", "Deepika", "Arjun", "Sneha", "Ravi",
-    "Kavya", "Suresh", "Meera", "Amit", "Pooja", "Rajesh", "Divya", "Sanjay",
-    "Lakshmi", "Karthik", "Nisha", "Manoj", "Aishwarya", "Ramesh", "Swati", "Anil",
-]
-INDIAN_LAST = [
-    "Sharma", "Patel", "Reddy", "Iyer", "Gupta", "Nair", "Singh", "Rao",
-    "Menon", "Verma", "Krishnan", "Desai", "Joshi", "Kulkarni", "Banerjee", "Pillai",
-]
 # CA first names are sampled frequency-weighted from the committed StatCan
 # 2021 Census list (benchmark/data/statcan_names/, 9k+ names — see README
 # there). The census publishes names UNACCENTED, so a small accented
@@ -55,23 +45,9 @@ CANADIAN_LAST = [
     "Kowalski", "O'Brien", "McCarthy", "MacLeod", "Cardinal",
 ]
 
-INDIAN_CITIES = [
-    ("Bengaluru", "Karnataka", "560034"), ("Mumbai", "Maharashtra", "400012"),
-    ("Chennai", "Tamil Nadu", "600020"), ("New Delhi", "Delhi", "110029"),
-    ("Hyderabad", "Telangana", "500082"), ("Pune", "Maharashtra", "411004"),
-    ("Kolkata", "West Bengal", "700017"),
-]
-INDIAN_STREETS = [
-    "MG Road", "Brigade Road", "Linking Road", "Anna Salai", "Jubilee Hills Road No 36",
-    "FC Road", "Park Street", "Sarjapur Road", "Banjara Hills",
-]
 # Canadian street/city pools were replaced by the curated ODA sample
 # (see gen_address / _oda_addresses).
 
-HOSPITALS_IN = [
-    "Apollo Hospitals", "Fortis Healthcare", "AIIMS New Delhi", "Manipal Hospital",
-    "Narayana Health City", "Tata Memorial Hospital", "CMC Vellore",
-]
 HOSPITALS_CA = [
     "Toronto General Hospital", "CHUM", "Vancouver General Hospital",
     "Foothills Medical Centre", "The Ottawa Hospital", "Hôpital Maisonneuve-Rosemont",
@@ -102,7 +78,8 @@ def gen_ca_sin(rng: random.Random) -> str:
 
 
 def gen_ca_ohip(rng: random.Random) -> str:
-    base = "".join(rng.choices("0123456789", k=9))
+    # MOH HCV schema: [1-9]\d{9}.
+    base = rng.choice("123456789") + "".join(rng.choices("0123456789", k=8))
     digits = base + luhn_check_digit(base)
     version = rng.choice(["", "AB", "KD", "JX", "MC"])
     formatted = _fmt(digits, [4, 3, 3], rng)
@@ -122,11 +99,17 @@ def _ramq_letters(last: str, first: str) -> str:
     return (surname + first[0]).upper()
 
 
-def gen_ca_ramq(rng: random.Random) -> str:
-    last = rng.choice(CANADIAN_LAST)
-    first = gen_ca_first_name(rng)
+def gen_ca_ramq(
+    rng: random.Random,
+    surname: str | None = None,
+    first_name: str | None = None,
+) -> str:
+    """RAMQ NAM. When the note's patient name is known the letter block is
+    derived from it (as on a real card); otherwise a name is sampled."""
+    last = surname if surname is not None else rng.choice(CANADIAN_LAST)
+    first = first_name if first_name is not None else gen_ca_first_name(rng)
     letters = _ramq_letters(last, first)
-    yy = f"{rng.randint(30, 99):02d}"
+    yy = f"{rng.randint(1930, 2015) % 100:02d}"
     # Month of birth, +50 for women (RAMQ sex-offset encoding).
     month = rng.randint(1, 12) + rng.choice([0, 50])
     dd = f"{rng.randint(1, 28):02d}"
@@ -164,62 +147,6 @@ def gen_ca_postal(rng: random.Random) -> str:
     return code[:3] + " " + code[3:]
 
 
-# --- Indian identifiers -------------------------------------------------------
-
-
-def gen_in_aadhaar(rng: random.Random) -> str:
-    base = rng.choice("23456789") + "".join(rng.choices("0123456789", k=10))
-    digits = base + verhoeff_check_digit(base)
-    return _fmt(digits, [4, 4, 4], rng)
-
-
-def gen_in_abha(rng: random.Random) -> str:
-    digits = "".join(rng.choices("0123456789", k=14))
-    if len(set(digits)) == 1:
-        digits = digits[:-1] + str((int(digits[-1]) + 1) % 10)
-    style = rng.choice(["separated", "compact"])
-    if style == "separated":
-        sep = rng.choice([" ", "-"])
-        return sep.join([digits[:2], digits[2:6], digits[6:10], digits[10:]])
-    return digits
-
-
-def gen_in_pan(rng: random.Random) -> str:
-    letters = "".join(rng.choices("ABCDEFGHIJKLMNOPQRSTUVWXYZ", k=3))
-    holder = rng.choice("PCFH")
-    initial = rng.choice("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-    last = rng.choice("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-    return f"{letters}{holder}{initial}{rng.randint(0, 9999):04d}{last}"
-
-
-def gen_in_uhid(rng: random.Random) -> str:
-    prefix = rng.choice(["APL", "FRT", "AIIMS", "MH", "NH", "CMC"])
-    sep = rng.choice(["-", "/", ""])
-    return f"{prefix}{sep}{rng.randint(10000, 9999999999)}"
-
-
-def gen_in_mobile(rng: random.Random) -> str:
-    number = rng.choice("6789") + "".join(rng.choices("0123456789", k=9))
-    style = rng.choice(["plain", "prefixed", "spaced"])
-    if style == "prefixed":
-        return f"+91 {number[:5]} {number[5:]}"
-    if style == "spaced":
-        return f"{number[:5]} {number[5:]}"
-    return number
-
-
-def gen_in_pin(rng: random.Random) -> str:
-    return rng.choice([c[2] for c in INDIAN_CITIES])
-
-
-def gen_in_voter_id(rng: random.Random) -> str:
-    return "".join(rng.choices("ABCDEFGHJKLMNPRSTUVWXYZ", k=3)) + f"{rng.randint(0, 9999999):07d}"
-
-
-def gen_in_passport(rng: random.Random) -> str:
-    return rng.choice("ABCDEFGHJKLMNP") + str(rng.randint(1, 9)) + f"{rng.randint(0, 999999):06d}"
-
-
 # --- Common PII ---------------------------------------------------------------
 
 
@@ -252,22 +179,32 @@ def gen_ca_first_name(rng: random.Random) -> str:
     return rng.choices(names, cum_weights=cum, k=1)[0]
 
 
-def gen_person(rng: random.Random, locale: str) -> str:
-    if locale == "in":
-        return f"{rng.choice(INDIAN_FIRST)} {rng.choice(INDIAN_LAST)}"
+def gen_person(rng: random.Random) -> str:
     return f"{gen_ca_first_name(rng)} {rng.choice(CANADIAN_LAST)}"
 
 
-def gen_date(rng: random.Random) -> str:
-    months = ["January", "February", "March", "April", "May", "June", "July",
-              "August", "September", "October", "November", "December"]
+_MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+           "August", "September", "October", "November", "December"]
+
+
+def _format_date(rng: random.Random, y: int, m: int, d: int) -> str:
+    months = _MONTHS
     style = rng.choice(["long", "slash", "iso"])
-    y, m, d = rng.randint(2018, 2026), rng.randint(1, 12), rng.randint(1, 28)
     if style == "long":
         return f"{months[m - 1]} {d}, {y}"
     if style == "slash":
         return f"{d:02d}/{m:02d}/{y}"
     return f"{y}-{m:02d}-{d:02d}"
+
+
+def gen_date(rng: random.Random) -> str:
+    """Encounter / exam / admission date (recent past)."""
+    return _format_date(rng, rng.randint(2018, 2025), rng.randint(1, 12), rng.randint(1, 28))
+
+
+def gen_dob(rng: random.Random) -> str:
+    """Date of birth: a plausible patient age, never a future date."""
+    return _format_date(rng, rng.randint(1930, 2015), rng.randint(1, 12), rng.randint(1, 28))
 
 
 # Canadian addresses are drawn from the curated StatCan ODA sample (real,
@@ -309,10 +246,7 @@ def _format_ca_address(row: dict, rng: random.Random) -> str:
     return f"{street}, {muni}, {prov} {postal}"
 
 
-def gen_address(rng: random.Random, locale: str) -> str:
-    if locale == "in":
-        city, state, pin = rng.choice(INDIAN_CITIES)
-        return f"{rng.randint(1, 400)} {rng.choice(INDIAN_STREETS)}, {city}, {state} {pin}"
+def gen_address(rng: random.Random) -> str:
     return _format_ca_address(rng.choice(_oda_addresses()), rng)
 
 
@@ -323,14 +257,4 @@ GENERATORS_CA = {
     "CA_BC_PHN": gen_ca_bc_phn,
     "CA_AB_ULI": gen_ca_ab_uli,
     "CA_POSTAL_CODE": gen_ca_postal,
-}
-GENERATORS_IN = {
-    "IN_AADHAAR": gen_in_aadhaar,
-    "IN_ABHA": gen_in_abha,
-    "IN_PAN": gen_in_pan,
-    "IN_UHID": gen_in_uhid,
-    "IN_MOBILE": gen_in_mobile,
-    "IN_PIN_CODE": gen_in_pin,
-    "IN_VOTER_ID": gen_in_voter_id,
-    "IN_PASSPORT": gen_in_passport,
 }

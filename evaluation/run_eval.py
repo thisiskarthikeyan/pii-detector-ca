@@ -1,13 +1,20 @@
 """Evaluation harness: stock Presidio vs. Presidio + recognizer pack.
 
+Three systems are compared:
+
+- "Stock Presidio": the default recognizer registry;
+- "Presidio + CA builtins": stock plus Presidio's own Canadian recognizers
+  (CaSinRecognizer, CaPostalCodeRecognizer) which ship disabled by default
+  (added upstream in 2.2.363 / 2.2.365) — the strongest no-pack baseline;
+- "Presidio + pack": stock plus this package's recognizers.
+
 Usage:
-    python evaluation/run_eval.py --all            # both locales, gold + generated
-    python evaluation/run_eval.py --locale ca --split gold
+    python evaluation/run_eval.py --all            # gold + generated splits
+    python evaluation/run_eval.py --split gold
 
 Writes markdown tables, a machine-readable results.json (consumed by
 check_thresholds.py in CI), and a JSON error-analysis dump to
-evaluation/results/. A bharat-pii baseline is included for the India locale
-when the library is importable; it is optional and skipped otherwise.
+evaluation/results/.
 """
 
 from __future__ import annotations
@@ -28,7 +35,7 @@ from metrics import Span, bootstrap_ci, evaluate_notes, overall  # noqa: E402
 from presidio_analyzer import AnalyzerEngine  # noqa: E402
 from presidio_analyzer.nlp_engine import NlpEngineProvider  # noqa: E402
 
-from presidio_recognizers_ca_in import add_recognizers  # noqa: E402
+from pii_detector_ca import add_recognizers  # noqa: E402
 
 DEFAULT_MODEL = "en_core_web_sm"
 
@@ -54,16 +61,33 @@ def collect_metadata(model: str = DEFAULT_MODEL) -> dict:
     return metadata
 
 
-def build_analyzer(with_pack: bool, model: str = DEFAULT_MODEL) -> AnalyzerEngine:
+def build_analyzer(
+    with_pack: bool, model: str = DEFAULT_MODEL, *, presidio_ca_builtins: bool = False
+) -> AnalyzerEngine:
     nlp_config = {
         "nlp_engine_name": "spacy",
         "models": [{"lang_code": "en", "model_name": model}],
     }
     provider = NlpEngineProvider(nlp_configuration=nlp_config)
     analyzer = AnalyzerEngine(nlp_engine=provider.create_engine(), supported_languages=["en"])
+    if presidio_ca_builtins:
+        for recognizer in _presidio_ca_builtins():
+            analyzer.registry.add_recognizer(recognizer)
     if with_pack:
         add_recognizers(analyzer.registry)
     return analyzer
+
+
+def _presidio_ca_builtins() -> list:
+    """Presidio's own Canadian recognizers, when the installed version has them."""
+    from presidio_analyzer import predefined_recognizers as pr
+
+    found = []
+    for name in ("CaSinRecognizer", "CaPostalCodeRecognizer"):
+        cls = getattr(pr, name, None)
+        if cls is not None:
+            found.append(cls())
+    return found
 
 
 def predict_presidio(analyzer: AnalyzerEngine, notes: list[dict]) -> list[list[Span]]:
@@ -74,38 +98,19 @@ def predict_presidio(analyzer: AnalyzerEngine, notes: list[dict]) -> list[list[S
     return predictions
 
 
-def predict_bharat_pii(notes: list[dict]) -> list[list[Span]] | None:
-    """Optional third-party baseline for the India locale."""
-    try:
-        from bharat_pii.api import detect
-    except ImportError:
-        return None
-    predictions = []
-    for note in notes:
-        spans = []
-        for hit in detect(note["text"]):
-            start = hit.get("start")
-            end = hit.get("end")
-            if start is not None and end is not None:
-                spans.append(Span(start, end, hit.get("entity", "PII")))
-        predictions.append(spans)
-    return predictions
 
-
-def load_notes(locale: str, split: str) -> list[dict]:
+def load_notes(split: str) -> list[dict]:
     if split == "gold":
-        path = REPO / "benchmark" / "data" / "gold" / f"{locale}_gold.jsonl"
+        path = REPO / "benchmark" / "data" / "gold" / "ca_gold.jsonl"
     else:
-        path = REPO / "benchmark" / "data" / "generated" / f"{locale}.jsonl"
+        path = REPO / "benchmark" / "data" / "generated" / "ca.jsonl"
     with open(path, encoding="utf-8") as f:
         return [json.loads(line) for line in f]
 
 
-def format_table(
-    system: str, locale: str, split: str, stats: dict, precision: dict, ci: dict
-) -> str:
+def format_table(system: str, split: str, stats: dict, precision: dict, ci: dict) -> str:
     lines = [
-        f"### {system} — locale={locale}, split={split}",
+        f"### {system} — split={split}",
         "",
         "| Entity | Gold | Detected (overlap) | Recall | Strict recall | FN rate "
         "| Typed exact recall |",
@@ -141,35 +146,32 @@ def format_table(
 
 
 def run(
-    locale: str,
     split: str,
     out_lines: list[str],
     errors: dict,
     runs: list[dict],
     model: str = DEFAULT_MODEL,
 ) -> None:
-    notes = load_notes(locale, split)
+    notes = load_notes(split)
     systems = {
         "Stock Presidio": predict_presidio(build_analyzer(with_pack=False, model=model), notes),
+        "Presidio + CA builtins": predict_presidio(
+            build_analyzer(with_pack=False, model=model, presidio_ca_builtins=True), notes
+        ),
         "Presidio + pack": predict_presidio(build_analyzer(with_pack=True, model=model), notes),
     }
-    if locale == "in":
-        bharat = predict_bharat_pii(notes)
-        if bharat is not None:
-            systems["bharat-pii"] = bharat
 
     for system, preds in systems.items():
         stats, precision, per_note = evaluate_notes(notes, preds)
         ci = bootstrap_ci(per_note)
-        out_lines.append(format_table(system, locale, split, stats, precision, ci))
-        errors[f"{system}|{locale}|{split}"] = {
+        out_lines.append(format_table(system, split, stats, precision, ci))
+        errors[f"{system}|{split}"] = {
             entity: s.missed_values for entity, s in stats.items() if s.missed_values
         }
         o = overall(stats)
         runs.append(
             {
                 "system": system,
-                "locale": locale,
                 "split": split,
                 "nlp_model": model,
                 "entities": {
@@ -189,16 +191,15 @@ def run(
             }
         )
         print(
-            f"{system:18s} {locale}/{split}: recall={o['recall']:.3f} "
+            f"{system:24s} {split}: recall={o['recall']:.3f} "
             f"strict={o['strict_recall']:.3f} fn={o['fn_rate']:.3f}"
         )
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--locale", choices=["ca", "in"])
     parser.add_argument("--split", choices=["gold", "generated"], default="gold")
-    parser.add_argument("--all", action="store_true")
+    parser.add_argument("--all", action="store_true", help="both splits")
     parser.add_argument(
         "--model",
         default=DEFAULT_MODEL,
@@ -222,14 +223,8 @@ def main() -> None:
     out_lines = list(header)
     errors: dict = {}
     runs: list[dict] = []
-    if args.all:
-        for locale in ["ca", "in"]:
-            for split in ["gold", "generated"]:
-                run(locale, split, out_lines, errors, runs, model=args.model)
-    else:
-        if not args.locale:
-            parser.error("--locale required unless --all")
-        run(args.locale, args.split, out_lines, errors, runs, model=args.model)
+    for split in ["gold", "generated"] if args.all else [args.split]:
+        run(split, out_lines, errors, runs, model=args.model)
 
     suffix = "" if args.model == DEFAULT_MODEL else f"_{args.model}"
     (results_dir / f"results{suffix}.md").write_text("\n".join(out_lines), encoding="utf-8")

@@ -2,25 +2,19 @@
 
 De-identification tools are judged on both leak rate AND over-redaction.
 These tests assert that common look-alikes — credit cards (which share the
-Luhn checksum with SIN/OHIP), US identifier formats, clinical numerics, and
-cross-locale collisions — are not reported at or above the evaluation
-harness's score threshold (0.35) by any recognizer in the pack.
+Luhn checksum with SIN/OHIP), US identifier formats, and clinical numerics —
+are not reported at or above the evaluation harness's score threshold (0.35)
+by any recognizer in the pack.
 
 Context-word boosting is engine-level and cannot fire here (pattern-level
 analyze), so these tests capture the recognizers' *context-free* behavior:
 exactly the situation in which a confusable value appears in running text.
-
-Scope note: the initial pass is Canada-only (see IMPLEMENTATION_PLAN.md).
-India-related cases here act as a freeze gate on current behavior; the
-India confusable inventory is deliberately shallow and will be expanded in
-Phase 4 (items 4.0/4.1).
 """
 
 from __future__ import annotations
 
-from presidio_recognizers_ca_in import get_recognizers
-from presidio_recognizers_ca_in.canada import BcPhnRecognizer, CaSinRecognizer, OhipRecognizer
-from presidio_recognizers_ca_in.india import AadhaarRecognizer
+from pii_detector_ca import get_recognizers
+from pii_detector_ca.canada import BcPhnRecognizer, CaSinRecognizer, OhipRecognizer
 
 THRESHOLD = 0.35
 
@@ -78,12 +72,6 @@ class TestChecksumRejects:
         )
         assert not results
 
-    def test_verhoeff_invalid_aadhaar_not_reported(self):
-        results = AadhaarRecognizer().analyze(
-            "Aadhaar 4111 1111 1111", ["IN_AADHAAR"], nlp_artifacts=None
-        )
-        assert not results
-
     def test_structurally_invalid_bc_phn_not_reported(self):
         # Check digit computes to 11 (never issued) for this base.
         results = BcPhnRecognizer().analyze(
@@ -91,11 +79,9 @@ class TestChecksumRejects:
         )
         assert not results
 
-
-class TestCrossLocaleCollisions:
-    def test_indian_mobile_not_reported_as_bc_phn(self):
-        # Valid Indian mobile starting with 9 has BC PHN's shape; the
-        # mod-11 checksum must reject it.
+    def test_indian_mobile_shape_not_reported_as_bc_phn(self):
+        # A 10-digit number starting with 9 has BC PHN's shape; the mod-11
+        # checksum must reject it.
         results = BcPhnRecognizer().analyze(
             "Contact 9876543210", ["CA_BC_PHN"], nlp_artifacts=None
         )

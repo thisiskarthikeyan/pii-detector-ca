@@ -25,8 +25,6 @@ variant so effects can be isolated against the `control` variant:
 Gold spans are recorded at insertion time and remain exact by construction
 (including newlines and corrupted characters). Deterministic given --seed.
 
-Canada-only by design; the India hard split is plan item 4.2.
-
 Usage:
     python benchmark/generate_hard.py --per-cell 10
 """
@@ -43,7 +41,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from presidio_recognizers_ca_in.validators import (  # noqa: E402
+from pii_detector_ca.validators import (  # noqa: E402
     ca_bc_phn_valid,
     luhn_check_digit,
 )
@@ -71,14 +69,14 @@ def _raw_sin(rng: random.Random) -> str:
 
 
 def _raw_ohip(rng: random.Random) -> str:
-    base = "".join(rng.choices("0123456789", k=9))
+    base = rng.choice("123456789") + "".join(rng.choices("0123456789", k=8))
     return base + luhn_check_digit(base)
 
 
 def _raw_ramq(rng: random.Random) -> str:
     # Realistic letter block: 3 surname letters + first-name initial (3.6).
     letters = _ramq_letters(rng.choice(CANADIAN_LAST), rng.choice("AEJLMS"))
-    yy = f"{rng.randint(30, 99):02d}"
+    yy = f"{rng.randint(1930, 2015) % 100:02d}"
     month = rng.randint(1, 12) + rng.choice([0, 50])
     dd = f"{rng.randint(1, 28):02d}"
     seq = f"{rng.randint(1, 99):02d}"

@@ -1,32 +1,24 @@
 """Pattern-level recognizer tests (no AnalyzerEngine / spaCy model needed).
 
 PatternRecognizer.analyze() runs regex + validate_result, which is the
-deterministic core we own. Context-word boosting is engine-level and is
-exercised in the evaluation harness instead.
+deterministic core we own. Context-word boosting is engine-level; a small
+engine-level check lives in ``TestEngineContext`` and is skipped when the
+spaCy model is not installed.
 """
 
 import pytest
 
-from presidio_recognizers_ca_in import get_recognizers
-from presidio_recognizers_ca_in.canada import (
+from pii_detector_ca import get_recognizers
+from pii_detector_ca.canada import (
     AlbertaUliRecognizer,
     BcPhnRecognizer,
     CaSinRecognizer,
     CaStreetAddressRecognizer,
+    GenericCaHealthCardRecognizer,
     OhipRecognizer,
     RamqRecognizer,
 )
-from presidio_recognizers_ca_in.india import (
-    AadhaarRecognizer,
-    AbhaRecognizer,
-    InMobileRecognizer,
-    PanRecognizer,
-    UhidRecognizer,
-)
-from presidio_recognizers_ca_in.validators import (
-    luhn_check_digit,
-    verhoeff_check_digit,
-)
+from pii_detector_ca.validators import luhn_check_digit
 
 
 def entities_found(recognizer, text, entity):
@@ -51,6 +43,19 @@ class TestCanadianRecognizers:
         text = f"Health card {num[:4]}-{num[4:7]}-{num[7:]}-KD on file"
         results = entities_found(OhipRecognizer(), text, "CA_OHIP")
         assert results and results[0].score >= 0.9
+        assert text[results[0].start : results[0].end] == f"{num[:4]}-{num[4:7]}-{num[7:]}-KD"
+
+    @pytest.mark.parametrize("tail", ["on file", "is valid", "at triage", "to follow", "in chart"])
+    def test_ohip_span_excludes_trailing_english_words(self, tail):
+        # Regression: with IGNORECASE the optional version-code group absorbed
+        # any following 1-2 letter word ("... 897 on") into a 1.0-score span.
+        base = "123456789"
+        num = base + luhn_check_digit(base)
+        value = f"{num[:4]} {num[4:7]} {num[7:]}"
+        text = f"Health card {value} {tail}."
+        results = entities_found(OhipRecognizer(), text, "CA_OHIP")
+        assert results
+        assert text[results[0].start : results[0].end] == value
 
     def test_ramq_detected(self):
         results = entities_found(
@@ -89,46 +94,6 @@ class TestCanadianRecognizers:
         assert results and results[0].score >= 0.9
 
 
-class TestIndianRecognizers:
-    def test_aadhaar_detected(self):
-        base = "23456789012"
-        aadhaar = base + verhoeff_check_digit(base)
-        text = f"Aadhaar {aadhaar[:4]} {aadhaar[4:8]} {aadhaar[8:]}"
-        results = entities_found(AadhaarRecognizer(), text, "IN_AADHAAR")
-        assert results and results[0].score >= 0.9
-
-    def test_aadhaar_invalid_checksum_not_reported(self):
-        base = "23456789012"
-        good = base + verhoeff_check_digit(base)
-        bad = good[:11] + str((int(good[11]) + 1) % 10)
-        text = f"Aadhaar {bad[:4]} {bad[4:8]} {bad[8:]}"
-        assert not entities_found(AadhaarRecognizer(), text, "IN_AADHAAR")
-
-    def test_abha_detected(self):
-        # ABHA has no checksum: the separated-format match keeps its pattern
-        # score (0.4); it is never boosted to near-certainty by the validator.
-        results = entities_found(
-            AbhaRecognizer(), "ABHA 12-3456-7890-1234", "IN_ABHA"
-        )
-        assert results
-        assert 0.35 <= results[0].score < 0.9
-
-    def test_pan_detected(self):
-        results = entities_found(PanRecognizer(), "PAN ABCPE1234F", "IN_PAN")
-        assert results and results[0].score >= 0.9
-
-    def test_mobile_detected(self):
-        results = entities_found(
-            InMobileRecognizer(), "Contact +91 98765 43210", "IN_MOBILE"
-        )
-        assert results and results[0].score >= 0.9
-
-    def test_uhid_custom_pattern(self):
-        rec = UhidRecognizer(pattern=r"\bAIIMS-\d{8}\b", score=0.6)
-        results = entities_found(rec, "UHID AIIMS-12345678", "IN_UHID")
-        assert results
-
-
 class TestContextGating:
     """Checksumless (plausibility-only) recognizers must NOT be boosted to
     near-certainty by their validator; without context words their matches
@@ -142,21 +107,15 @@ class TestContextGating:
         )
         assert all(r.score < self.THRESHOLD for r in results)
 
-    def test_bare_abha_stays_below_threshold(self):
+    def test_bare_generic_health_card_stays_below_threshold(self):
         results = entities_found(
-            AbhaRecognizer(), "Invoice total 12345678901234 rupees.", "IN_ABHA"
+            GenericCaHealthCardRecognizer(), "Order 123456789 shipped.", "CA_HEALTH_CARD"
         )
         assert all(r.score < self.THRESHOLD for r in results)
 
     def test_uli_repeated_digit_rejected(self):
         results = entities_found(
             AlbertaUliRecognizer(), "ULI 111111111 on file", "CA_AB_ULI"
-        )
-        assert not [r for r in results if r.score > 0]
-
-    def test_abha_repeated_digit_rejected(self):
-        results = entities_found(
-            AbhaRecognizer(), "ABHA 22222222222222 on file", "IN_ABHA"
         )
         assert not [r for r in results if r.score > 0]
 
@@ -168,14 +127,77 @@ class TestContextGating:
         assert results and results[0].score >= 0.9
 
 
+class TestEngineContext:
+    """Engine-level context boosting. Presidio's lemma enhancer matches single
+    tokens only, so every context list must contain single tokens that
+    actually fire (regression for CA_HEALTH_CARD and the French terms)."""
+
+    THRESHOLD = 0.35
+
+    @pytest.fixture(scope="class")
+    @staticmethod
+    def analyzer():
+        pytest.importorskip("en_core_web_sm")
+        from presidio_analyzer import AnalyzerEngine
+        from presidio_analyzer.nlp_engine import NlpEngineProvider
+
+        from pii_detector_ca import add_recognizers
+
+        nlp = NlpEngineProvider(
+            nlp_configuration={
+                "nlp_engine_name": "spacy",
+                "models": [{"lang_code": "en", "model_name": "en_core_web_sm"}],
+            }
+        ).create_engine()
+        engine = AnalyzerEngine(nlp_engine=nlp, supported_languages=["en"])
+        add_recognizers(engine.registry)
+        return engine
+
+    def _hits(self, analyzer, text):
+        res = analyzer.analyze(text=text, language="en", score_threshold=self.THRESHOLD)
+        return {r.entity_type for r in res}
+
+    def test_generic_health_card_context_is_not_attributed_to_alberta(self, analyzer):
+        # "health card" alone cannot attribute a 9-digit number to a province:
+        # report the generic label only, never CA_AB_ULI.
+        for text in [
+            "Health card 574839216 recorded at registration.",
+            "Health card 57483-9216 recorded at registration.",
+        ]:
+            hits = self._hits(analyzer, text)
+            assert "CA_HEALTH_CARD" in hits, text
+            assert "CA_AB_ULI" not in hits, text
+
+    def test_alberta_context_surfaces_uli(self, analyzer):
+        for text in [
+            "Alberta health card 574839216 recorded.",
+            "ULI 57483-9216 on file.",
+            "AHCIP number 574839216.",
+        ]:
+            assert "CA_AB_ULI" in self._hits(analyzer, text), text
+
+    def test_french_context_surfaces_generic(self, analyzer):
+        hits = self._hits(analyzer, "Numéro d'assurance maladie 574839216 présenté.")
+        assert "CA_HEALTH_CARD" in hits
+
+    def test_provincial_program_context(self, analyzer):
+        hits = self._hits(analyzer, "MSP number 574839216 verified.")
+        assert "CA_HEALTH_CARD" in hits
+
+    def test_no_context_no_generic(self, analyzer):
+        hits = self._hits(analyzer, "The count was 574839216 units.")
+        assert "CA_HEALTH_CARD" not in hits
+        assert "CA_AB_ULI" not in hits
+
+
 class TestPackageApi:
     def test_get_recognizers_all(self):
-        recs = get_recognizers()
-        assert len(recs) == 16
+        assert len(get_recognizers()) == 8
 
-    def test_get_recognizers_by_locale(self):
-        assert len(get_recognizers(["ca"])) == 8
-        assert len(get_recognizers(["in"])) == 8
+    def test_get_recognizers_exclude(self):
+        recs = get_recognizers(exclude=["CA_SIN", "CA_POSTAL_CODE"])
+        assert len(recs) == 6
+        assert not any("CA_SIN" in r.supported_entities for r in recs)
 
     def test_entities_are_unique(self):
         entities = [e for r in get_recognizers() for e in r.supported_entities]

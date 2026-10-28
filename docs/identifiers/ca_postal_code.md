@@ -13,11 +13,17 @@
 
 ## Rule implemented
 
-- Pattern (`canada/postal_code.py`): first letter class
+- Pattern (`core/specs.py`, `CA_POSTAL_CODE`): first letter class
   `[ABCEGHJ-NPRSTVXY]`, subsequent letter class `[ABCEGHJ-NPRSTV-Z]`,
   optional space or dash between the two triples; score 0.5, boosted by
   address context words. No validator — the pattern is the full structural
   rule.
+
+## Upstream equivalent
+
+Presidio ≥ 2.2.365 ships `CaPostalCodeRecognizer` (`CA_POSTAL_CODE`),
+disabled by default; the two share the entity name, so enable one or the
+other (`add_recognizers(registry, exclude=["CA_POSTAL_CODE"])`).
 
 ## Known gaps
 

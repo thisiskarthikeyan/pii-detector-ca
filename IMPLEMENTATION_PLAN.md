@@ -2,21 +2,18 @@
 
 Roadmap to a credible validation process, an open-source release, and a submittable paper.
 
-**Strategy: locale-split, Canada first. India is OUT OF SCOPE for the initial pass.**
-Canada has a bounded identifier landscape (one federal ID, ~5 well-specified provincial
-schemes) and can be driven to publication-quality depth quickly. India has far more
-variation (per-facility UHIDs, state-level differences, multi-script text, diverse
-mobile/ID formats) and gets its own track (Phase 4) only after the Canada work is done.
+**Scope decision (2026-10-27): this package is Canada only.** The experimental Indian
+recognizers were removed from the package and the repository (`git log` before
+2026-10-27 has them); India is to become a *separate* package, `pii-detector-in`,
+with its own benchmark, when that work is funded. Phase 4 below is kept as the
+specification for that future package and nothing in it is scheduled.
 
-**India freeze policy for the initial pass:**
-- Existing India recognizers/tests/gates stay in the repo and must keep passing at
-  their current level (freeze = regression protection, not endorsement of depth).
-- No new India recognizers, benchmark content, docs, or evaluation work until Phase 4.
-- India-touching artifacts added by the shared-infra phase (thresholds.json entries,
-  property/negative tests, corpus checksums for `in_*` files) are **provisional** and
-  are re-validated/expanded as the first task of Phase 4 (item 4.0).
-- Locale-agnostic work (metrics, CI, release plumbing) is done once, in the shared
-  phases, and reused by both tracks.
+**Upstream change that reframes the paper (2026-10-27):** Presidio 2.2.363
+(2026-06-28) added a Luhn-validated `CA_SIN` recognizer and 2.2.365 (2026-10-25) a
+`CA_POSTAL_CODE` recognizer, both `enabled: false` by default. The package's
+contribution is therefore the provincial health-card layer, the street-address
+recognizer and the benchmark/evaluation methodology — not SIN/postal-code
+detection. `run_eval.py` now reports a "Presidio + CA builtins" baseline.
 
 Each item is a checkbox so this file doubles as a progress tracker.
 
@@ -221,7 +218,19 @@ Applies to both locales; build before deepening either track.
     unaffected (1.000). All 52 gate checks pass; lg + seed-variance regenerated
     (spread ≤ 0.005).
 - [ ] **3.4 CA gold-split human review** — execute documented protocol on the CA gold
-  split; record outcome in `docs/gold_review.md`.
+  split; record outcome in `docs/gold_review.md`. Until done, the paper must not
+  call the split "gold": it is the first 100 notes of the same generator stream.
+- [x] **3.4a Pre-release bug sweep** — DONE (2026-10-27). Found by probing outside
+  the benchmark's distribution: (a) OHIP separated pattern absorbed trailing 1-2
+  letter English words into a 1.0-score span (IGNORECASE + optional version
+  code) — now case-sensitive, validator enforces HCV `[1-9]\d{9}`;
+  (b) `CA_HEALTH_CARD` and all French context never fired through Presidio
+  (multi-word phrases vs single-token lemma enhancer) — single tokens added,
+  engine-level regression tests in `tests/test_recognizers.py::TestEngineContext`;
+  (c) `run_core_eval.py` counted correct address predictions as FPs;
+  (d) corpus: future DOBs, RAMQ letters unrelated to the patient, RAMQ births
+  capped at 1999. Measured checksum collision floors: 7.85% (SIN, 9-digit),
+  10.29% (OHIP, 10-digit) on 20k random strings — to be reported in the paper.
 
 ### 3B. Coverage & correctness depth
 
@@ -279,19 +288,18 @@ Applies to both locales; build before deepening either track.
   - Paper input (6.1): report holdout before/after table; recognizer count is now
     16 (paper still says 15 — update at table regeneration).
 
-## Phase 4 — India track (after Canada track is solid)
+## Phase 4 — India track (future separate package `pii-detector-in`)
 
-**Status (2026-10-27): proposed future work.** Scope decision for the 0.1.0 release
-and first paper: Canada-first. India recognizers stay in the package but are
-labeled *experimental* in README, user manual, pyproject, and CHANGELOG; no India
-claims are made as supported results. Nothing below is scheduled.
+**Status (2026-10-27): removed from this package; unscheduled.** The India
+recognizers, generators, templates, gold corpus and tests were deleted from the
+repository on 2026-10-27 (recoverable from git history). When the India package
+starts, extract `core/` into a shared dependency first (see PHASE2 plan 2A) so
+the two packages share validators, the spec schema and the Presidio adapter.
 
-- [ ] **4.0 Revisit provisional India coverage from the shared-infra phase**
-  - Re-validate and deepen everything India-related that was added while India was
-    frozen: thresholds.json `in` floors (set from a shallow benchmark), India entries
-    in the property/negative test suites, India corpus checksums, and the India
-    results in results.md. Treat all current India numbers as provisional until this
-    item completes.
+- [ ] **4.0 Restore the India recognizers from git history into `pii-detector-in`**
+  - Aadhaar (Verhoeff), ABHA, PAN, UHID, mobile, PIN, Voter ID, passport, plus the
+    generators/templates. Re-validate every rule against an official source before
+    re-publishing; the pre-removal numbers were provisional.
 - [ ] **4.1 IN false-positive stress corpus** — Indian confusables: bare 12/14-digit
   quantities, invoice/GST numbers, IFSC-adjacent strings, lab values.
 - [ ] **4.2 IN adversarial / hard split** — no-context identifiers, separator
@@ -321,37 +329,53 @@ claims are made as supported results. Nothing below is scheduled.
   template slot → eval threshold → spec doc.
 - [x] **5.3 SECURITY.md** — DONE (2026-10-27); uses GitHub private vulnerability
   reporting, which must be enabled in repo settings once public. private disclosure channel for recall/leak findings.
-- [x] **5.4 Housekeeping** — DONE (2026-10-27); author name still "Karthik" only. fix placeholder repo URL/author in `pyproject.toml`;
-  ensure `__pycache__`/`.pyc` untracked; document generated-data policy.
+- [x] **5.4 Housekeeping** — DONE (2026-10-27). Author "Karthikeyan Murugaiah" +
+  email in `pyproject.toml`/`CITATION.cff`; ORCID still to add before the DOI.
+- [x] **5.4a Rename to `pii-detector-ca`, remove India** — DONE (2026-10-27).
+  Distribution `pii-detector-ca`, import `pii_detector_ca`; `locales=` removed
+  from the API; `exclude=` added to `add_recognizers` for the Presidio built-in
+  name collision.
 - [ ] **5.5 PyPI release** — 0.1.0 via trusted publishing; tag-triggered workflow.
+  Name `pii-detector-ca` verified free on PyPI 2026-10-27.
 - [ ] **5.6 CHANGELOG.md** + semver tags. — CHANGELOG added (2026-10-27); `v0.1.0`
   tag pending release.
 - [ ] **5.7 CITATION.cff + Zenodo DOI** — CITATION.cff added (2026-10-27); DOI pending; archive at the paper's evaluated version.
 
 ## Phase 6 — Paper finalization
 
-Note: the paper currently covers both locales. With the Canada-first split, either
-(a) keep the two-locale paper and let India results reflect current depth while Canada
-gets the hardened evaluation, or (b) narrow the first submission to Canada and make
-India a follow-up. Decide at 6.1 based on how far Phase 4 has progressed by the
-submission deadline.
+The manuscript is kept on the `paper` branch (`paper/paper.md`), not on `main`,
+so the package release history stays free of draft churn.
 
-- [ ] **6.1 Regenerate all §5 tables** from post-Phase-2/3 results; add CIs, strict
-  leak metric, FP-rate table, `en_core_web_lg` baseline column. Decide single- vs
-  two-locale scope.
-- [ ] **6.2 Acknowledge benchmark circularity** in §4/§6; position the stock-Presidio
-  gap as the robust finding; use FP/hard splits as non-circular evidence.
-- [ ] **6.3 Ethics / broader-impact statement** — synthetic data only, checksum-valid
-  collision caveat, dual-use note, not compliance certification.
+Decision (2026-10-27): Canada-only paper. the paper draft (branch `paper`, `paper/paper.md`) is stale (two-locale,
+pre-Phase-2/3 numbers, 15 recognizers / 3 note types) and must be rewritten, not
+patched. Headline contribution: provincial health-card coverage + benchmark
+methodology; SIN/postal are upstream now (see top of file).
+
+- [x] **6.1 Regenerate all §5 tables** — DONE (2026-10-27). `paper/paper.md` on
+  branch `paper` rewritten (v0.2) from current results: three baselines incl. "Presidio + CA
+  builtins", CIs, strict recall, negatives, adversarial, address holdout, lg,
+  seed variance, collision floors. Structured for JAMIA Open *Research and
+  Applications* (≤ 4,000 words).
+- [ ] **6.1a pyDeid baseline run** — pyDeid (Sundrelingam et al., JAMIA Open
+  2025; MIT; `GEMINI-Medicine/pyDeid`, `deid_string()` API) is regex-only for
+  SIN/OHIP/postal with no checksum. Run it on the evaluation split, negatives
+  and hard split and add a column; the paper currently characterises it from
+  source only (Limitations). Not run in the sandboxed session (external code).
+- [x] **6.2 Acknowledge benchmark circularity** — DONE in v0.2 (Discussion).
+- [x] **6.3 Ethics / broader-impact statement** — DONE in v0.2.
 - [ ] **6.4 Datasheet for the benchmark** (Gebru-style).
 - [ ] **6.5 Complete references** — verify EMNLP 2025 / Communications Medicine 2026
   anchors; add identifier spec citations; Presidio, i2b2/n2c2, Verhoeff.
-- [ ] **6.6 Fix §3.2 PAN notation** — explicit pattern
-  `[A-Z]{3}[PCFHATBLJG][A-Z][0-9]{4}[A-Z]`.
-- [ ] **6.7 Soften untested claims** — Hindi context words untested until 4.5; French
-  untested until 3.7.
-- [ ] **6.8 Venue mechanics** — target venue, template, page limit, anonymity rules,
-  reproducibility appendix (single script from clean checkout to all tables).
+- [x] **6.6 Report checksum collision floors** — DONE in v0.2 (Results).
+- [x] **6.7 Soften untested claims** — DONE in v0.2 (Limitations).
+- [ ] **6.8 Venue mechanics** — Primary: JAMIA Open *Research and Applications*
+  (4,000 words, structured abstract ≤ 250, 4 tables / 6 figures, APC ~US$3,625
+  list — confirm; preprints allowed; pyDeid published there Jan 2025). Fallback:
+  arXiv cs.CL now + ClinicalNLP 2027 (2026 deadline was 16 Feb; expect ~Feb 2027).
+  JOSS is **not** eligible until the repo has 6 months of public history
+  (~April 2027) and requires an AI-usage disclosure. Needs: ORCID, Zenodo DOI
+  (5.7), v0.1.0 tag, figures (none yet — at minimum the Table 3 heatmap and a
+  leak-vs-strict bar chart).
 
 ---
 
@@ -363,4 +387,4 @@ submission deadline.
 3. Phase 3 (Canada track, 3A before 3B; 3A items are the paper-critical ones).
 4. Decision point: if a submission deadline is near, do Phase 6 with Canada-only or
    Canada-deep/India-current scope; otherwise proceed to Phase 4.
-5. Phase 4 (India track), then Phase 5, then Phase 6.
+5. Phase 5, then Phase 6. Phase 4 only as a separate package.

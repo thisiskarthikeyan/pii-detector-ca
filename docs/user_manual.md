@@ -2,8 +2,6 @@
 
 **For people who want to find Canadian ID numbers in text — without needing a technical background.**
 
-> Canada is the supported locale. The Indian rules described below are **experimental** (proposed future work): they work, but they have not been tested as thoroughly as the Canadian ones. Do not rely on them for real Indian documents yet.
-
 This guide explains what the software does, how to try it on your own text, and how to read the results. It avoids research and engineering jargon.
 
 ---
@@ -12,17 +10,17 @@ This guide explains what the software does, how to try it on your own text, and 
 
 You might use this if you:
 
-- work with clinical notes, forms, or free-text documents from **Canada** or **India**
-- need to **spot** Social Insurance Numbers, health card numbers, Aadhaar, PAN, and similar identifiers before sharing text with others
+- work with clinical notes, forms, or free-text documents from **Canada**
+- need to **spot** Social Insurance Numbers, provincial health card numbers, postal codes and addresses before sharing text with others
 - want to **try a few sample sentences** and see what the software flags
 
-This manual is **not** a legal or compliance guide. It does not certify that your organization meets PIPEDA, PHIPA, DPDP, or any other regulation.
+This manual is **not** a legal or compliance guide. It does not certify that your organization meets PIPEDA, PHIPA, or any other regulation.
 
 ---
 
 ## What this product is
 
-This package adds **rules for Canadian and Indian ID formats** to text-scanning workflows.
+This package adds **rules for Canadian ID formats** to text-scanning workflows.
 
 Think of it as a **specialized spell-checker for ID numbers**: it looks at a block of text, finds strings that look like official identifiers, and checks whether they pass format and checksum rules where those rules are public.
 
@@ -39,32 +37,18 @@ Most of this manual focuses on the **simple scan**, because that is the easiest 
 
 ## What it finds
 
-### Canada
-
 | What it looks for | Plain name |
 |---|---|
 | `CA_SIN` | Social Insurance Number |
 | `CA_OHIP` | Ontario health card number |
 | `CA_RAMQ` | Quebec health insurance number |
 | `CA_BC_PHN` | BC Personal Health Number |
-| `CA_AB_ULI` | Alberta health card number (ULI) |
 | `CA_POSTAL_CODE` | Canadian postal code (e.g. K1A 0B1) |
 | `CA_STREET_ADDRESS` | Full mailing/residence address ending in province + postal code |
+| `CA_AB_ULI` | Alberta health card number (ULI) |
+| `CA_HEALTH_CARD` | Health card number for the other provinces/territories (needs nearby words such as "health card") |
 
-### India (experimental)
-
-| What it looks for | Plain name |
-|---|---|
-| `IN_AADHAAR` | Aadhaar number |
-| `IN_ABHA` | Ayushman Bharat health account number |
-| `IN_PAN` | PAN (tax ID) |
-| `IN_UHID` | Hospital patient ID (format varies by hospital) |
-| `IN_MOBILE` | Indian mobile phone number |
-| `IN_PIN_CODE` | 6-digit postal PIN |
-| `IN_VOTER_ID` | Voter ID (EPIC) |
-| `IN_PASSPORT` | Indian passport number |
-
-The **label in the output** (e.g. `CA_SIN`, `IN_AADHAAR`) is the short code the software uses. The table above is what each code means in everyday language.
+The **label in the output** (e.g. `CA_SIN`, `CA_OHIP`) is the short code the software uses. The table above is what each code means in everyday language.
 
 ---
 
@@ -78,7 +62,7 @@ Please read this section carefully.
 - **It does not store or send your text anywhere** — everything runs on your machine when you run it locally.
 - **It does not include real patient data** in its built-in practice notes; those are synthetic (made-up) examples.
 - **Person names and dates** are handled by other tools (Presidio + spaCy), not by the simple `scan` function alone.
-- **Using both Canada and India rules on Canadian-only text** can cause extra wrong matches (for example, a long number that looks like an Indian mobile number). For Canadian documents, restrict to Canada only (see below).
+- **Checksums are not proof.** Roughly 1 in 12 random 9-digit numbers passes the SIN check and 1 in 10 random 10-digit numbers passes the Ontario check, so order numbers and compact phone numbers are sometimes flagged.
 
 ---
 
@@ -88,12 +72,8 @@ Please read this section carefully.
 
 You need Python 3.10 or newer.
 
-The package is not on PyPI yet. Install it from the source code:
-
 ```bash
-git clone https://github.com/thisiskarthikeyan/pii-detector.git
-cd pii-detector
-pip install -e .
+pip install pii-detector-ca
 ```
 
 For the full Presidio pipeline (names, dates, etc.), you also need Presidio and a spaCy English model. That setup is more involved; see the main [README](../README.md).
@@ -115,14 +95,14 @@ When testing, use:
 Open Python and run:
 
 ```python
-from presidio_recognizers_ca_in import scan
+from pii_detector_ca import scan
 
 text = """
 Referral note: Ontario health card 7577 752 616 AB on file.
 SIN on intake form: 239-698-863.
 """
 
-matches = scan(text, locales=["ca"], threshold=0.35)
+matches = scan(text, threshold=0.35)
 
 for hit in matches:
     print(f"Found: {hit.text!r}")
@@ -137,10 +117,7 @@ for hit in matches:
 | Setting | What it means |
 |---|---|
 | `text` | The paragraph or document you want checked |
-| `locales=["ca"]` | Only use **Canadian** rules. Use `["in"]` for India only, or `["ca", "in"]` for both |
 | `threshold=0.35` | How confident a match must be before it is reported (0 = report everything weak or strong; 0.35 is the default; 1.0 = only very strong matches) |
-
-**Tip for Canadian documents:** use `locales=["ca"]` to avoid Indian rules firing on innocent numbers.
 
 ---
 
@@ -150,7 +127,7 @@ Each match is one piece of text the software thinks is an identifier.
 
 | Field | What it tells you |
 |---|---|
-| **Type** (`entity`) | Which kind of ID (e.g. `CA_SIN`, `IN_PAN`) |
+| **Type** (`entity`) | Which kind of ID (e.g. `CA_SIN`, `CA_OHIP`) |
 | **Found text** (`text`) | The exact characters matched in your input |
 | **Position** (`start`, `end`) | Where in the string the match begins and ends (counting from 0 at the first character) |
 | **Confidence** (`score`) | How sure the rule is, from 0.0 to 1.0. Higher = stronger evidence. Values near **1.0** usually mean a checksum or strict structure check passed |
@@ -179,12 +156,12 @@ If **nothing is printed**, the software did not find any ID types strong enough 
 
 ## When results depend on nearby words
 
-Some ID types have **no public check-digit formula**. For those, the software uses a low base confidence and expects **helpful words nearby** — such as “health card”, “Aadhaar”, “UHID”, “PIN” — when used through the **full Presidio pipeline**.
+Some ID types have **no public check-digit formula**. For those, the software uses a low base confidence and expects **helpful words nearby** — such as “health card”, “ULI”, “MSP”, “carte soleil” — when used through the **full Presidio pipeline**.
 
 In **simple scan mode** (`scan`), that nearby-word boosting is **not** applied. So:
 
-- **Works well in simple scan:** SIN, OHIP, RAMQ, BC PHN, Aadhaar, PAN, mobile numbers, full street addresses (when checksum or strict structure applies)
-- **May be missed in simple scan unless confidence is high enough without context:** Alberta ULI, ABHA, UHID, PIN codes, generic health card patterns
+- **Works in simple scan:** SIN, OHIP, RAMQ, BC PHN, postal codes, full street addresses (checksum or strict structure applies)
+- **Never reported in simple scan at the default threshold:** Alberta ULI and the generic health card — they depend entirely on nearby words
 
 If you need those context-sensitive types in production, use the **Presidio integration** (full pipeline), not `scan` alone.
 
@@ -199,10 +176,10 @@ Use a **positive test** (should find something) and a **negative test** (should 
 A valid SIN must pass a check-digit calculation. Example that should be **found** with high confidence:
 
 ```python
-from presidio_recognizers_ca_in import scan
+from pii_detector_ca import scan
 
 text = "Employee SIN: 239-698-863"
-hits = scan(text, locales=["ca"])
+hits = scan(text)
 assert any(h.entity == "CA_SIN" and h.score >= 0.9 for h in hits)
 print("PASS: valid SIN detected")
 ```
@@ -211,7 +188,7 @@ print("PASS: valid SIN detected")
 
 ```python
 text = "Invoice reference: 123-456-789"
-hits = scan(text, locales=["ca"])
+hits = scan(text)
 sin_hits = [h for h in hits if h.entity == "CA_SIN"]
 assert len(sin_hits) == 0
 print("PASS: invalid SIN correctly ignored")
@@ -223,15 +200,14 @@ print("PASS: invalid SIN correctly ignored")
 |---|---|
 | Valid example IDs are **found** with confidence near **1.0** | The core rules are working |
 | Random or invalid numbers are **not** reported as IDs | The checker is not crying wolf on every digit string |
-| You restricted `locales` to the country you care about | Fewer wrong matches from the other country’s rules |
 
 ### What “failure” looks like
 
 | Problem | What you might see | What to do |
 |---|---|---|
-| Valid ID not found | Empty result list | Check locale setting; check if ID type needs Presidio full pipeline; check formatting (spaces, dashes) |
-| Wrong ID type | Unexpected `entity` label | Review whether both locales are enabled; review text context |
-| Innocent number flagged | Match on invoice/order numbers | Expected occasionally for checksum-only types; use locale scoping; use full pipeline with context rules |
+| Valid ID not found | Empty result list | Check if the ID type needs the Presidio full pipeline; check formatting (spaces, dashes) |
+| Wrong ID type | Unexpected `entity` label | Review text context; some formats overlap (a 9-digit number can be a SIN or an Alberta ULI) |
+| Innocent number flagged | Match on invoice/order numbers | Expected occasionally for checksum-only types (see the collision rates above) |
 | Nothing installs | Import error | Confirm Python version and `pip install` |
 
 ---
@@ -242,10 +218,11 @@ The project ships with **practice documents** (synthetic clinical notes) and scr
 
 ### What gets compared
 
-1. **Stock Presidio** — generic tool without this package’s Canada/India rules  
-2. **Presidio + this package** — generic tool **with** the added rules  
+1. **Stock Presidio** — generic tool without this package’s Canadian rules  
+2. **Presidio + CA builtins** — generic tool with Presidio’s own (normally switched-off) SIN and postal-code rules  
+3. **Presidio + this package** — generic tool **with** this package’s rules  
 
-On the practice notes, the package is expected to find **all** injected Canadian and Indian ID numbers that the benchmark labels, while stock Presidio misses many of them.
+On the practice notes, the package is expected to find **all** injected Canadian ID numbers that the benchmark labels, while the first two miss the provincial health-card numbers.
 
 ### Running the main check (same as automated CI)
 
@@ -293,38 +270,6 @@ That means every automatic minimum-quality bar passed.
 | `run_address_eval.py` | Tests **street addresses** on a separate holdout set not used to train the rules. |
 | `run_core_eval.py --all` | Tests the **simple scan** path only (no Presidio). Expect lower “found rate” on context-sensitive IDs — that is expected, not a Presidio regression. |
 
----
-
-## Choosing Canada only vs India only vs both
-
-| Your documents | Recommended setting |
-|---|---|
-| Canadian clinics, billing, admin | `locales=["ca"]` |
-| Indian hospitals, billing, admin | `locales=["in"]` (experimental) |
-| Mixed operations (rare) | `locales=["ca", "in"]` — accept more cross-matches |
-
-When integrating with Presidio:
-
-```python
-from presidio_recognizers_ca_in import get_recognizers
-
-# Canada only — fewer false matches on Canadian text
-recognizers = get_recognizers(locales=["ca"])
-```
-
----
-
-## Hospital-specific patient IDs (UHID)
-
-Indian hospitals use **different** patient ID formats. The default pattern is conservative. If your site uses a known format (example: `AIIMS-12345678`), configure it:
-
-```python
-from presidio_recognizers_ca_in.india import UhidRecognizer
-
-rec = UhidRecognizer(pattern=r"\bAIIMS-\d{8}\b")
-```
-
-Replace the pattern with one that matches **your** facility’s format, ideally after checking with your health records team.
 
 ---
 
@@ -332,7 +277,7 @@ Replace the pattern with one that matches **your** facility’s format, ideally 
 
 | Goal | Command |
 |---|---|
-| Try in Python | `from presidio_recognizers_ca_in import scan` |
+| Try in Python | `from pii_detector_ca import scan` |
 | Run full quality report | `python evaluation/run_eval.py --all` |
 | Pass/fail gate | `python evaluation/check_thresholds.py` |
 | Simple-scan-only report | `python evaluation/run_core_eval.py --all` |
@@ -354,11 +299,11 @@ Results are written under `evaluation/results/` as markdown (human-readable) and
 
 ## Summary
 
-- This product **finds Canadian and Indian ID numbers** in text using format and checksum rules.
-- Use **`scan(text, locales=[...])`** for the simplest hands-on test.
+- This product **finds Canadian ID numbers** in text using format and checksum rules.
+- Use **`scan(text)`** for the simplest hands-on test.
 - Output shows **what** was found, **where**, and **how confident** the rule is (0–1).
 - **Working correctly** on a quick test means valid IDs are found and obvious fakes are ignored.
 - The bundled evaluation scripts measure quality on **synthetic practice notes**; **“Threshold gate passed”** means success, **`FAIL`** means failure.
 - It **does not** replace legal review, human QA, or full de-identification by itself.
 
-If you need help interpreting a specific result from your own test, compare the **Type**, **Found text**, and **Confidence** columns against the tables in this guide — and confirm you used the right **country setting** for your documents.
+If you need help interpreting a specific result from your own test, compare the **Type**, **Found text**, and **Confidence** columns against the tables in this guide.

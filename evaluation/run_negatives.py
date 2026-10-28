@@ -1,22 +1,17 @@
 """False-positive evaluation on the PII-free confusables corpus (plan 3.1).
 
 Every note in benchmark/data/negatives/ contains zero PII, so every
-pack-entity prediction (CA_* / IN_*) at or above the reporting threshold is
-a false positive. Built-in Presidio entities (DATE_TIME, etc.) are out of
+pack-entity prediction (CA_*) at or above the reporting threshold is a
+false positive. Built-in Presidio entities (DATE_TIME, etc.) are out of
 scope here — the pack does not own them and the corpus is not designed to
 measure them.
-
-Two configurations are compared:
-- "pack (all locales)": default add_recognizers() registration;
-- "pack (ca only)":     get_recognizers(["ca"]) — the registration a
-  Canadian deployment should use.
 
 Writes evaluation/results/negatives_ca.{md,json}. The FP ceiling is gated
 in CI by check_thresholds.py using the "negatives_max_fp" section of
 thresholds.json.
 
 Usage:
-    python benchmark/generate_negatives.py --locale ca --n 300
+    python benchmark/generate_negatives.py --n 300
     python evaluation/run_negatives.py
 """
 
@@ -32,19 +27,10 @@ sys.path.insert(0, str(REPO / "src"))
 sys.path.insert(0, str(REPO / "evaluation"))
 
 from presidio_analyzer import AnalyzerEngine  # noqa: E402
-from run_eval import DEFAULT_MODEL, build_analyzer, collect_metadata  # noqa: E402
-
-from presidio_recognizers_ca_in import get_recognizers  # noqa: E402
+from run_eval import build_analyzer, collect_metadata  # noqa: E402
 
 SCORE_THRESHOLD = 0.35
-PACK_PREFIXES = ("CA_", "IN_")
-
-
-def build_ca_only_analyzer(model: str = DEFAULT_MODEL) -> AnalyzerEngine:
-    analyzer = build_analyzer(with_pack=False, model=model)
-    for recognizer in get_recognizers(["ca"]):
-        analyzer.registry.add_recognizer(recognizer)
-    return analyzer
+PACK_PREFIXES = ("CA_",)
 
 
 def evaluate(analyzer: AnalyzerEngine, notes: list[dict]) -> dict:
@@ -81,16 +67,13 @@ def main() -> None:
         notes = [json.loads(line) for line in f]
     assert all(not n["entities"] for n in notes), "negatives corpus must be PII-free"
 
-    configs = {
-        "pack (all locales)": build_analyzer(with_pack=True),
-        "pack (ca only)": build_ca_only_analyzer(),
-    }
+    configs = {"pack": build_analyzer(with_pack=True)}
 
     results = {}
     lines = [
         "# False-positive evaluation — Canadian confusables corpus",
         "",
-        f"{len(notes)} PII-free notes; every CA_*/IN_* prediction at threshold "
+        f"{len(notes)} PII-free notes; every CA_* prediction at threshold "
         f">= {SCORE_THRESHOLD} is a false positive.",
         "",
     ]

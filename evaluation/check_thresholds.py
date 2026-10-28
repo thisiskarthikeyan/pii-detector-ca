@@ -40,12 +40,10 @@ def main() -> None:
     if not gated_runs:
         sys.exit(f"ERROR: no runs for system {system!r} in {RESULTS}.")
 
+    floors = config["min_recall"]
     for run in gated_runs:
-        locale, split = run["locale"], run["split"]
-        floors = config["min_recall"].get(locale)
-        if floors is None:
-            continue
-        tag = f"{system} {locale}/{split}"
+        split = run["split"]
+        tag = f"{system} {split}"
 
         for entity, floor in floors.items():
             if entity == "TOTAL":

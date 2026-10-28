@@ -11,12 +11,24 @@ item 3.5.
 
 ## Rule implemented
 
-- Pattern (`canada/health_cards.py`, `GenericCaHealthCardRecognizer`):
-  0–2 uppercase letters + 6–12 digits, score **0.01** — far below the 0.35
-  reporting threshold, so a match surfaces only with strong context-word
-  boosting ("health card", "medicare number", "msp", French equivalents).
+- Pattern (`core/specs.py`, `CA_HEALTH_CARD`): 0–2 uppercase letters +
+  6–12 digits, score **0.01** — far below the 0.35 reporting threshold, so a
+  match surfaces only with context-word boosting.
+- Context: single tokens, because Presidio's lemma enhancer matches one token
+  at a time — "health", "card", "hcn", "phn", "medicare", "msp" (BC),
+  "hsn" (SK), "phin" (MB), "mcp" (NL), and French "maladie", "assurance",
+  "soleil", "ramq". (Before this list carried single tokens the recognizer
+  never fired on "health card" text at all.)
 - No validator: with no published structure there is nothing deterministic
   to check.
+- Separated forms (`\d{3,6}[- ]\d{3,6}`, `\d{3,4}[- ]\d{3}[- ]\d{3,4}`) are
+  matched at the same floor score so the 5-4 Alberta rendering and 3-3-3 /
+  4-3-3 renderings are covered.
+- Attribution: a 9-digit number under generic "health card" wording is
+  reported as `CA_HEALTH_CARD` only; `CA_AB_ULI` requires Alberta-specific
+  context ("alberta", "uli", "ahcip", "netcare"). In the benchmark, ULI
+  values are labelled under generic headers, so `CA_AB_ULI` typed-exact
+  recall is 0 by design while leak recall stays 1.0 via this recognizer.
 
 ## Known gaps
 

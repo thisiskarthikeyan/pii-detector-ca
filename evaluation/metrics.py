@@ -31,7 +31,6 @@ TYPE_MAP = {
     "DATE_TIME": "DATE",
     "LOCATION": "ADDRESS",
     "CA_STREET_ADDRESS": "ADDRESS",
-    "PHONE_NUMBER": "IN_MOBILE",
 }
 
 

@@ -13,7 +13,7 @@ Thanks for helping close the locale gap in clinical de-identification. This proj
 Requires Python ≥ 3.10 and [uv](https://docs.astral.sh/uv/).
 
 ```bash
-uv sync --extra dev
+uv sync --extra dev   # includes the presidio extra
 uv pip install -r evaluation/requirements-eval.txt   # pinned spaCy model, for evaluation
 ```
 

@@ -72,12 +72,8 @@ Please read this section carefully.
 
 You need Python 3.10 or newer.
 
-The package is not on PyPI yet. Install it from the source code:
-
 ```bash
-git clone https://github.com/thisiskarthikeyan/pii-detector.git
-cd pii-detector
-pip install -e .
+pip install pii-detector-ca
 ```
 
 For the full Presidio pipeline (names, dates, etc.), you also need Presidio and a spaCy English model. That setup is more involved; see the main [README](../README.md).

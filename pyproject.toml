@@ -20,15 +20,18 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Topic :: Text Processing :: Linguistic",
 ]
-dependencies = [
-    "presidio-analyzer>=2.2",
-]
+# No runtime dependencies: scan() is stdlib-only. Presidio is an optional extra.
+dependencies = []
 
 [project.optional-dependencies]
+presidio = [
+    "presidio-analyzer>=2.2",
+]
 benchmark = [
     "pandas>=2.0",
 ]
 dev = [
+    "presidio-analyzer>=2.2",
     "pytest>=8.0",
     "ruff>=0.4",
     "pandas>=2.0",
@@ -37,10 +40,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/thisiskarthikeyan/pii-detector"
-Repository = "https://github.com/thisiskarthikeyan/pii-detector"
-Issues = "https://github.com/thisiskarthikeyan/pii-detector/issues"
-Changelog = "https://github.com/thisiskarthikeyan/pii-detector/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/thisiskarthikeyan/pii-detector-ca"
+Repository = "https://github.com/thisiskarthikeyan/pii-detector-ca"
+Issues = "https://github.com/thisiskarthikeyan/pii-detector-ca/issues"
+Changelog = "https://github.com/thisiskarthikeyan/pii-detector-ca/blob/main/CHANGELOG.md"
 
 [build-system]
 requires = ["hatchling"]
@@ -48,6 +51,18 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/pii_detector_ca"]
+
+[tool.hatch.build.targets.sdist]
+# Ship the code, tests, docs and benchmark/eval scripts; not the paper draft,
+# committed results, corpus data or planning documents.
+exclude = [
+    "paper/",
+    "evaluation/results/",
+    "benchmark/data/",
+    ".github/",
+    "IMPLEMENTATION_PLAN.md",
+    "PHASE2_IMPLEMENTATION_PLAN.md",
+]
 
 [tool.ruff]
 line-length = 100

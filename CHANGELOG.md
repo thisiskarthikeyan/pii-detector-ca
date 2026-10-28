@@ -11,6 +11,7 @@ First public release, Canada only. (Pre-release history: the package was develop
 ### Added
 
 - Canadian recognizers: `CA_SIN` (Luhn), `CA_OHIP` (Luhn + version code), `CA_RAMQ` (structural), `CA_BC_PHN` (mod-11), `CA_AB_ULI` (context gated), `CA_HEALTH_CARD` (generic, context gated), `CA_POSTAL_CODE`, `CA_STREET_ADDRESS`.
+- `presidio-analyzer` is an optional extra (`pip install pii-detector-ca[presidio]`); the base install has no dependencies.
 - Framework-neutral core (`pii_detector_ca.core`): stdlib-only validators, entity specs, and a `scan()` API that runs without Presidio or spaCy. Presidio recognizers are thin adapters over the same specs.
 - `add_recognizers(registry, exclude=[...])` / `get_recognizers(exclude=[...])` to skip entities that Presidio's own (default-disabled) `CA_SIN` / `CA_POSTAL_CODE` recognizers already cover.
 - Synthetic clinical-note benchmark: a seeded, deterministic generator with a determinism manifest, a false-positive negatives corpus, an adversarial hard split, and a street-address holdout derived from the StatCan Open Database of Addresses.
@@ -30,5 +31,5 @@ First public release, Canada only. (Pre-release history: the package was develop
 - Core-scanner evaluation counted correct `CA_STREET_ADDRESS` / `CA_POSTAL_CODE` predictions as false positives because `ADDRESS` gold was filtered out; predictions are now type-mapped and `ADDRESS` kept.
 - Benchmark realism: dates of birth were drawn from the encounter-date range (including future dates); RAMQ letter blocks did not match the patient named in the note; RAMQ birth years stopped at 1999.
 
-[Unreleased]: https://github.com/thisiskarthikeyan/pii-detector/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/thisiskarthikeyan/pii-detector/releases/tag/v0.1.0
+[Unreleased]: https://github.com/thisiskarthikeyan/pii-detector-ca/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/thisiskarthikeyan/pii-detector-ca/releases/tag/v0.1.0

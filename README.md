@@ -23,15 +23,14 @@ Most clinical de-identification tooling is built and tested on US identifier for
 
 ## Install
 
-Not yet on PyPI. Install from source:
-
 ```bash
-git clone https://github.com/thisiskarthikeyan/pii-detector.git
-cd pii-detector
-pip install -e .
+pip install pii-detector-ca              # standalone scan(): no dependencies
+pip install "pii-detector-ca[presidio]"  # + Presidio recognizers
 ```
 
 The Presidio integration also needs a spaCy model: `python -m spacy download en_core_web_sm` (see the snippet below for why `sm` is configured explicitly). The standalone `scan()` API needs neither.
+
+From source: `git clone https://github.com/thisiskarthikeyan/pii-detector-ca.git && cd pii-detector-ca && pip install -e ".[presidio]"`.
 
 ## Usage
 

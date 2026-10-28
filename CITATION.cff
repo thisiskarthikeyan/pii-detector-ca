@@ -11,8 +11,8 @@ authors:
 version: 0.1.0
 date-released: 2026-10-27
 license: MIT
-repository-code: "https://github.com/thisiskarthikeyan/pii-detector"
-url: "https://github.com/thisiskarthikeyan/pii-detector"
+repository-code: "https://github.com/thisiskarthikeyan/pii-detector-ca"
+url: "https://github.com/thisiskarthikeyan/pii-detector-ca"
 abstract: >-
   Checksum-validated detectors for Canadian health and government identifiers
   (SIN, Ontario OHIP, Quebec RAMQ, BC PHN, Alberta ULI, postal codes, street

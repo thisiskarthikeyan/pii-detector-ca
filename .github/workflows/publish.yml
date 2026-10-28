@@ -1,0 +1,53 @@
+name: Publish to PyPI
+
+# Tag-triggered release via PyPI Trusted Publishing (OIDC): no API tokens.
+# The PyPI project must have a pending/trusted publisher configured for
+# this repository, this workflow file name, and the "pypi" environment.
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - name: Check tag matches package version
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          VERSION=$(uv run --no-project python -c "import tomllib;print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          test "$TAG" = "$VERSION" || { echo "tag v$TAG != pyproject version $VERSION"; exit 1; }
+      - name: Fast checks
+        run: |
+          uv sync --locked --extra dev
+          uv run ruff check .
+          uv run pytest -q
+      - name: Build
+        run: uv build
+      - name: Validate metadata
+        run: uv run --with twine twine check dist/*
+      - name: Standalone install smoke test (no Presidio)
+        run: |
+          uv venv /tmp/smoke
+          VIRTUAL_ENV=/tmp/smoke uv pip install dist/*.whl
+          /tmp/smoke/bin/python -c "from pii_detector_ca import scan, __version__; print(__version__, scan('SIN 130-692-544'))"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1

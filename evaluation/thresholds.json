@@ -1,41 +1,76 @@
 {
   "_comment": [
     "Regression gate for the 'Presidio + pack' system, enforced by",
-    "check_thresholds.py in CI. Identifier entities are deterministic",
-    "(regex + checksum on a fixed-seed corpus) and must stay at 1.0.",
-    "PERSON/DATE/ADDRESS depend on the spaCy NLP engine and get floors",
-    "slightly below current measured values to absorb model-version drift.",
-    "Applies to both gold and generated splits."
+    "check_thresholds.py in CI on every split in results.json.",
+    "Floors are set from the measured values recorded in",
+    "results/gate_summary.md (written by check_thresholds.py), with a small",
+    "margin for spaCy-model drift on PERSON/DATE. A floor of 0 is a measured",
+    "zero kept visible on purpose; raising it needs recognizer work, not",
+    "corpus edits. Identifier floors use PACK recall (the owning recognizer",
+    "fired), never leak recall, which passes even when a recognizer is removed."
   ],
   "system": "Presidio + pack",
-  "_min_span_precision_comment": "Re-pinned 0.78 -> 0.75 after 3.3 CA benchmark diversity (measured ca 0.761-0.770, in 0.795-0.799). The drop is spaCy built-in noise on richer templates (ORGANIZATION on hospital headers, DATE_TIME on durations); pack entities contribute zero benchmark FPs — pack precision is gated separately by negatives_max_fp_per_100_notes.",
-  "min_span_precision": 0.75,
-  "hard_min_recall": {
-    "_comment": "Regression floors for 'Presidio + pack' per-variant leak recall on the CA adversarial split (results/hard_ca.json). These are NOT targets: measured 2026-07-03 control 1.00, no_context 0.96, unusual_separator 0.56, line_wrap 0.38, ocr_confusable 0.38, dictation 0.50. Floors sit below measured to absorb seed/model drift; low values are honest findings, and raising them requires actual robustness work, not corpus tweaks.",
-    "control": 1.0,
-    "no_context": 0.9,
-    "unusual_separator": 0.5,
-    "line_wrap": 0.3,
-    "ocr_confusable": 0.3,
-    "dictation": 0.4
-  },
-  "address_min_strict_recall": {
-    "_comment": "Strict recall on the ODA holdout address corpus (results/address_ca.json). Measured 2026-07-03: pack 0.950; main-benchmark CA gold ADDRESS strict 0.971 after CA_STREET_ADDRESS recognizer.",
-    "Presidio + pack": 0.9
-  },
-  "negatives_max_fp_per_100_notes": {
-    "_comment": "FP ceiling on the PII-free confusables corpus (results/negatives_ca.json). Residual FPs are irreducible checksum collisions on random digit strings (~8% of random 9-digit strings pass SIN, ~10% of random 10-digit strings pass OHIP).",
-    "pack": 20
-  },
-  "min_recall": {
+  "min_pack_recall": {
+    "_comment": "Measured 2026-10-29 generated/heldout: SIN 1.0, OHIP 1.0, BC_PHN 1.0, AB_ULI 1.0, POSTAL 1.0, RAMQ 0.95/1.0 (lowercase letters are 8% of RAMQ gold and miss by design), HEALTH_CARD 0.82/0.81 (unlabelled nursing/tabular placements have no context within Presidio's 5-token window), ADDRESS 0.86/0.71 (20% of benchmark addresses are out-of-distribution renderings; see address_ca.md).",
     "CA_SIN": 1.0,
     "CA_OHIP": 1.0,
-    "CA_RAMQ": 1.0,
     "CA_BC_PHN": 1.0,
     "CA_AB_ULI": 1.0,
-    "DATE": 0.98,
-    "ADDRESS": 0.98,
+    "CA_POSTAL_CODE": 1.0,
+    "CA_RAMQ": 0.9,
+    "CA_HEALTH_CARD": 0.7,
+    "ADDRESS": 0.65
+  },
+  "min_leak_recall": {
+    "_comment": "spaCy-dependent entities and the blended total; measured PERSON 0.94, DATE 0.99, TOTAL 0.98.",
     "PERSON": 0.9,
-    "TOTAL": 0.97
-  }
+    "DATE": 0.97,
+    "TOTAL": 0.95
+  },
+  "min_pack_precision": 0.99,
+  "min_pipeline_precision": 0.6,
+  "_precision_comment": "Pack precision is over CA_* predictions only, deduplicated (measured 1.000 on the benchmark, which contains no confusable numerics; the negatives corpus is where pack FPs are measured). Pipeline precision is dominated by Presidio built-ins (ORGANIZATION on hospital headers); measured 0.65.",
+  "max_overredaction_chars_per_note": 60,
+  "_overredaction_comment": "Characters masked outside any gold span per note (measured 41-42, almost all from built-in ORGANIZATION/DATE_TIME spans).",
+  "min_pred_counts": {
+    "_comment": "Recognizer-presence check on the generated split: each pack type must emit at least this many predictions, so a silently dropped or broken recognizer fails even where another recognizer would mask the same spans.",
+    "CA_SIN": 50,
+    "CA_OHIP": 50,
+    "CA_RAMQ": 50,
+    "CA_BC_PHN": 50,
+    "CA_AB_ULI": 50,
+    "CA_HEALTH_CARD": 50,
+    "CA_POSTAL_CODE": 50,
+    "CA_STREET_ADDRESS": 50
+  },
+  "hard_min_pack_recall": {
+    "_comment": "Pack recall per variant on the adversarial split (50 notes per entity x variant). Measured 2026-10-29: control 1.00, no_context 0.80 (ULI is context-gated by design), unusual_separator 0.70 (dot/slash now matched; regrouping is not), line_wrap 0.00, ocr_confusable 0.00, dictation 0.00. The zeros are real: the pack has no robustness to those perturbations.",
+    "control": 1.0,
+    "no_context": 0.75,
+    "unusual_separator": 0.6,
+    "line_wrap": 0.0,
+    "ocr_confusable": 0.0,
+    "dictation": 0.0
+  },
+  "address_min_strict_recall": {
+    "_comment": "Strict recall per form on the ODA holdout. Only the in-distribution one-line form is gated (measured 0.967); every other form is out-of-distribution and measured 0.000 except postal_own_line (1.000), reported in address_ca.md.",
+    "one_line": 0.9
+  },
+  "negatives_max_fp_rate": {
+    "_comment": "FPs per planted confusable value, by source (negatives_ca.md). Checksum sources sit at the collision floor (~8% SIN, ~9% OHIP, ~2% BC PHN). The trap_* sources measure the context-gating cost: an innocent number within 5 tokens of a health-card / Alberta / French context word is flagged (often by two recognizers at once, hence rates above 1). That cost is a documented open design problem, not an accepted target; the ceilings only stop it growing.",
+    "accession": 0.0,
+    "credit_card": 0.0,
+    "us_ssn": 0.0,
+    "phone_facility": 0.0,
+    "serial9": 0.15,
+    "order10": 0.15,
+    "mrn10": 0.3,
+    "encounter10": 0.2,
+    "phone_compact": 0.2,
+    "fax_compact": 0.2,
+    "trap_near": 0.8,
+    "trap_alberta": 1.6,
+    "trap_french": 1.3
+  },
+  "negatives_max_unplanted_fp": 0
 }

@@ -17,8 +17,9 @@
 
 ## Rule implemented
 
-- Pattern (`core/specs.py`): `9` + 4-3-3 digit
-  groups (score 0.4) or 10 contiguous digits starting with 9 (score 0.15).
+- Pattern (`core/specs.py`): `9` + 4-3-3 digit groups separated by space,
+  dash, dot or slash (score 0.4) or 10 contiguous digits starting with 9
+  (score 0.15).
 - Validator (`ca_bc_phn_valid`): 10 digits after separator stripping, first
   digit 9, then exactly the published routine: `sum((d*w) % 11)` over digits
   2–9, check digit `11 - (sum % 11)` compared to digit 10. Results of 10 or

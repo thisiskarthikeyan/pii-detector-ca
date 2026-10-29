@@ -18,8 +18,11 @@
 ## Rule implemented
 
 - Pattern (`core/specs.py`, `CA_OHIP`): first digit 1–9, then 4-3-3 digit
-  groups with optional 1–2 trailing uppercase letters (score 0.4), or 10
-  contiguous digits + optional letters (score 0.15). Compiled
+  groups separated by space, dash, dot or slash, with optional 1–2 trailing
+  uppercase letters (score 0.4), or 10 contiguous digits + optional letters
+  (score 0.15; the checksum alone promotes it to 1.0, so ~10% of random
+  10-digit MRNs / encounter / compact phone numbers are flagged — measured in
+  `evaluation/results/negatives_ca.md`). Compiled
   **case-sensitively**: version codes are uppercase on every card issue, and
   with IGNORECASE a lowercase English word following the number ("… 897 on
   file") was absorbed into the span as a bogus version code.

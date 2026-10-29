@@ -1,7 +1,14 @@
 """Generate the Canadian street-address evaluation corpus (plan item 3.9).
 
 Each note contains one real ODA address (from the eval holdout CSV, never
-used by the main benchmark generator) with an address context label.
+used by the main benchmark generator) with an address context label. Half
+the notes use the in-distribution one-line form the recognizer was written
+against (``form = one_line``); the other half rotate through renderings it
+was NOT written against (two-line, province spelled out, no postal code,
+postal code on its own line, Apt/Suite units, rural route, no comma before
+the province). Each gold entity records its ``form`` so strict recall is
+reported per rendering; CI gates the in-distribution form only.
+
 Gold spans are exact by construction.
 
 Usage:
@@ -19,7 +26,11 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from pii_generators import _format_ca_address  # noqa: E402
+from pii_generators import (  # noqa: E402
+    ADDRESS_OOD_FORMS,
+    _format_ca_address,
+    _format_ca_address_ood,
+)
 
 EVAL_CSV = Path(__file__).parent / "data" / "oda" / "ca_addresses_eval.csv"
 LABELS = [
@@ -51,14 +62,18 @@ def main() -> None:
     with open(out_path, "w", encoding="utf-8") as f:
         for i in range(args.n):
             row = rng.choice(rows)
-            address = _format_ca_address(row, rng)
+            if i % 2 == 0:
+                form = "one_line"
+                address = _format_ca_address(row, rng)
+            else:
+                form = ADDRESS_OOD_FORMS[(i // 2) % len(ADDRESS_OOD_FORMS)]
+                address = _format_ca_address_ood(row, rng, form)
             label = rng.choice(LABELS)
             if label.endswith(":"):
                 line = f"{label} {address}"
-                start = len(_PREFIX) + len(label) + 1
             else:
                 line = f"{label} {address}."
-                start = len(_PREFIX) + len(label) + 1
+            start = len(_PREFIX) + len(label) + 1
             text = _PREFIX + line + _SUFFIX
             end = start + len(address)
             assert text[start:end] == address
@@ -68,7 +83,13 @@ def main() -> None:
                 "note_type": "address_eval",
                 "text": text,
                 "entities": [
-                    {"start": start, "end": end, "type": "ADDRESS", "value": address}
+                    {
+                        "start": start,
+                        "end": end,
+                        "type": "ADDRESS",
+                        "value": address,
+                        "form": form,
+                    }
                 ],
             }
             f.write(json.dumps(note, ensure_ascii=False) + "\n")

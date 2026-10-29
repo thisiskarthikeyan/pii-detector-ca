@@ -15,6 +15,8 @@ variant so effects can be isolated against the `control` variant:
                      anywhere in the note (checksum types should still hit;
                      context-gated ULI is expected to miss by design)
 - unusual_separator  dot-separated, non-standard regrouping, or slash
+                     (dot and slash are matched since the separator class
+                     was widened; regrouping is not)
 - line_wrap          value wrapped across a newline mid-identifier
 - ocr_confusable     one digit OCR-corrupted (0->O or 1->l) in the surface;
                      the gold span is the corrupted text, as a scanner would
@@ -26,7 +28,7 @@ Gold spans are recorded at insertion time and remain exact by construction
 (including newlines and corrupted characters). Deterministic given --seed.
 
 Usage:
-    python benchmark/generate_hard.py --per-cell 10
+    python benchmark/generate_hard.py --per-cell 50
 """
 
 from __future__ import annotations
@@ -39,16 +41,15 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-
-from pii_detector_ca.validators import (  # noqa: E402
-    ca_bc_phn_valid,
-    luhn_check_digit,
-)
-
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from pii_generators import CANADIAN_LAST, _ramq_letters  # noqa: E402
+from pii_generators import (  # noqa: E402
+    raw_ca_ab_uli,
+    raw_ca_bc_phn,
+    raw_ca_ohip,
+    raw_ca_ramq,
+    raw_ca_sin,
+)
 
 VARIANTS = [
     "control",
@@ -60,42 +61,16 @@ VARIANTS = [
 ]
 
 
-# --- Raw (unformatted) checksum-valid values ---------------------------------
-
-
-def _raw_sin(rng: random.Random) -> str:
-    base = rng.choice("12345679") + "".join(rng.choices("0123456789", k=7))
-    return base + luhn_check_digit(base)
-
-
-def _raw_ohip(rng: random.Random) -> str:
-    base = rng.choice("123456789") + "".join(rng.choices("0123456789", k=8))
-    return base + luhn_check_digit(base)
+# Raw checksum-valid values come from the benchmark generators, which use the
+# reference checksums in checksums_ref.py (not the package validators).
+_raw_sin = raw_ca_sin
+_raw_ohip = raw_ca_ohip
+_raw_bc_phn = raw_ca_bc_phn
+_raw_ab_uli = raw_ca_ab_uli
 
 
 def _raw_ramq(rng: random.Random) -> str:
-    # Realistic letter block: 3 surname letters + first-name initial (3.6).
-    letters = _ramq_letters(rng.choice(CANADIAN_LAST), rng.choice("AEJLMS"))
-    yy = f"{rng.randint(1930, 2015) % 100:02d}"
-    month = rng.randint(1, 12) + rng.choice([0, 50])
-    dd = f"{rng.randint(1, 28):02d}"
-    seq = f"{rng.randint(1, 99):02d}"
-    return f"{letters}{yy}{month:02d}{dd}{seq}"
-
-
-def _raw_bc_phn(rng: random.Random) -> str:
-    while True:
-        base = "9" + "".join(rng.choices("0123456789", k=8))
-        for check in "0123456789":
-            if ca_bc_phn_valid(base + check):
-                return base + check
-
-
-def _raw_ab_uli(rng: random.Random) -> str:
-    digits = "".join(rng.choices("0123456789", k=9))
-    if len(set(digits)) == 1:
-        digits = digits[:-1] + str((int(digits[-1]) + 1) % 10)
-    return digits
+    return raw_ca_ramq(rng)
 
 
 @dataclass(frozen=True)
@@ -217,7 +192,7 @@ def build_note(entity: str, variant: str, rng: random.Random) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--per-cell", type=int, default=10,
+    parser.add_argument("--per-cell", type=int, default=50,
                         help="notes per (entity, variant) cell")
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()

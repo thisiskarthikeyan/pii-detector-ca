@@ -20,8 +20,9 @@
 
 ## Rule implemented
 
-- Pattern (`core/specs.py`, `CA_SIN`): 3-3-3 digit groups separated by space or dash
-  (score 0.4), or 9 contiguous digits (score 0.1, needs checksum + context).
+- Pattern (`core/specs.py`, `CA_SIN`): 3-3-3 digit groups separated by space, dash,
+  dot or slash (score 0.4), or 9 contiguous digits (score 0.1; the checksum alone
+  promotes it to 1.0, which is why ~8% of random 9-digit serials are flagged).
 - Validator (`ca_sin_valid` in `core/validators.py`): exactly 9 digits after
   separator stripping, first digit not 0 or 8, Luhn (mod-10) checksum valid.
 - Context words: "sin", "social insurance", "social insurance number",

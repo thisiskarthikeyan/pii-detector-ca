@@ -52,10 +52,12 @@ def main() -> None:
         "",
         f"{args.n} notes per seed; seeds: {args.seeds}.",
         "",
-        "| Seed | Gold entities | Leak recall | Strict recall | Precision |",
-        "|---|---|---|---|---|",
+        "| Seed | Gold entities | Leak recall | Strict recall | Pack recall | Pack precision |",
+        "|---|---|---|---|---|---|",
     ]
-    spreads: dict[str, list[float]] = {"recall": [], "strict_recall": [], "precision": []}
+    spreads: dict[str, list[float]] = {
+        "recall": [], "strict_recall": [], "attributed_recall": [], "pack_precision": []
+    }
     for seed in args.seeds:
         notes = generate_corpus_in_memory(args.n, seed)
         preds = predict_presidio(analyzer, notes)
@@ -63,14 +65,15 @@ def main() -> None:
         o = overall(stats)
         spreads["recall"].append(o["recall"])
         spreads["strict_recall"].append(o["strict_recall"])
-        spreads["precision"].append(precision["precision"])
+        spreads["attributed_recall"].append(o["attributed_recall"])
+        spreads["pack_precision"].append(precision["pack"]["precision"])
         lines.append(
-            f"| {seed} | {o['gold']} | {o['recall']:.3f} | "
-            f"{o['strict_recall']:.3f} | {precision['precision']:.3f} |"
+            f"| {seed} | {o['gold']} | {o['recall']:.3f} | {o['strict_recall']:.3f} | "
+            f"{o['attributed_recall']:.3f} | {precision['pack']['precision']:.3f} |"
         )
         print(
-            f"seed={seed}: recall={o['recall']:.3f} "
-            f"strict={o['strict_recall']:.3f} precision={precision['precision']:.3f}"
+            f"seed={seed}: recall={o['recall']:.3f} strict={o['strict_recall']:.3f} "
+            f"pack={o['attributed_recall']:.3f} pack_precision={precision['pack']['precision']:.3f}"
         )
 
     lines.append("")

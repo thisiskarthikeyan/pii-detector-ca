@@ -8,9 +8,16 @@ Three systems are compared:
   (added upstream in 2.2.363 / 2.2.365) — the strongest no-pack baseline;
 - "Presidio + pack": stock plus this package's recognizers.
 
+Splits:
+
+- "heldout": the first 100 notes of the fixed-seed generator stream
+  (benchmark/data/gold/ca_gold.jsonl). It has NOT been human-reviewed; the
+  file path keeps the historical name, the reports do not.
+- "generated": the remaining notes of the same stream.
+
 Usage:
-    python evaluation/run_eval.py --all            # gold + generated splits
-    python evaluation/run_eval.py --split gold
+    python evaluation/run_eval.py --all            # heldout + generated splits
+    python evaluation/run_eval.py --split heldout
 
 Writes markdown tables, a machine-readable results.json (consumed by
 check_thresholds.py in CI), and a JSON error-analysis dump to
@@ -31,13 +38,18 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 sys.path.insert(0, str(REPO / "evaluation"))
 
-from metrics import Span, bootstrap_ci, evaluate_notes, overall  # noqa: E402
+from metrics import PACK_PREFIX, Span, bootstrap_ci, evaluate_notes, overall  # noqa: E402
 from presidio_analyzer import AnalyzerEngine  # noqa: E402
 from presidio_analyzer.nlp_engine import NlpEngineProvider  # noqa: E402
 
 from pii_detector_ca import add_recognizers  # noqa: E402
 
 DEFAULT_MODEL = "en_core_web_sm"
+SPLITS = ["heldout", "generated"]
+SPLIT_PATHS = {
+    "heldout": REPO / "benchmark" / "data" / "gold" / "ca_gold.jsonl",
+    "generated": REPO / "benchmark" / "data" / "generated" / "ca.jsonl",
+}
 
 
 def collect_metadata(model: str = DEFAULT_MODEL) -> dict:
@@ -62,7 +74,11 @@ def collect_metadata(model: str = DEFAULT_MODEL) -> dict:
 
 
 def build_analyzer(
-    with_pack: bool, model: str = DEFAULT_MODEL, *, presidio_ca_builtins: bool = False
+    with_pack: bool,
+    model: str = DEFAULT_MODEL,
+    *,
+    presidio_ca_builtins: bool = False,
+    exclude: list[str] | None = None,
 ) -> AnalyzerEngine:
     nlp_config = {
         "nlp_engine_name": "spacy",
@@ -74,7 +90,7 @@ def build_analyzer(
         for recognizer in _presidio_ca_builtins():
             analyzer.registry.add_recognizer(recognizer)
     if with_pack:
-        add_recognizers(analyzer.registry)
+        add_recognizers(analyzer.registry, exclude=exclude or ())
     return analyzer
 
 
@@ -98,50 +114,81 @@ def predict_presidio(analyzer: AnalyzerEngine, notes: list[dict]) -> list[list[S
     return predictions
 
 
-
 def load_notes(split: str) -> list[dict]:
-    if split == "gold":
-        path = REPO / "benchmark" / "data" / "gold" / "ca_gold.jsonl"
-    else:
-        path = REPO / "benchmark" / "data" / "generated" / "ca.jsonl"
-    with open(path, encoding="utf-8") as f:
+    with open(SPLIT_PATHS[split], encoding="utf-8") as f:
         return [json.loads(line) for line in f]
+
+
+def _fmt_ci(ci: dict, key: str) -> str:
+    if key not in ci:
+        return "n/a"
+    lo, hi = ci[key]
+    return f"[{lo:.3f}, {hi:.3f}]"
 
 
 def format_table(system: str, split: str, stats: dict, precision: dict, ci: dict) -> str:
     lines = [
         f"### {system} — split={split}",
         "",
-        "| Entity | Gold | Detected (overlap) | Recall | Strict recall | FN rate "
-        "| Typed exact recall |",
-        "|---|---|---|---|---|---|---|",
+        "| Entity | Gold | Leak recall | Strict recall | Pack recall | Typed exact |",
+        "|---|---|---|---|---|---|",
     ]
     for entity in sorted(stats):
         s = stats[entity]
         lines.append(
-            f"| {entity} | {s.gold} | {s.detected} | {s.recall:.3f} | "
-            f"{s.strict_recall:.3f} | {s.fn_rate:.3f} | {s.typed_recall:.3f} |"
+            f"| {entity} | {s.gold} | {s.recall:.3f} | {s.strict_recall:.3f} | "
+            f"{s.attributed_recall:.3f} | {s.typed_recall:.3f} |"
         )
     o = overall(stats)
     lines.append(
-        f"| **TOTAL** | {o['gold']} | {o['detected']} | {o['recall']:.3f} | "
-        f"{o['strict_recall']:.3f} | {o['fn_rate']:.3f} | {o['typed_recall']:.3f} |"
+        f"| **TOTAL** | {o['gold']} | {o['recall']:.3f} | {o['strict_recall']:.3f} | "
+        f"{o['attributed_recall']:.3f} | {o['typed_recall']:.3f} |"
     )
-    lines.append("")
-    lines.append(
-        f"Span precision (predicted spans overlapping any gold PII): "
-        f"{precision['precision']:.3f} ({precision['tp']}/{precision['total']})"
-    )
-
-    def fmt_ci(key: str) -> str:
-        lo, hi = ci[key]
-        return f"[{lo:.3f}, {hi:.3f}]"
-
-    lines.append(
-        f"Bootstrap 95% CI (1000 note-resamples): leak recall {fmt_ci('recall')}, "
-        f"strict recall {fmt_ci('strict_recall')}, precision {fmt_ci('precision')}"
-    )
-    lines.append("")
+    pipe, pack = precision["pipeline"], precision["pack"]
+    over = precision["overredaction"]
+    lines += [
+        "",
+        "Pack recall = gold span overlapped by the recognizer that owns the entity "
+        "type (CA_STREET_ADDRESS for ADDRESS, DATE_TIME for DATE); leak recall "
+        "counts overlap by any recognizer.",
+        "",
+        f"Pipeline precision (all predictions, deduplicated): {pipe['precision']:.3f} "
+        f"(TP {pipe['tp']}, FP {pipe['fp']}, duplicates on claimed gold {pipe['dup']})",
+        f"Pack precision (CA_* predictions only): {pack['precision']:.3f} "
+        f"(TP {pack['tp']}, FP {pack['fp']}, duplicates {pack['dup']})",
+        f"Over-redaction: {over['chars_per_note']:.1f} chars/note masked outside gold spans",
+        f"Bootstrap 95% CI (1000 note-resamples): leak recall {_fmt_ci(ci, 'recall')}, "
+        f"strict recall {_fmt_ci(ci, 'strict_recall')}, "
+        f"pack recall {_fmt_ci(ci, 'attributed_recall')}, "
+        f"pipeline precision {_fmt_ci(ci, 'precision')}, "
+        f"pack precision {_fmt_ci(ci, 'pack_precision')}",
+        "",
+    ]
+    counts = precision["pred_counts"]
+    if counts:
+        lines += [
+            "| Predicted type | TP (overlaps gold) | FP (no gold overlap) |",
+            "|---|---|---|",
+        ]
+        for ptype, c in counts.items():
+            lines.append(f"| {ptype} | {c['tp']} | {c['fp']} |")
+        lines.append("")
+    by_form = precision.get("by_form")
+    if by_form and system == "Presidio + pack":
+        lines += [
+            "Per surface form (pack system only): gold entities tagged with the "
+            "rendering the generator used.",
+            "",
+            "| Entity | Form | Gold | Leak recall | Strict recall | Pack recall |",
+            "|---|---|---|---|---|---|",
+        ]
+        for key, s in by_form.items():
+            entity, form = key.split("|", 1)
+            lines.append(
+                f"| {entity} | {form} | {s['gold']} | {s['recall']:.3f} | "
+                f"{s['strict_recall']:.3f} | {s['attributed_recall']:.3f} |"
+            )
+        lines.append("")
     return "\n".join(lines)
 
 
@@ -166,7 +213,14 @@ def run(
         ci = bootstrap_ci(per_note)
         out_lines.append(format_table(system, split, stats, precision, ci))
         errors[f"{system}|{split}"] = {
-            entity: s.missed_values for entity, s in stats.items() if s.missed_values
+            "missed": {
+                entity: s.missed_values for entity, s in stats.items() if s.missed_values
+            },
+            "unattributed": {
+                entity: s.unattributed_values
+                for entity, s in stats.items()
+                if s.unattributed_values
+            },
         }
         o = overall(stats)
         runs.append(
@@ -174,31 +228,23 @@ def run(
                 "system": system,
                 "split": split,
                 "nlp_model": model,
-                "entities": {
-                    entity: {
-                        "gold": s.gold,
-                        "detected": s.detected,
-                        "covered": s.covered,
-                        "recall": s.recall,
-                        "strict_recall": s.strict_recall,
-                        "typed_recall": s.typed_recall,
-                    }
-                    for entity, s in sorted(stats.items())
-                },
+                "entities": {entity: s.as_dict() for entity, s in sorted(stats.items())},
                 "overall": o,
                 "span_precision": precision,
+                "pack_prefix": PACK_PREFIX,
                 "bootstrap_ci_95": ci,
             }
         )
         print(
-            f"{system:24s} {split}: recall={o['recall']:.3f} "
-            f"strict={o['strict_recall']:.3f} fn={o['fn_rate']:.3f}"
+            f"{system:24s} {split}: leak={o['recall']:.3f} "
+            f"strict={o['strict_recall']:.3f} pack={o['attributed_recall']:.3f} "
+            f"pack-precision={precision['pack']['precision']:.3f}"
         )
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--split", choices=["gold", "generated"], default="gold")
+    parser.add_argument("--split", choices=SPLITS, default="heldout")
     parser.add_argument("--all", action="store_true", help="both splits")
     parser.add_argument(
         "--model",
@@ -219,11 +265,14 @@ def main() -> None:
         f"Generated: {metadata['generated_at']} | Python {metadata['python']} | "
         + " | ".join(f"{k} {v}" for k, v in metadata["versions"].items()),
         "",
+        "The `heldout` split is the first 100 notes of the fixed-seed generator "
+        "stream; it is not human-reviewed. All data is synthetic.",
+        "",
     ]
     out_lines = list(header)
     errors: dict = {}
     runs: list[dict] = []
-    for split in ["gold", "generated"] if args.all else [args.split]:
+    for split in SPLITS if args.all else [args.split]:
         run(split, out_lines, errors, runs, model=args.model)
 
     suffix = "" if args.model == DEFAULT_MODEL else f"_{args.model}"

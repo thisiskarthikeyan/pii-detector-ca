@@ -4,6 +4,17 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Changed
+
+- Evaluation gate now enforces **pack recall** (the owning recognizer overlapped the gold span) for identifier entities instead of leak recall, plus a per-recognizer prediction-count presence check; removing a recognizer fails CI (`tests/test_gate.py`). Previously `CA_BC_PHN` and `CA_AB_ULI` passed with their recognizers deleted because built-in recognizers masked the same spans.
+- Precision is reported as deduplicated pipeline precision and pack-only precision (CA_* predictions), with duplicate counts and an over-redaction metric (characters masked outside gold spans). The old any-overlap precision counted several predictions on one gold span as several true positives.
+- Hard split: 50 notes per entity × variant (was 10); CI gates per-variant pack recall, with measured zeros for line-wrap, OCR and dictation kept as explicit floors of 0.
+- Separator class for grouped identifier patterns (SIN, OHIP, BC PHN, Alberta ULI, RAMQ, generic health card) widened from `[- ]` to `[-. /]`.
+- Benchmark: identifiers are built from independent reference checksums (`benchmark/checksums_ref.py`) rather than the package validators, pinned by `tests/test_oracle.py`; values are rendered in weighted surface forms (dot, slash, mixed separators, glued/lowercase version codes, lowercase RAMQ) and tagged with `form`; four templates added (Alberta registration, out-of-province intake, unlabelled nursing note, tab-separated registration extract); standalone `CA_POSTAL_CODE`, Alberta-labelled `CA_AB_ULI` and other-province `CA_HEALTH_CARD` gold spans; a ULI-shaped number under generic wording is gold `CA_HEALTH_CARD`; ~20% of benchmark addresses use out-of-distribution renderings. The "gold" split is reported as `heldout` (same file path).
+- Negatives corpus: planted numbers are tagged by source (MRN, encounter, compact phone/fax, context traps inside the 5-token window, Alberta and French traps); FP rate is gated per source. Measured: 10% of random 10-digit MRNs are flagged `CA_OHIP`; context traps fire in 68–143% of cases.
+- Address holdout: half the notes use forms the recognizer was not written against (two-line, province spelled out, no postal code, Apt/Suite, rural route, no comma before province); strict recall is reported per form and only the one-line form is gated. Measured out-of-distribution strict recall is 0.000 except postal-code-on-own-line.
+- `check_thresholds.py` prints measured values beside every floor and writes `evaluation/results/gate_summary.md`.
+
 ## [0.1.0] - unreleased
 
 First public release, Canada only. (Pre-release history: the package was developed as `presidio-recognizers-ca-in` with experimental Indian recognizers; those were removed before 0.1.0 and will return as a separate `pii-detector-in` package once they have their own benchmark.)

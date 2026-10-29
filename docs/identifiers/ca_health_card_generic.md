@@ -21,9 +21,15 @@ item 3.5.
   never fired on "health card" text at all.)
 - No validator: with no published structure there is nothing deterministic
   to check.
-- Separated forms (`\d{3,6}[- ]\d{3,6}`, `\d{3,4}[- ]\d{3}[- ]\d{3,4}`) are
-  matched at the same floor score so the 5-4 Alberta rendering and 3-3-3 /
-  4-3-3 renderings are covered.
+- Separated forms (`\d{3,6}[-. /]\d{3,6}`, `\d{3,4}[-. /]\d{3}[-. /]\d{3,4}`)
+  are matched at the same floor score so the 5-4 Alberta rendering and
+  3-3-3 / 4-3-3 renderings are covered.
+- Measured (benchmark, generated split): pack recall 0.82. The misses are
+  placements with no context word within Presidio's 5-token window
+  (tab-separated extracts, unlabelled prose). Measured FP cost of the
+  context gate on the negatives corpus: an innocent 9-digit number inside
+  the window of a context word is flagged in ~70% (English), ~110%
+  (French) and ~140% (Alberta, two labels) of cases.
 - Attribution: a 9-digit number under generic "health card" wording is
   reported as `CA_HEALTH_CARD` only; `CA_AB_ULI` requires Alberta-specific
   context ("alberta", "uli", "ahcip", "netcare"). In the benchmark, ULI

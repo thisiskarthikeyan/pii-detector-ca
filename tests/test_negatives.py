@@ -13,8 +13,11 @@ exactly the situation in which a confusable value appears in running text.
 
 from __future__ import annotations
 
+import pytest
+
 from pii_detector_ca import get_recognizers
 from pii_detector_ca.canada import BcPhnRecognizer, CaSinRecognizer, OhipRecognizer
+from pii_detector_ca.validators import luhn_check_digit
 
 THRESHOLD = 0.35
 
@@ -102,3 +105,22 @@ class TestClinicalNumerics:
     def test_clinical_snippets_produce_no_reports(self):
         for snippet in self.SNIPPETS:
             assert reported(snippet) == [], snippet
+
+
+class TestKnownCompactCollisions:
+    """Documented failure mode, kept visible as expected failures.
+
+    A Luhn-valid 10-digit MRN, encounter number or compact phone number is
+    reported as CA_OHIP at score 1.0 with no health context: the checksum
+    alone promotes the compact pattern. The negatives corpus measures the
+    rate (sources mrn10 / encounter10 / phone_compact). Deciding whether
+    compact 10-digit matches should require context is an open design
+    question; until it is settled these tests document the behaviour.
+    """
+
+    @pytest.mark.xfail(strict=True, reason="checksum-only promotion of compact 10-digit numbers")
+    @pytest.mark.parametrize("label", ["MRN:", "Encounter #", "Tel:"])
+    def test_luhn_valid_ten_digit_number_not_reported_as_ohip(self, label):
+        base = "358017432"
+        value = base + luhn_check_digit(base)
+        assert reported(f"{label} {value}") == []

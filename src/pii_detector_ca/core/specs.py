@@ -43,6 +43,12 @@ _HEALTH_CONTEXT_FR = (
     "carte soleil",
 )
 
+# Separator class for grouped digit identifiers. Dash and space are the
+# issued renderings; dot and slash are added for transcribed/OCR'd text
+# (measured on the hard split's `unusual_separator` variant). Mixed
+# separators within one value are accepted; non-standard regrouping is not.
+_SEP = r"[-. /]"
+
 _PROV = r"(?:AB|BC|MB|NB|NL|NS|NT|NU|ON|PE|QC|SK|YT)"
 _POSTAL = r"[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d"
 _FRENCH_TYPES = (
@@ -55,7 +61,7 @@ _ENTITY_SPECS: dict[str, EntitySpec] = {
     "CA_SIN": EntitySpec(
         entity="CA_SIN",
         patterns=(
-            PatternSpec("ca_sin_separated", r"\b\d{3}[- ]\d{3}[- ]\d{3}\b", 0.4),
+            PatternSpec("ca_sin_separated", rf"\b\d{{3}}{_SEP}\d{{3}}{_SEP}\d{{3}}\b", 0.4),
             PatternSpec("ca_sin_compact", r"\b\d{9}\b", 0.1),
         ),
         context=(
@@ -77,7 +83,7 @@ _ENTITY_SPECS: dict[str, EntitySpec] = {
             # absorbed into the span as a bogus version code.
             PatternSpec(
                 "ohip_separated",
-                r"\b[1-9]\d{3}[- ]\d{3}[- ]\d{3}(?:[- ]?[A-Z]{1,2})?\b",
+                rf"\b[1-9]\d{{3}}{_SEP}\d{{3}}{_SEP}\d{{3}}(?:[- ]?[A-Z]{{1,2}})?\b",
                 0.4,
             ),
             PatternSpec("ohip_compact", r"\b[1-9]\d{9}[A-Z]{0,2}\b", 0.15),
@@ -92,7 +98,7 @@ _ENTITY_SPECS: dict[str, EntitySpec] = {
         patterns=(
             PatternSpec(
                 "ramq_separated",
-                r"\b[A-ZÀ-ÖØ-Þ]{4}[- ]?\d{4}[- ]?\d{4}\b",
+                rf"\b[A-ZÀ-ÖØ-Þ]{{4}}{_SEP}?\d{{4}}{_SEP}?\d{{4}}\b",
                 0.4,
             ),
         ),
@@ -104,7 +110,7 @@ _ENTITY_SPECS: dict[str, EntitySpec] = {
     "CA_BC_PHN": EntitySpec(
         entity="CA_BC_PHN",
         patterns=(
-            PatternSpec("bc_phn_separated", r"\b9\d{3}[- ]\d{3}[- ]\d{3}\b", 0.4),
+            PatternSpec("bc_phn_separated", rf"\b9\d{{3}}{_SEP}\d{{3}}{_SEP}\d{{3}}\b", 0.4),
             PatternSpec("bc_phn_compact", r"\b9\d{9}\b", 0.15),
         ),
         context=_HEALTH_CONTEXT_EN + ("bc services card", "care card", "carecard"),
@@ -117,7 +123,7 @@ _ENTITY_SPECS: dict[str, EntitySpec] = {
             # Base scores sit above CA_HEALTH_CARD's so that, when both fire on
             # the same span under Alberta context, Presidio's duplicate removal
             # keeps the province-specific label.
-            PatternSpec("ab_uli_separated", r"\b\d{5}[- ]\d{4}\b", 0.2),
+            PatternSpec("ab_uli_separated", rf"\b\d{{5}}{_SEP}\d{{4}}\b", 0.2),
             PatternSpec("ab_uli_compact", r"\b\d{9}\b", 0.1),
         ),
         # Alberta-specific context only. Generic "health card" wording cannot
@@ -133,9 +139,9 @@ _ENTITY_SPECS: dict[str, EntitySpec] = {
             PatternSpec("ca_health_generic", r"\b[A-Z]{0,2}\d{6,12}\b", 0.01),
             # Common separated renderings (5-4 as on Alberta cards, 3-3-3,
             # 4-3-3); all context-gated at the same floor score.
-            PatternSpec("ca_health_generic_sep2", r"\b\d{3,6}[- ]\d{3,6}\b", 0.01),
+            PatternSpec("ca_health_generic_sep2", rf"\b\d{{3,6}}{_SEP}\d{{3,6}}\b", 0.01),
             PatternSpec(
-                "ca_health_generic_sep3", r"\b\d{3,4}[- ]\d{3}[- ]\d{3,4}\b", 0.01
+                "ca_health_generic_sep3", rf"\b\d{{3,4}}{_SEP}\d{{3}}{_SEP}\d{{3,4}}\b", 0.01
             ),
         ),
         context=_HEALTH_CONTEXT_EN

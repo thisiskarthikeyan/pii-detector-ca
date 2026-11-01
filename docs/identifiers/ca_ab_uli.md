@@ -20,8 +20,8 @@
 - No public checksum or structure beyond "9 digits" is documented, so this
   recognizer is **context-gated**: pattern scores are set below the 0.35
   reporting threshold and only context-word boosting can surface a match.
-- Patterns (`core/specs.py`): 5-4 digit groups (score 0.2) or 9 contiguous
-  digits (score 0.1) — both above `CA_HEALTH_CARD`'s floor so the
+- Patterns (`core/specs.py`): 5-4 digit groups separated by space, dash, dot
+  or slash (score 0.2) or 9 contiguous digits (score 0.1) — both above `CA_HEALTH_CARD`'s floor so the
   province-specific label scores higher when both fire.
 - Validator (`ca_ab_uli_plausible`): returns `False` for wrong shape or a
   single repeated digit (e.g. 000000000), `None` otherwise — never `True`,

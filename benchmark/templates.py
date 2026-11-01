@@ -1,12 +1,24 @@
 """Clinical note templates with named PII slots.
 
 Each template is a list of segments. A segment is either literal text or a
-slot tuple ("SLOT", entity_type). The assembler fills slots via the
+slot tuple ("SLOT", slot_type). The assembler fills slots via the
 generators in pii_generators.py and records exact character spans, so the
 corpus is span-labeled by construction — no post-hoc annotation.
 
-Slot types: PERSON, DATE, DOB (a DATE entity with a birth-year range),
-ADDRESS, HEALTH_ID (rotates across provincial formats) and CA_SIN.
+Slot types:
+
+- PERSON, DATE, DOB (a DATE entity with a birth-year range), ADDRESS
+- CA_SIN
+- HEALTH_ID        rotating provincial health number under a GENERIC label
+                   ("Health card:"). OHIP / RAMQ / BC PHN keep their own gold
+                   type (checksum-attributable); a 9-digit Alberta-shaped
+                   value or another province's card is gold CA_HEALTH_CARD,
+                   because generic wording cannot attribute it to a province.
+- HEALTH_ID_REPEAT the same value as the note's first HEALTH_ID, again
+- AB_ULI           Alberta ULI under Alberta-specific wording (gold CA_AB_ULI)
+- PROV_HEALTH_LINE a whole "<province label> <number>" line for a province
+                   without a dedicated recognizer (gold CA_HEALTH_CARD)
+- POSTAL           a standalone postal code (gold CA_POSTAL_CODE)
 """
 
 CLINICAL_FINDINGS = [
@@ -73,6 +85,8 @@ def discharge_summary_ca(hospital):
         "Primary diagnosis: ", ("SLOT", "DIAGNOSIS"), ".\n",
         "The patient was admitted with the above and improved with treatment. ",
         "Discharge medications include ", ("SLOT", "MEDICATION"), ". ",
+        "Health number ", ("SLOT", "HEALTH_ID_REPEAT"),
+        " was re-verified at discharge. ",
         "Follow-up with the family physician in two weeks.\n",
     ]
 
@@ -128,6 +142,56 @@ def lab_requisition_ca(hospital):
     ]
 
 
+def alberta_registration_ca(hospital):
+    # Alberta-specific wording: the only template where a ULI can be
+    # attributed to its province (gold CA_AB_ULI).
+    return [
+        f"{hospital} — AHCIP REGISTRATION\n\n",
+        "Patient: ", ("SLOT", "PERSON"), "\n",
+        "Alberta ULI: ", ("SLOT", "AB_ULI"), "\n",
+        "DOB: ", ("SLOT", "DOB"), "\n",
+        "Postal code: ", ("SLOT", "POSTAL"), "\n",
+        "Registered: ", ("SLOT", "DATE"), "\n",
+        "Netcare lookup confirmed coverage under the Alberta Health Care ",
+        "Insurance Plan.\n",
+    ]
+
+
+def other_province_intake_ca(hospital):
+    # A province without a dedicated recognizer (gold CA_HEALTH_CARD).
+    return [
+        f"{hospital} — OUT-OF-PROVINCE INTAKE\n\n",
+        "Patient: ", ("SLOT", "PERSON"), "   DOB: ", ("SLOT", "DOB"), "\n",
+        ("SLOT", "PROV_HEALTH_LINE"), "\n",
+        "Home postal code: ", ("SLOT", "POSTAL"), "\n",
+        "Seen: ", ("SLOT", "DATE"), "\n",
+        "Reciprocal billing to be arranged with the home province.\n",
+    ]
+
+
+def nursing_note_ca(hospital):
+    # Identifier mid-sentence with NO label word nearby: tests the
+    # checksum-only path (no context boosting possible).
+    return [
+        f"{hospital} — NURSING NOTE\n\n",
+        ("SLOT", "DATE"), ": ", ("SLOT", "PERSON"),
+        " settled on the unit. Armband checked against ", ("SLOT", "HEALTH_ID"),
+        " and the chart; two identifiers matched. ",
+        ("SLOT", "FINDINGS"), "\n",
+        "Family contact declined to be recorded.\n",
+    ]
+
+
+def registration_sheet_ca(hospital):
+    # Tab-separated registration row: identifier in a table-like layout.
+    return [
+        f"{hospital} — REGISTRATION EXTRACT\n\n",
+        "NAME\tHEALTH NO\tSIN\tPOSTAL\tDOB\n",
+        ("SLOT", "PERSON"), "\t", ("SLOT", "HEALTH_ID"), "\t", ("SLOT", "CA_SIN"),
+        "\t", ("SLOT", "POSTAL"), "\t", ("SLOT", "DOB"), "\n",
+    ]
+
+
 TEMPLATES = [
     radiology_report_ca,
     discharge_summary_ca,
@@ -135,4 +199,8 @@ TEMPLATES = [
     ed_triage_note_ca,
     consult_note_ca,
     lab_requisition_ca,
+    alberta_registration_ca,
+    other_province_intake_ca,
+    nursing_note_ca,
+    registration_sheet_ca,
 ]

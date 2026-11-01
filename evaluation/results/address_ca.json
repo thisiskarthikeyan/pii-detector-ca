@@ -1,58 +1,275 @@
 {
   "metadata": {
-    "generated_at": "2026-10-27T03:26:38+00:00",
-    "python": "3.12.3",
+    "generated_at": "2026-10-29T05:18:30+00:00",
+    "python": "3.13.17",
     "versions": {
-      "presidio-analyzer": "2.2.365",
-      "spacy": "3.8.18",
+      "presidio-analyzer": "2.2.363",
+      "spacy": "3.8.13",
       "en_core_web_sm": "3.8.0"
     },
     "nlp_model": "en_core_web_sm",
     "score_threshold": 0.35,
     "corpus_checksums": {
-      "gold/ca_gold.jsonl": "2d8c507488a1cb06d7362f7b3a002ec19990d28b2adead909a19d2f3b0f51fe6",
-      "generated/ca.jsonl": "f87a7c2599bca71e17a961718828da92a1bb0d57b00ef63633366b8141606c65",
-      "negatives/ca_negatives.jsonl": "bb2b1f63b7f87f2365b002c3532130b372ab94f513331cf6f5200d06b66e31a4",
-      "hard/ca_hard.jsonl": "e5c296c7f9e42c9baec1eb6852e400d23ff9e315855edd46172b483eb0252d1b",
-      "addresses/ca_address_eval.jsonl": "06213d503d0f649be6307ed70ef0c1a780ab025bcb074edce207acc21745802e"
+      "gold/ca_gold.jsonl": "2af93014d09babff2ffef35d62a3c5bd82d08651bc8ec365bb7bad72aec9389b",
+      "generated/ca.jsonl": "c520f0497124831907c9f8d684fa1a7139f688d5e16cddb4afbdc818a29bb966",
+      "negatives/ca_negatives.jsonl": "7959be069f48db7cddfe485b3c41067a1bc2784214b2a76496a654a78aad3111",
+      "hard/ca_hard.jsonl": "f52a701fb715529f149dab2636a56961f5445000300e90ffa719b8cb074fcfa5",
+      "addresses/ca_address_eval.jsonl": "339d51967e8594cac6455cb6f5d6e2fc8d22fe18db9508052a43a88e801300b0"
     }
   },
   "results": {
     "Stock Presidio": {
       "overall": {
         "gold": 300,
-        "detected": 291,
+        "detected": 293,
         "covered": 0,
-        "recall": 0.97,
-        "fn_rate": 0.030000000000000027,
+        "attributed": 0,
+        "recall": 0.9766666666666667,
+        "fn_rate": 0.023333333333333317,
         "strict_recall": 0.0,
         "strict_fn_rate": 1.0,
+        "attributed_recall": 0.0,
         "typed_recall": 0.0
       },
       "address": {
         "gold": 300,
-        "detected": 291,
+        "detected": 293,
         "covered": 0,
-        "recall": 0.97,
-        "strict_recall": 0.0
+        "attributed": 0,
+        "recall": 0.9766666666666667,
+        "strict_recall": 0.0,
+        "attributed_recall": 0.0,
+        "typed_recall": 0.0
+      },
+      "by_form": {
+        "apt_suite": {
+          "gold": 21,
+          "detected": 21,
+          "covered": 0,
+          "attributed": 0,
+          "recall": 1.0,
+          "strict_recall": 0.0,
+          "attributed_recall": 0.0,
+          "typed_recall": 0.0
+        },
+        "no_comma_province": {
+          "gold": 21,
+          "detected": 19,
+          "covered": 0,
+          "attributed": 0,
+          "recall": 0.9047619047619048,
+          "strict_recall": 0.0,
+          "attributed_recall": 0.0,
+          "typed_recall": 0.0
+        },
+        "no_postal": {
+          "gold": 22,
+          "detected": 22,
+          "covered": 0,
+          "attributed": 0,
+          "recall": 1.0,
+          "strict_recall": 0.0,
+          "attributed_recall": 0.0,
+          "typed_recall": 0.0
+        },
+        "one_line": {
+          "gold": 150,
+          "detected": 145,
+          "covered": 0,
+          "attributed": 0,
+          "recall": 0.9666666666666667,
+          "strict_recall": 0.0,
+          "attributed_recall": 0.0,
+          "typed_recall": 0.0
+        },
+        "postal_own_line": {
+          "gold": 21,
+          "detected": 21,
+          "covered": 0,
+          "attributed": 0,
+          "recall": 1.0,
+          "strict_recall": 0.0,
+          "attributed_recall": 0.0,
+          "typed_recall": 0.0
+        },
+        "province_spelled": {
+          "gold": 22,
+          "detected": 22,
+          "covered": 0,
+          "attributed": 0,
+          "recall": 1.0,
+          "strict_recall": 0.0,
+          "attributed_recall": 0.0,
+          "typed_recall": 0.0
+        },
+        "rural_route": {
+          "gold": 21,
+          "detected": 21,
+          "covered": 0,
+          "attributed": 0,
+          "recall": 1.0,
+          "strict_recall": 0.0,
+          "attributed_recall": 0.0,
+          "typed_recall": 0.0
+        },
+        "two_line": {
+          "gold": 22,
+          "detected": 22,
+          "covered": 0,
+          "attributed": 0,
+          "recall": 1.0,
+          "strict_recall": 0.0,
+          "attributed_recall": 0.0,
+          "typed_recall": 0.0
+        }
       },
       "span_precision": {
-        "tp": 636,
-        "total": 1236,
-        "precision": 0.5145631067961165
+        "pipeline": {
+          "tp": 293,
+          "dup": 344,
+          "fp": 600,
+          "total": 1237,
+          "precision": 0.3281075027995521
+        },
+        "pack": {
+          "tp": 0,
+          "dup": 0,
+          "fp": 0,
+          "total": 0,
+          "precision": 0.0
+        },
+        "pred_counts": {
+          "DATE_TIME": {
+            "tp": 133,
+            "fp": 300
+          },
+          "LOCATION": {
+            "tp": 222,
+            "fp": 0
+          },
+          "NRP": {
+            "tp": 1,
+            "fp": 0
+          },
+          "ORGANIZATION": {
+            "tp": 142,
+            "fp": 300
+          },
+          "PERSON": {
+            "tp": 137,
+            "fp": 0
+          },
+          "PHONE_NUMBER": {
+            "tp": 2,
+            "fp": 0
+          }
+        },
+        "overredaction": {
+          "chars_total": 11819,
+          "chars_per_note": 39.39666666666667
+        },
+        "tp": 293,
+        "total": 1237,
+        "precision": 0.3281075027995521,
+        "by_form": {
+          "ADDRESS|apt_suite": {
+            "gold": 21,
+            "detected": 21,
+            "covered": 0,
+            "attributed": 0,
+            "recall": 1.0,
+            "strict_recall": 0.0,
+            "attributed_recall": 0.0,
+            "typed_recall": 0.0
+          },
+          "ADDRESS|no_comma_province": {
+            "gold": 21,
+            "detected": 19,
+            "covered": 0,
+            "attributed": 0,
+            "recall": 0.9047619047619048,
+            "strict_recall": 0.0,
+            "attributed_recall": 0.0,
+            "typed_recall": 0.0
+          },
+          "ADDRESS|no_postal": {
+            "gold": 22,
+            "detected": 22,
+            "covered": 0,
+            "attributed": 0,
+            "recall": 1.0,
+            "strict_recall": 0.0,
+            "attributed_recall": 0.0,
+            "typed_recall": 0.0
+          },
+          "ADDRESS|one_line": {
+            "gold": 150,
+            "detected": 145,
+            "covered": 0,
+            "attributed": 0,
+            "recall": 0.9666666666666667,
+            "strict_recall": 0.0,
+            "attributed_recall": 0.0,
+            "typed_recall": 0.0
+          },
+          "ADDRESS|postal_own_line": {
+            "gold": 21,
+            "detected": 21,
+            "covered": 0,
+            "attributed": 0,
+            "recall": 1.0,
+            "strict_recall": 0.0,
+            "attributed_recall": 0.0,
+            "typed_recall": 0.0
+          },
+          "ADDRESS|province_spelled": {
+            "gold": 22,
+            "detected": 22,
+            "covered": 0,
+            "attributed": 0,
+            "recall": 1.0,
+            "strict_recall": 0.0,
+            "attributed_recall": 0.0,
+            "typed_recall": 0.0
+          },
+          "ADDRESS|rural_route": {
+            "gold": 21,
+            "detected": 21,
+            "covered": 0,
+            "attributed": 0,
+            "recall": 1.0,
+            "strict_recall": 0.0,
+            "attributed_recall": 0.0,
+            "typed_recall": 0.0
+          },
+          "ADDRESS|two_line": {
+            "gold": 22,
+            "detected": 22,
+            "covered": 0,
+            "attributed": 0,
+            "recall": 1.0,
+            "strict_recall": 0.0,
+            "attributed_recall": 0.0,
+            "typed_recall": 0.0
+          }
+        }
       },
       "bootstrap_ci_95": {
         "recall": [
-          0.95,
-          0.9867
+          0.9567,
+          0.9933
         ],
         "strict_recall": [
           0.0,
           0.0
         ],
+        "attributed_recall": [
+          0.0,
+          0.0
+        ],
         "precision": [
-          0.5008,
-          0.5276
+          0.3236,
+          0.3318
         ]
       }
     },
@@ -60,24 +277,245 @@
       "overall": {
         "gold": 300,
         "detected": 300,
-        "covered": 285,
+        "covered": 166,
+        "attributed": 185,
         "recall": 1.0,
         "fn_rate": 0.0,
-        "strict_recall": 0.95,
-        "strict_fn_rate": 0.050000000000000044,
-        "typed_recall": 0.95
+        "strict_recall": 0.5533333333333333,
+        "strict_fn_rate": 0.44666666666666666,
+        "attributed_recall": 0.6166666666666667,
+        "typed_recall": 0.55
       },
       "address": {
         "gold": 300,
         "detected": 300,
-        "covered": 285,
+        "covered": 166,
+        "attributed": 185,
         "recall": 1.0,
-        "strict_recall": 0.95
+        "strict_recall": 0.5533333333333333,
+        "attributed_recall": 0.6166666666666667,
+        "typed_recall": 0.55
+      },
+      "by_form": {
+        "apt_suite": {
+          "gold": 21,
+          "detected": 21,
+          "covered": 0,
+          "attributed": 14,
+          "recall": 1.0,
+          "strict_recall": 0.0,
+          "attributed_recall": 0.6666666666666666,
+          "typed_recall": 0.0
+        },
+        "no_comma_province": {
+          "gold": 21,
+          "detected": 21,
+          "covered": 0,
+          "attributed": 0,
+          "recall": 1.0,
+          "strict_recall": 0.0,
+          "attributed_recall": 0.0,
+          "typed_recall": 0.0
+        },
+        "no_postal": {
+          "gold": 22,
+          "detected": 22,
+          "covered": 0,
+          "attributed": 0,
+          "recall": 1.0,
+          "strict_recall": 0.0,
+          "attributed_recall": 0.0,
+          "typed_recall": 0.0
+        },
+        "one_line": {
+          "gold": 150,
+          "detected": 150,
+          "covered": 145,
+          "attributed": 150,
+          "recall": 1.0,
+          "strict_recall": 0.9666666666666667,
+          "attributed_recall": 1.0,
+          "typed_recall": 0.96
+        },
+        "postal_own_line": {
+          "gold": 21,
+          "detected": 21,
+          "covered": 21,
+          "attributed": 21,
+          "recall": 1.0,
+          "strict_recall": 1.0,
+          "attributed_recall": 1.0,
+          "typed_recall": 1.0
+        },
+        "province_spelled": {
+          "gold": 22,
+          "detected": 22,
+          "covered": 0,
+          "attributed": 0,
+          "recall": 1.0,
+          "strict_recall": 0.0,
+          "attributed_recall": 0.0,
+          "typed_recall": 0.0
+        },
+        "rural_route": {
+          "gold": 21,
+          "detected": 21,
+          "covered": 0,
+          "attributed": 0,
+          "recall": 1.0,
+          "strict_recall": 0.0,
+          "attributed_recall": 0.0,
+          "typed_recall": 0.0
+        },
+        "two_line": {
+          "gold": 22,
+          "detected": 22,
+          "covered": 0,
+          "attributed": 0,
+          "recall": 1.0,
+          "strict_recall": 0.0,
+          "attributed_recall": 0.0,
+          "typed_recall": 0.0
+        }
       },
       "span_precision": {
-        "tp": 1235,
-        "total": 1835,
-        "precision": 0.6730245231607629
+        "pipeline": {
+          "tp": 300,
+          "dup": 800,
+          "fp": 600,
+          "total": 1700,
+          "precision": 0.3333333333333333
+        },
+        "pack": {
+          "tp": 278,
+          "dup": 185,
+          "fp": 0,
+          "total": 463,
+          "precision": 1.0
+        },
+        "pred_counts": {
+          "CA_POSTAL_CODE": {
+            "tp": 278,
+            "fp": 0
+          },
+          "CA_STREET_ADDRESS": {
+            "tp": 185,
+            "fp": 0
+          },
+          "DATE_TIME": {
+            "tp": 133,
+            "fp": 300
+          },
+          "LOCATION": {
+            "tp": 222,
+            "fp": 0
+          },
+          "NRP": {
+            "tp": 1,
+            "fp": 0
+          },
+          "ORGANIZATION": {
+            "tp": 142,
+            "fp": 300
+          },
+          "PERSON": {
+            "tp": 137,
+            "fp": 0
+          },
+          "PHONE_NUMBER": {
+            "tp": 2,
+            "fp": 0
+          }
+        },
+        "overredaction": {
+          "chars_total": 11819,
+          "chars_per_note": 39.39666666666667
+        },
+        "tp": 300,
+        "total": 1700,
+        "precision": 0.3333333333333333,
+        "by_form": {
+          "ADDRESS|apt_suite": {
+            "gold": 21,
+            "detected": 21,
+            "covered": 0,
+            "attributed": 14,
+            "recall": 1.0,
+            "strict_recall": 0.0,
+            "attributed_recall": 0.6666666666666666,
+            "typed_recall": 0.0
+          },
+          "ADDRESS|no_comma_province": {
+            "gold": 21,
+            "detected": 21,
+            "covered": 0,
+            "attributed": 0,
+            "recall": 1.0,
+            "strict_recall": 0.0,
+            "attributed_recall": 0.0,
+            "typed_recall": 0.0
+          },
+          "ADDRESS|no_postal": {
+            "gold": 22,
+            "detected": 22,
+            "covered": 0,
+            "attributed": 0,
+            "recall": 1.0,
+            "strict_recall": 0.0,
+            "attributed_recall": 0.0,
+            "typed_recall": 0.0
+          },
+          "ADDRESS|one_line": {
+            "gold": 150,
+            "detected": 150,
+            "covered": 145,
+            "attributed": 150,
+            "recall": 1.0,
+            "strict_recall": 0.9666666666666667,
+            "attributed_recall": 1.0,
+            "typed_recall": 0.96
+          },
+          "ADDRESS|postal_own_line": {
+            "gold": 21,
+            "detected": 21,
+            "covered": 21,
+            "attributed": 21,
+            "recall": 1.0,
+            "strict_recall": 1.0,
+            "attributed_recall": 1.0,
+            "typed_recall": 1.0
+          },
+          "ADDRESS|province_spelled": {
+            "gold": 22,
+            "detected": 22,
+            "covered": 0,
+            "attributed": 0,
+            "recall": 1.0,
+            "strict_recall": 0.0,
+            "attributed_recall": 0.0,
+            "typed_recall": 0.0
+          },
+          "ADDRESS|rural_route": {
+            "gold": 21,
+            "detected": 21,
+            "covered": 0,
+            "attributed": 0,
+            "recall": 1.0,
+            "strict_recall": 0.0,
+            "attributed_recall": 0.0,
+            "typed_recall": 0.0
+          },
+          "ADDRESS|two_line": {
+            "gold": 22,
+            "detected": 22,
+            "covered": 0,
+            "attributed": 0,
+            "recall": 1.0,
+            "strict_recall": 0.0,
+            "attributed_recall": 0.0,
+            "typed_recall": 0.0
+          }
+        }
       },
       "bootstrap_ci_95": {
         "recall": [
@@ -85,12 +523,20 @@
           1.0
         ],
         "strict_recall": [
-          0.9233,
-          0.97
+          0.4967,
+          0.61
+        ],
+        "attributed_recall": [
+          0.5633,
+          0.6733
         ],
         "precision": [
-          0.6667,
-          0.679
+          0.3333,
+          0.3333
+        ],
+        "pack_precision": [
+          1.0,
+          1.0
         ]
       }
     }

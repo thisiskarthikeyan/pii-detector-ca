@@ -70,7 +70,7 @@ jobs:
         run: |
           uv run --no-sync python benchmark/generate_corpus.py --n 1000
           uv run --no-sync python benchmark/generate_negatives.py --n 300
-          uv run --no-sync python benchmark/generate_hard.py --per-cell 10
+          uv run --no-sync python benchmark/generate_hard.py --per-cell 50
           uv run --no-sync python benchmark/generate_address_eval.py --n 300
       - name: Corpus determinism check
         run: uv run --no-sync python benchmark/check_determinism.py

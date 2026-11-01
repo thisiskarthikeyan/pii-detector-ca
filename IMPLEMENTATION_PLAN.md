@@ -220,6 +220,16 @@ Applies to both locales; build before deepening either track.
 - [ ] **3.4 CA gold-split human review** — execute documented protocol on the CA gold
   split; record outcome in `docs/gold_review.md`. Until done, the paper must not
   call the split "gold": it is the first 100 notes of the same generator stream.
+  (2026-10-29: the evaluation now labels it `heldout`; the file path is unchanged.)
+- [x] **3.4b Evaluation-rigor fixes** — DONE (2026-10-29). Pack-attributed recall
+  gate + recognizer-presence check (removing a recognizer now fails CI), deduplicated
+  pack/pipeline precision and over-redaction, independent reference checksums for
+  the generators (`benchmark/checksums_ref.py`, `tests/test_oracle.py`), surface-form
+  tagging with per-form recall, templates for Alberta ULI / other-province cards /
+  standalone postal codes / unlabelled and tabular placements, negatives corpus
+  tagged by source with in-window context traps and MRN/phone numbers, hard split
+  at 50 per cell gated on pack recall, address holdout with out-of-distribution
+  forms gated on the in-distribution form only, `gate_summary.md`. See CHANGELOG.
 - [x] **3.4a Pre-release bug sweep** — DONE (2026-10-27). Found by probing outside
   the benchmark's distribution: (a) OHIP separated pattern absorbed trailing 1-2
   letter English words into a 1.0-score span (IGNORECASE + optional version

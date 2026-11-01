@@ -1,20 +1,31 @@
 """Generate the Canadian false-positive stress corpus (plan item 3.1).
 
 Every note in this corpus contains ZERO PII by construction, but is dense
-with confusable non-PII numerics:
+with confusable non-PII numerics. Each confusable value is recorded with
+its character span and a ``source`` tag so the evaluation can attribute
+every false positive to the kind of number that caused it:
 
-- Luhn-valid credit cards (share the Luhn checksum with SIN and OHIP);
-- random 9- and 10-digit serial/order numbers (~10% of which collide with
-  Luhn by chance — measuring that collision cost is the point, not a bug);
-- US SSNs (out-of-jurisdiction identifier a CA deployment should not flag);
-- ICD-10 codes, lab panels, vitals with units and ranges;
-- facility phone numbers (non-personal switchboard lines);
-- "context traps": sentences containing identifier context words
-  ("health card", "SIN", "PHN") with NO identifier present, so nearby
-  innocent numbers get context-boosted — the hard case for context gating.
+- credit_card     Luhn-valid 16-digit cards (share the checksum with SIN/OHIP)
+- serial9         9-digit lot/serial numbers (~8% collide with the SIN check)
+- order10         10-digit order/requisition numbers (~9% collide with OHIP)
+- mrn10           10-digit medical record numbers — the most common 10-digit
+                  number in a real Canadian note, with no health context
+- encounter10     10-digit encounter / visit numbers
+- phone_compact   10-digit phone numbers written without separators
+- fax_compact     10-digit fax numbers written without separators
+- us_ssn          out-of-jurisdiction identifier a CA deployment should not flag
+- phone_facility  switchboard numbers in (NNN) NNN-NNNN form
+- accession       ACC-YYYY-NNNNNNN accession numbers
+- trap_near       an innocent number within Presidio's 5-token context
+                  window of a health-card / SIN / PHN context word
+- trap_alberta    the same, with Alberta-specific wording (ULI context)
+- trap_french     the same, with French health-card wording
+- trap_far        a context sentence with NO number nearby (the original
+                  traps; kept to show the window matters)
 
-Any pack-entity prediction on this corpus is a false positive. The corpus
-is deterministic (seeded) and covered by the determinism manifest.
+Numbers are random digits: the checksum collision rate is the quantity being
+measured, so nothing is forced valid or invalid. Any pack-entity prediction
+on this corpus is a false positive. Deterministic given --seed.
 
 Usage:
     python benchmark/generate_negatives.py --n 300
@@ -28,9 +39,9 @@ import random
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from pii_detector_ca.validators import luhn_check_digit  # noqa: E402
+from checksums_ref import luhn_append  # noqa: E402
 
 HOSPITALS = [
     "Toronto General Hospital", "Foothills Medical Centre",
@@ -52,7 +63,8 @@ VITALS_LINES = [
     "Temperature {temp:.1f} C, weight {wt:.1f} kg, height {ht} cm.",
 ]
 
-CONTEXT_TRAPS = [
+# Context sentences with no number nearby (original traps).
+TRAPS_FAR = [
     "Health card: pending verification with the provincial registry.",
     "SIN not provided at registration; billing to follow up.",
     "PHN to be confirmed by Alberta Health before claim submission.",
@@ -61,13 +73,57 @@ CONTEXT_TRAPS = [
     "RAMQ coverage expired; carte soleil renewal in progress.",
 ]
 
+# Context word within 5 tokens of the number slot ({n}).
+TRAPS_NEAR = [
+    "Health card pending; serial {n} noted.",
+    "SIN withheld, see order {n} instead.",
+    "PHN unknown; device {n} assigned.",
+    "OHIP check queued, reference {n}.",
+    "Health number absent; lot {n} logged.",
+]
+TRAPS_ALBERTA = [
+    "Alberta Health ULI pending; order {n} placed.",
+    "AHCIP coverage unconfirmed, requisition {n} held.",
+    "Netcare lookup failed; ticket {n} opened.",
+]
+TRAPS_FRENCH = [
+    "Numéro d'assurance maladie en attente; dossier {n} ouvert.",
+    "Carte soleil expirée; commande {n} en cours.",
+    "Assurance maladie non confirmée, bon {n} émis.",
+]
+
+
+class _Note:
+    """Accumulates text while recording confusable spans with their source."""
+
+    def __init__(self) -> None:
+        self.parts: list[str] = []
+        self.len = 0
+        self.confusables: list[dict] = []
+
+    def add(self, text: str) -> None:
+        self.parts.append(text)
+        self.len += len(text)
+
+    def add_value(self, value: str, source: str) -> None:
+        self.confusables.append(
+            {"start": self.len, "end": self.len + len(value), "source": source}
+        )
+        self.add(value)
+
+    def add_template(self, template: str, value: str, source: str) -> None:
+        before, after = template.split("{n}")
+        self.add(before)
+        self.add_value(value, source)
+        self.add(after)
+
+    def text(self) -> str:
+        return "".join(self.parts)
+
 
 def gen_credit_card(rng: random.Random) -> str:
-    base = rng.choice(["4", "51", "52", "55"]) + "".join(
-        rng.choices("0123456789", k=14)
-    )
-    base = base[:15]
-    digits = base + luhn_check_digit(base)
+    base = rng.choice(["4", "51", "52", "55"]) + "".join(rng.choices("0123456789", k=14))
+    digits = luhn_append(base[:15])
     return " ".join(digits[i : i + 4] for i in range(0, 16, 4))
 
 
@@ -76,7 +132,6 @@ def gen_us_ssn(rng: random.Random) -> str:
 
 
 def gen_serial9(rng: random.Random) -> str:
-    """9-digit lot/serial number; ~10% will be Luhn-valid by chance."""
     digits = "".join(rng.choices("0123456789", k=9))
     style = rng.choice(["compact", "spaced", "dashed"])
     if style == "compact":
@@ -85,9 +140,14 @@ def gen_serial9(rng: random.Random) -> str:
     return sep.join([digits[:3], digits[3:6], digits[6:]])
 
 
-def gen_order10(rng: random.Random) -> str:
-    """10-digit order/requisition number; ~10% Luhn-collide with OHIP."""
-    return "".join(rng.choices("0123456789", k=10))
+def gen_digits(rng: random.Random, n: int) -> str:
+    return "".join(rng.choices("0123456789", k=n))
+
+
+def gen_phone_compact(rng: random.Random) -> str:
+    # Real Canadian area codes; exchange 555-01xx is the fictional range.
+    area = rng.choice(["403", "416", "604", "613", "204", "514", "902", "306", "709"])
+    return f"{area}555{rng.randint(100, 199):04d}"
 
 
 def gen_accession(rng: random.Random) -> str:
@@ -95,7 +155,6 @@ def gen_accession(rng: random.Random) -> str:
 
 
 def gen_facility_phone(rng: random.Random) -> str:
-    # 555-01xx is the reserved fictional exchange range.
     area = rng.choice(["403", "416", "604", "613", "204"])
     return f"({area}) 555-{rng.randint(100, 199):04d}"
 
@@ -119,40 +178,87 @@ def gen_vitals_line(rng: random.Random) -> str:
     )
 
 
-def billing_note(hospital: str, rng: random.Random) -> str:
-    return (
-        f"{hospital} — BILLING WORKSHEET (no patient identifiers)\n\n"
-        f"{rng.choice(CONTEXT_TRAPS)}\n"
-        f"Requisition number: {gen_order10(rng)}\n"
-        f"Payment card on file: {gen_credit_card(rng)} (expiry redacted).\n"
-        f"Out-of-country coverage reference (US): SSN {gen_us_ssn(rng)}.\n"
-        f"Switchboard: {gen_facility_phone(rng)}.\n"
-    )
+def billing_note(hospital: str, rng: random.Random) -> _Note:
+    n = _Note()
+    n.add(f"{hospital} — BILLING WORKSHEET (no patient identifiers)\n\n")
+    n.add(rng.choice(TRAPS_FAR) + "\n")
+    n.add("Requisition number: ")
+    n.add_value(gen_digits(rng, 10), "order10")
+    n.add("\nPayment card on file: ")
+    n.add_value(gen_credit_card(rng), "credit_card")
+    n.add(" (expiry redacted).\nOut-of-country coverage reference (US): SSN ")
+    n.add_value(gen_us_ssn(rng), "us_ssn")
+    n.add(".\nSwitchboard: ")
+    n.add_value(gen_facility_phone(rng), "phone_facility")
+    n.add(".\n")
+    return n
 
 
-def lab_report_note(hospital: str, rng: random.Random) -> str:
-    return (
-        f"{hospital} — LABORATORY REPORT (identifiers withheld)\n\n"
-        f"Accession: {gen_accession(rng)}\n"
-        f"Analyzer lot number {gen_serial9(rng)}; QC passed.\n"
-        f"{gen_lab_line(rng)}\n{gen_lab_line(rng)}\n"
-        f"Coded diagnoses: {', '.join(rng.sample(ICD_CODES, 3))}.\n"
-    )
+def lab_report_note(hospital: str, rng: random.Random) -> _Note:
+    n = _Note()
+    n.add(f"{hospital} — LABORATORY REPORT (identifiers withheld)\n\n")
+    n.add("Accession: ")
+    n.add_value(gen_accession(rng), "accession")
+    n.add("\nAnalyzer lot number ")
+    n.add_value(gen_serial9(rng), "serial9")
+    n.add("; QC passed.\n")
+    n.add(f"{gen_lab_line(rng)}\n{gen_lab_line(rng)}\n")
+    n.add(f"Coded diagnoses: {', '.join(rng.sample(ICD_CODES, 3))}.\n")
+    return n
 
 
-def admin_note(hospital: str, rng: random.Random) -> str:
-    return (
-        f"{hospital} — UNIT ADMINISTRATIVE LOG\n\n"
-        f"{rng.choice(CONTEXT_TRAPS)}\n"
-        f"Infusion pump serial {gen_serial9(rng)} sent for calibration; "
-        f"replacement device serial {gen_serial9(rng)} deployed.\n"
-        f"{gen_vitals_line(rng)}\n"
-        f"Supply order {gen_order10(rng)} placed with vendor; "
-        f"reference {gen_accession(rng)}.\n"
-    )
+def admin_note(hospital: str, rng: random.Random) -> _Note:
+    n = _Note()
+    n.add(f"{hospital} — UNIT ADMINISTRATIVE LOG\n\n")
+    n.add(rng.choice(TRAPS_FAR) + "\n")
+    n.add("Infusion pump serial ")
+    n.add_value(gen_serial9(rng), "serial9")
+    n.add(" sent for calibration; replacement device serial ")
+    n.add_value(gen_serial9(rng), "serial9")
+    n.add(" deployed.\n")
+    n.add(f"{gen_vitals_line(rng)}\n")
+    n.add("Supply order ")
+    n.add_value(gen_digits(rng, 10), "order10")
+    n.add(" placed with vendor; reference ")
+    n.add_value(gen_accession(rng), "accession")
+    n.add(".\n")
+    return n
 
 
-TEMPLATES = [billing_note, lab_report_note, admin_note]
+def registration_note(hospital: str, rng: random.Random) -> _Note:
+    # The numbers that actually surround a patient record: MRN, encounter,
+    # compact phone/fax. None is PII under the benchmark's definition (an
+    # MRN is a facility-local key), and none carries health-card context.
+    n = _Note()
+    n.add(f"{hospital} — ENCOUNTER HEADER (patient identifiers removed)\n\n")
+    n.add("MRN: ")
+    n.add_value(gen_digits(rng, 10), "mrn10")
+    n.add("   Encounter #")
+    n.add_value(gen_digits(rng, 10), "encounter10")
+    n.add("\nClinic tel ")
+    n.add_value(gen_phone_compact(rng), "phone_compact")
+    n.add(" fax ")
+    n.add_value(gen_phone_compact(rng), "fax_compact")
+    n.add("\n")
+    n.add(f"{gen_vitals_line(rng)}\n")
+    return n
+
+
+def context_trap_note(hospital: str, rng: random.Random) -> _Note:
+    # Context words INSIDE the enhancer's window of an innocent number.
+    n = _Note()
+    n.add(f"{hospital} — CLERICAL NOTE\n\n")
+    n.add_template(rng.choice(TRAPS_NEAR), gen_serial9(rng), "trap_near")
+    n.add("\n")
+    n.add_template(rng.choice(TRAPS_ALBERTA), gen_digits(rng, 9), "trap_alberta")
+    n.add("\n")
+    n.add_template(rng.choice(TRAPS_FRENCH), gen_digits(rng, 9), "trap_french")
+    n.add("\n")
+    n.add(rng.choice(TRAPS_FAR) + "\n")
+    return n
+
+
+TEMPLATES = [billing_note, lab_report_note, admin_note, registration_note, context_trap_note]
 
 
 def main() -> None:
@@ -169,12 +275,17 @@ def main() -> None:
     with open(out_path, "w", encoding="utf-8") as f:
         for i in range(args.n):
             template = TEMPLATES[i % len(TEMPLATES)]
+            built = template(rng.choice(HOSPITALS), rng)
+            text = built.text()
+            for c in built.confusables:
+                assert text[c["start"] : c["end"]].strip() == text[c["start"] : c["end"]]
             note = {
                 "id": f"ca-neg-{i:05d}",
                 "locale": "ca",
                 "note_type": template.__name__,
-                "text": template(rng.choice(HOSPITALS), rng),
+                "text": text,
                 "entities": [],
+                "confusables": built.confusables,
             }
             f.write(json.dumps(note, ensure_ascii=False) + "\n")
 

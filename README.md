@@ -8,16 +8,18 @@ Most clinical de-identification tooling is built and tested on US identifier for
 
 ## Supported entities
 
-| Entity | Identifier | Validation | Spec |
-|---|---|---|---|
-| `CA_SIN` | Social Insurance Number | Luhn checksum; leading digit not 0/8 | [doc](docs/identifiers/ca_sin.md) |
-| `CA_OHIP` | Ontario health number (10 digits + version code) | Luhn (mod-10); leading digit 1–9 | [doc](docs/identifiers/ca_ohip.md) |
-| `CA_RAMQ` | Quebec health insurance number (NAM) | Structural (name/DOB encoding) | [doc](docs/identifiers/ca_ramq.md) |
-| `CA_BC_PHN` | British Columbia Personal Health Number | Mod-11 weighted checksum | [doc](docs/identifiers/ca_bc_phn.md) |
-| `CA_AB_ULI` | Alberta Unique Lifetime Identifier | Pattern + context gated | [doc](docs/identifiers/ca_ab_uli.md) |
-| `CA_HEALTH_CARD` | Other provinces/territories (generic) | Context gated only | [doc](docs/identifiers/ca_health_card_generic.md) |
-| `CA_POSTAL_CODE` | Canadian postal code | Structural (letter-class rules) | [doc](docs/identifiers/ca_postal_code.md) |
-| `CA_STREET_ADDRESS` | Full civic/mailing address | Structural (postal + province anchor) | [doc](docs/identifiers/ca_street_address.md) |
+| Entity | Identifier | Validation | Benchmark pack recall (generated split) | Spec |
+|---|---|---|---|---|
+| `CA_SIN` | Social Insurance Number | Luhn checksum; leading digit not 0/8 | 1.000 | [doc](docs/identifiers/ca_sin.md) |
+| `CA_OHIP` | Ontario health number (10 digits + version code) | Luhn (mod-10); leading digit 1–9 | 1.000 (lowercase version codes not covered) | [doc](docs/identifiers/ca_ohip.md) |
+| `CA_RAMQ` | Quebec health insurance number (NAM) | Structural (name/DOB encoding) | 0.950 (lowercase letter blocks miss by design) | [doc](docs/identifiers/ca_ramq.md) |
+| `CA_BC_PHN` | British Columbia Personal Health Number | Mod-11 weighted checksum | 1.000 | [doc](docs/identifiers/ca_bc_phn.md) |
+| `CA_AB_ULI` | Alberta Unique Lifetime Identifier | Pattern + Alberta context gated | 1.000 under Alberta wording; 0 without it | [doc](docs/identifiers/ca_ab_uli.md) |
+| `CA_HEALTH_CARD` | Other provinces/territories (generic) | Context gated only | 0.822 (no context within 5 tokens → miss) | [doc](docs/identifiers/ca_health_card_generic.md) |
+| `CA_POSTAL_CODE` | Canadian postal code | Structural (letter-class rules) | 1.000 | [doc](docs/identifiers/ca_postal_code.md) |
+| `CA_STREET_ADDRESS` | Full civic/mailing address | Structural (postal + province anchor) | 0.857 (one-line form 0.99; other renderings mostly 0) | [doc](docs/identifiers/ca_street_address.md) |
+
+"Pack recall" means the recognizer that owns the entity fired on the gold span; it is the number CI gates. Full tables, including leak recall (masked by any recognizer), strict recall, per-surface-form breakdowns, and the false-positive rates per confusable source, are in `evaluation/results/`.
 
 **Relationship to Presidio's own Canadian recognizers.** Presidio ≥ 2.2.363 ships a `CA_SIN` recognizer and ≥ 2.2.365 a `CA_POSTAL_CODE` recognizer, both **disabled by default** in `default_recognizers.yaml`. The six health-card and address entities above have no upstream equivalent. If you enable Presidio's built-ins, skip ours to avoid duplicate detections: `add_recognizers(registry, exclude=["CA_SIN", "CA_POSTAL_CODE"])`. The evaluation reports a "Presidio + CA builtins" baseline so the health-card contribution is measured against the strongest no-pack configuration.
 
@@ -78,18 +80,20 @@ A non-technical walkthrough is in [docs/user_manual.md](docs/user_manual.md).
 - **Not a compliance guarantee.** Using this package does not by itself satisfy PIPEDA, PHIPA, provincial health-information acts, or any other regulation. It is one detection layer; keep human review and your organization's privacy process in the loop.
 - **Not a full de-identifier.** It detects identifiers. Person names, dates, and free-text clues come from Presidio's underlying NLP engine (spaCy), which this package does not improve. Most remaining misses on the benchmark are non-Anglophone person names.
 - **Not validated on real clinical text.** All reported numbers come from a synthetic benchmark (below). Real notes carry OCR noise, dictation artifacts, and formats a template generator cannot anticipate.
-- **Checksum-valid ≠ real, and the collision floor is not small.** About 8% of random 9-digit strings pass the SIN check and about 10% of random 10-digit strings pass the OHIP check, with no context required. Compact phone numbers, MRNs and accession numbers will be flagged at that rate. Checksumless types (Alberta ULI, generic health cards) rely on nearby context words instead.
+- **Checksum-valid ≠ real, and the collision floor is not small.** About 8% of random 9-digit strings pass the SIN check and about 9% of random 10-digit strings pass the OHIP check, with no context required. Measured on the negatives corpus: 10% of random 10-digit MRNs, encounter numbers and compact phone numbers are flagged `CA_OHIP` at score 1.0 with no health context (`evaluation/results/negatives_ca.md`, sources `mrn10`, `encounter10`, `phone_compact`). Whether compact 10-digit matches should require context is an open design question, tracked as expected-failure tests in `tests/test_negatives.py`.
+- **Context gating has a measured false-positive cost.** Checksumless types (Alberta ULI, generic health cards) rely on context words within Presidio's 5-token window. An innocent 9-digit number inside that window of "health card", "Alberta" or "assurance maladie" is flagged in roughly 70–140% of cases (two recognizers often fire on one span); see the `trap_*` rows in `negatives_ca.md`.
+- **No robustness to line wraps, OCR confusables, dictation spacing or digit regrouping.** Pack recall on those hard-split variants is 0.00 (`evaluation/results/hard_ca.md`). Dot and slash separators are matched.
 - **French prose is out of scope.** French context words are implemented (and exercised in tests) but the benchmark is English-language clinical prose only.
 
 ## Benchmark
 
-`benchmark/` contains a seeded, deterministic generator for synthetic clinical notes (six note types, from radiology reports to ED triage records) with span-labeled PII injection. It also has a false-positive negatives corpus, an adversarial hard split, and a street-address holdout built from the StatCan Open Database of Addresses. `evaluation/` compares stock Presidio, Presidio with its own Canadian built-ins enabled, and Presidio + this pack; results are committed under `evaluation/results/`.
+`benchmark/` contains a seeded, deterministic generator for synthetic clinical notes (ten note types, from radiology reports to tab-separated registration extracts and unlabelled nursing notes) with span-labeled PII injection. Identifier values are built from independent reference checksums (`benchmark/checksums_ref.py`, pinned to the package validators by `tests/test_oracle.py`), rendered in several surface forms (compact, spaced, dashed, dotted, slashed, mixed, glued or lowercase version codes) and tagged with the form so recall is reported per rendering. It also has a false-positive negatives corpus whose planted numbers are tagged by source (MRNs, encounter numbers, compact phones, context traps inside the enhancer window, and more), an adversarial hard split (50 notes per entity × variant), and a street-address holdout built from the StatCan Open Database of Addresses rendered half in-distribution and half in forms the recognizer was not written against. `evaluation/` compares stock Presidio, Presidio with its own Canadian built-ins enabled, and Presidio + this pack; results are committed under `evaluation/results/`, and `gate_summary.md` there lists every CI floor beside its measured value.
 
 ```bash
 pip install -e ".[dev]" && pip install -r evaluation/requirements-eval.txt
 python benchmark/generate_corpus.py --n 1000
 python benchmark/generate_negatives.py --n 300
-python benchmark/generate_hard.py --per-cell 10
+python benchmark/generate_hard.py --per-cell 50
 python benchmark/generate_address_eval.py --n 300
 python benchmark/check_determinism.py
 python evaluation/run_eval.py --all
@@ -99,9 +103,9 @@ python evaluation/run_address_eval.py
 python evaluation/check_thresholds.py
 ```
 
-CI runs this exact sequence in a locked environment (`uv.lock` + pinned spaCy model) and fails on any regression below `evaluation/thresholds.json`.
+CI runs this exact sequence in a locked environment (`uv.lock` + pinned spaCy model) and fails on any regression below `evaluation/thresholds.json`. The gate uses **pack recall** (the owning recognizer fired), a per-recognizer prediction-count presence check, deduplicated pack and pipeline precision, an over-redaction ceiling, per-variant pack recall on the hard split, strict recall on the in-distribution address form, and a false-positive ceiling per confusable source. Leak recall is reported but never gated, because it stays at 1.0 even when a recognizer is removed (`tests/test_gate.py` proves this).
 
-**Benchmark caveat:** the corpus is generated by the same project that wrote the recognizers, so in-distribution recall is partly circular. The robust findings are the stock-Presidio gap and the results on the negatives, hard, and address-holdout splits. The "gold" split is the first 100 notes of the same generator stream, not an independently annotated set. Synthetic data only; no real patient data is used or included.
+**Benchmark caveat:** the templates are written by the same project that wrote the recognizers, so in-distribution recall is still partly circular even with independent checksums and varied renderings. The robust findings are the stock-Presidio gap, the per-form and per-source breakdowns, and the hard, negatives and address-holdout results, most of which are unflattering and are reported as such. The `heldout` split is the first 100 notes of the same generator stream, not an independently annotated set, and has not been human-reviewed. Synthetic data only; no real patient data is used or included. A false-positive run on real de-identified clinical prose is still outstanding (plan item 2.10).
 
 ## Contributing, security, citation
 

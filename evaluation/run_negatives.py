@@ -2,13 +2,16 @@
 
 Every note in benchmark/data/negatives/ contains zero PII, so every
 pack-entity prediction (CA_*) at or above the reporting threshold is a
-false positive. Built-in Presidio entities (DATE_TIME, etc.) are out of
-scope here — the pack does not own them and the corpus is not designed to
-measure them.
+false positive. Each FP is attributed to the confusable value it overlaps
+(the corpus records every planted number with a ``source`` tag) so the
+report says WHICH kind of number causes the FPs, and CI can set a ceiling
+per source instead of one blended rate. An FP that overlaps no planted
+value is attributed to "unplanted".
 
-Writes evaluation/results/negatives_ca.{md,json}. The FP ceiling is gated
-in CI by check_thresholds.py using the "negatives_max_fp" section of
-thresholds.json.
+Built-in Presidio entities (DATE_TIME, etc.) are out of scope: the pack
+does not own them and the corpus is not designed to measure them.
+
+Writes evaluation/results/negatives_ca.{md,json}.
 
 Usage:
     python benchmark/generate_negatives.py --n 300
@@ -19,7 +22,7 @@ from __future__ import annotations
 
 import json
 import sys
-from collections import Counter
+from collections import Counter, defaultdict
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
@@ -33,11 +36,24 @@ SCORE_THRESHOLD = 0.35
 PACK_PREFIXES = ("CA_",)
 
 
+def _source_for(r, confusables: list[dict]) -> str:
+    for c in confusables:
+        if r.start < c["end"] and c["start"] < r.end:
+            return c["source"]
+    return "unplanted"
+
+
 def evaluate(analyzer: AnalyzerEngine, notes: list[dict]) -> dict:
     fp_by_entity: Counter[str] = Counter()
+    fp_by_source: Counter[str] = Counter()
+    planted_by_source: Counter[str] = Counter()
+    fp_by_source_entity: dict[str, Counter[str]] = defaultdict(Counter)
     notes_affected = 0
     examples: dict[str, list[str]] = {}
     for note in notes:
+        confusables = note.get("confusables", [])
+        for c in confusables:
+            planted_by_source[c["source"]] += 1
         results = analyzer.analyze(
             text=note["text"], language="en", score_threshold=SCORE_THRESHOLD
         )
@@ -45,16 +61,34 @@ def evaluate(analyzer: AnalyzerEngine, notes: list[dict]) -> dict:
         if pack_hits:
             notes_affected += 1
         for r in pack_hits:
+            source = _source_for(r, confusables)
             fp_by_entity[r.entity_type] += 1
-            examples.setdefault(r.entity_type, [])
-            if len(examples[r.entity_type]) < 5:
-                examples[r.entity_type].append(note["text"][r.start : r.end])
+            fp_by_source[source] += 1
+            fp_by_source_entity[source][r.entity_type] += 1
+            examples.setdefault(source, [])
+            if len(examples[source]) < 4:
+                examples[source].append(f"{r.entity_type}: {note['text'][r.start:r.end]}")
+    n = len(notes)
     return {
-        "notes": len(notes),
+        "notes": n,
         "fp_total": sum(fp_by_entity.values()),
-        "fp_per_100_notes": round(100 * sum(fp_by_entity.values()) / len(notes), 2),
+        "fp_per_100_notes": round(100 * sum(fp_by_entity.values()) / n, 2),
         "notes_affected": notes_affected,
         "fp_by_entity": dict(sorted(fp_by_entity.items())),
+        "by_source": {
+            source: {
+                "planted": planted_by_source.get(source, 0),
+                "fp": fp_by_source.get(source, 0),
+                "fp_rate": (
+                    round(fp_by_source.get(source, 0) / planted_by_source[source], 4)
+                    if planted_by_source.get(source)
+                    else None
+                ),
+                "fp_per_100_notes": round(100 * fp_by_source.get(source, 0) / n, 2),
+                "by_entity": dict(sorted(fp_by_source_entity[source].items())),
+            }
+            for source in sorted(set(planted_by_source) | set(fp_by_source))
+        },
         "examples": examples,
     }
 
@@ -74,7 +108,9 @@ def main() -> None:
         "# False-positive evaluation — Canadian confusables corpus",
         "",
         f"{len(notes)} PII-free notes; every CA_* prediction at threshold "
-        f">= {SCORE_THRESHOLD} is a false positive.",
+        f">= {SCORE_THRESHOLD} is a false positive. Each FP is attributed to the "
+        "planted confusable value it overlaps (`source`); `fp_rate` is FPs per "
+        "planted value of that source.",
         "",
     ]
     for config, analyzer in configs.items():
@@ -87,17 +123,24 @@ def main() -> None:
             f"({r['fp_per_100_notes']} per 100 notes; "
             f"{r['notes_affected']}/{r['notes']} notes affected)",
             "",
-            "| Entity | FPs | Example matches |",
-            "|---|---|---|",
+            "| Source | Planted | FPs | FP rate | FP / 100 notes | By entity | Examples |",
+            "|---|---|---|---|---|---|---|",
         ]
-        for entity, count in r["fp_by_entity"].items():
-            samples = "; ".join(f"`{e}`" for e in r["examples"].get(entity, []))
-            lines.append(f"| {entity} | {count} | {samples} |")
+        for source, s in r["by_source"].items():
+            rate = "n/a" if s["fp_rate"] is None else f"{s['fp_rate']:.3f}"
+            ents = ", ".join(f"{e} {c}" for e, c in s["by_entity"].items()) or "-"
+            ex = "; ".join(f"`{e}`" for e in r["examples"].get(source, [])) or "-"
+            lines.append(
+                f"| {source} | {s['planted']} | {s['fp']} | {rate} | "
+                f"{s['fp_per_100_notes']} | {ents} | {ex} |"
+            )
         lines.append("")
         print(
             f"{config:22s}: {r['fp_total']} FPs "
             f"({r['fp_per_100_notes']}/100 notes), by entity {r['fp_by_entity']}"
         )
+        for source, s in r["by_source"].items():
+            print(f"  {source:16s} planted={s['planted']:4d} fp={s['fp']:3d} rate={s['fp_rate']}")
 
     out_dir = REPO / "evaluation" / "results"
     (out_dir / "negatives_ca.md").write_text("\n".join(lines), encoding="utf-8")

@@ -34,4 +34,8 @@ Canadian addressing conventions rather than a government format rule:
   those — measured as the leak/strict gap in `results/address_ca.md`).
 - Municipality names containing commas or newlines break the anchor.
 - Rural route / general delivery styles (RR 2, GD) are not matched.
-- Measured strict recall on the ODA holdout: 0.950 (gated at ≥ 0.90 in CI).
+- Measured strict recall on the ODA holdout (`evaluation/results/address_ca.md`):
+  one-line form 0.967 (gated at ≥ 0.90 in CI); two-line, province spelled
+  out, missing postal code, rural route and no-comma-before-province forms
+  0.000; Apt/Suite 0.000 strict (0.667 pack overlap); postal code on its
+  own line 1.000 (the anchor's `\s+` crosses the newline).

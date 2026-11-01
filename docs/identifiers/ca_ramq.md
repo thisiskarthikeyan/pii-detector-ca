@@ -23,7 +23,7 @@
 
 - Pattern (`core/specs.py`): 4 uppercase letters
   (accented allowed — CÔT, GAG) + 8 digits, optionally in 4-4-4 groups
-  (score 0.4). Matching is **case-sensitive**: with Presidio's default
+  separated by space, dash, dot or slash (score 0.4). Matching is **case-sensitive**: with Presidio's default
   IGNORECASE, any lowercase 4-letter word followed by 8 digits ("card 4111
   1111 …") would match and be boosted by the structural validator.
 - Validator (`ca_ramq_valid`): 4 letters + 8 digits after separator

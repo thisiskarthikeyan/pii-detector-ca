@@ -10,7 +10,7 @@ core applies no context boosting — that is a documented property of
 
 Usage:
     python evaluation/run_core_eval.py --all
-    python evaluation/run_core_eval.py --split gold
+    python evaluation/run_core_eval.py --split heldout
 """
 
 from __future__ import annotations
@@ -36,12 +36,15 @@ DEFAULT_THRESHOLD = 0.35
 CORE_GOLD_TYPES = frozenset(TYPE_MAP.get(e, e) for e in ENTITY_IDS)
 
 
+SPLITS = ["heldout", "generated"]
+SPLIT_PATHS = {
+    "heldout": REPO / "benchmark" / "data" / "gold" / "ca_gold.jsonl",
+    "generated": REPO / "benchmark" / "data" / "generated" / "ca.jsonl",
+}
+
+
 def load_notes(split: str) -> list[dict]:
-    if split == "gold":
-        path = REPO / "benchmark" / "data" / "gold" / "ca_gold.jsonl"
-    else:
-        path = REPO / "benchmark" / "data" / "generated" / "ca.jsonl"
-    with open(path, encoding="utf-8") as f:
+    with open(SPLIT_PATHS[split], encoding="utf-8") as f:
         return [json.loads(line) for line in f]
 
 
@@ -62,27 +65,29 @@ def format_table(split: str, stats: dict, precision: dict, ci: dict) -> str:
         "Pack identifier entities + ADDRESS only (framework-neutral core; "
         "no spaCy PERSON/DATE). CA_AB_ULI is context-gated and expected ~0 here.",
         "",
-        "| Entity | Gold | Detected (overlap) | Recall | Strict recall | FN rate |",
-        "|---|---|---|---|---|---|",
+        "| Entity | Gold | Leak recall | Strict recall | Pack recall |",
+        "|---|---|---|---|---|",
     ]
     for entity in sorted(stats):
         s = stats[entity]
         lines.append(
-            f"| {entity} | {s.gold} | {s.detected} | {s.recall:.3f} | "
-            f"{s.strict_recall:.3f} | {s.fn_rate:.3f} |"
+            f"| {entity} | {s.gold} | {s.recall:.3f} | "
+            f"{s.strict_recall:.3f} | {s.attributed_recall:.3f} |"
         )
     o = overall(stats)
     lines.append(
-        f"| **TOTAL (pack ids)** | {o['gold']} | {o['detected']} | {o['recall']:.3f} | "
-        f"{o['strict_recall']:.3f} | {o['fn_rate']:.3f} |"
+        f"| **TOTAL (pack ids)** | {o['gold']} | {o['recall']:.3f} | "
+        f"{o['strict_recall']:.3f} | {o['attributed_recall']:.3f} |"
     )
     lines.append("")
+    pack = precision["pack"]
     lines.append(
-        f"Span precision (pack-id predictions only): "
-        f"{precision['precision']:.3f} ({precision['tp']}/{precision['total']})"
+        f"Pack precision (deduplicated): {pack['precision']:.3f} "
+        f"(TP {pack['tp']}, FP {pack['fp']}, duplicates {pack['dup']}); "
+        f"over-redaction {precision['overredaction']['chars_per_note']:.1f} chars/note"
     )
-    lo, hi = ci["recall"]
-    lines.append(f"Bootstrap 95% CI (pack ids): leak recall [{lo:.3f}, {hi:.3f}]")
+    lo, hi = ci["attributed_recall"]
+    lines.append(f"Bootstrap 95% CI (pack ids): pack recall [{lo:.3f}, {hi:.3f}]")
     lines.append("")
     return "\n".join(lines)
 
@@ -121,14 +126,14 @@ def run(split: str, out_lines: list[str], runs: list[dict]) -> None:
         }
     )
     print(
-        f"Core scanner       {split}: pack-id recall={o['recall']:.3f} "
-        f"strict={o['strict_recall']:.3f} fn={o['fn_rate']:.3f}"
+        f"Core scanner       {split}: leak={o['recall']:.3f} "
+        f"strict={o['strict_recall']:.3f} pack={o['attributed_recall']:.3f}"
     )
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--split", choices=["gold", "generated"], default="gold")
+    parser.add_argument("--split", choices=SPLITS, default="heldout")
     parser.add_argument("--all", action="store_true", help="both splits")
     args = parser.parse_args()
 
@@ -148,7 +153,7 @@ def main() -> None:
     ]
     runs: list[dict] = []
 
-    for split in ["gold", "generated"] if args.all else [args.split]:
+    for split in SPLITS if args.all else [args.split]:
         run(split, out_lines, runs)
 
     (results_dir / "results_core.md").write_text("\n".join(out_lines), encoding="utf-8")

@@ -6,9 +6,12 @@ Three families of properties:
    check digits validates (Luhn is permutation-complete).
 2. Single-digit error detection: corrupting any one digit of a valid value
    must break validation (the design guarantee of the checksum).
-3. Generator/validator agreement: every value the corpus generators produce
-   must pass (or at least not fail) the corresponding package validator, in
-   every surface format the generator emits.
+3. Generator/validator agreement: every RAW value the corpus generators
+   produce must pass (or at least not fail) the corresponding package
+   validator. Rendered surface forms are covered separately: forms the
+   recognizers are documented NOT to match (lowercase RAMQ letters,
+   lowercase OHIP version codes) are emitted at a low rate on purpose and
+   must be the only ones that fail.
 """
 
 from __future__ import annotations
@@ -24,13 +27,16 @@ from hypothesis import strategies as st
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "benchmark"))
 
 from pii_generators import (  # noqa: E402
-    gen_ca_ab_uli,
-    gen_ca_bc_phn,
-    gen_ca_ohip,
-    gen_ca_ramq,
-    gen_ca_sin,
+    raw_ca_ab_uli,
+    raw_ca_bc_phn,
+    raw_ca_ohip,
+    raw_ca_ramq,
+    raw_ca_sin,
+    render_ca_ohip,
+    render_ca_ramq,
 )
 
+from pii_detector_ca import scan  # noqa: E402
 from pii_detector_ca.validators import (  # noqa: E402
     ca_ab_uli_plausible,
     ca_bc_phn_valid,
@@ -68,11 +74,11 @@ class TestSingleDigitErrorDetection:
 # (generator, validator, must_pass): plausibility validators return None for
 # plausible values, so for those we only require "not False".
 GENERATOR_VALIDATOR_PAIRS = [
-    (gen_ca_sin, ca_sin_valid, True),
-    (gen_ca_ohip, ca_ohip_valid, True),
-    (gen_ca_ramq, ca_ramq_valid, True),
-    (gen_ca_bc_phn, ca_bc_phn_valid, True),
-    (gen_ca_ab_uli, ca_ab_uli_plausible, False),
+    (raw_ca_sin, ca_sin_valid, True),
+    (raw_ca_ohip, ca_ohip_valid, True),
+    (raw_ca_ramq, ca_ramq_valid, True),
+    (raw_ca_bc_phn, ca_bc_phn_valid, True),
+    (raw_ca_ab_uli, ca_ab_uli_plausible, False),
 ]
 
 
@@ -94,8 +100,20 @@ class TestGeneratorValidatorAgreement:
 
     @given(seed=st.integers(min_value=0, max_value=2**32 - 1))
     @settings(max_examples=50)
+    def test_rendered_forms_fail_only_where_documented(self, seed):
+        rng = random.Random(seed)
+        value, form = render_ca_ohip(rng)
+        assert ca_ohip_valid(value) == (not form.endswith("version_lower")), (value, form)
+        value, form = render_ca_ramq(rng)
+        # The RAMQ validator is case-insensitive; the case-sensitive PATTERN
+        # is what rejects lowercase letter blocks, so check via scan().
+        assert ca_ramq_valid(value)
+        assert bool(scan(value, entities=["CA_RAMQ"])) == (form != "lowercase"), (value, form)
+
+    @given(seed=st.integers(min_value=0, max_value=2**32 - 1))
+    @settings(max_examples=50)
     def test_normalize_strips_generated_sin_to_nine_digits(self, seed):
-        value = gen_ca_sin(random.Random(seed))
+        value = raw_ca_sin(random.Random(seed))
         cleaned = normalize(value)
         assert len(cleaned) == 9 and cleaned.isdigit()
         assert cleaned[0] not in "08"
@@ -104,5 +122,5 @@ class TestGeneratorValidatorAgreement:
     @settings(max_examples=50)
     def test_ramq_letters_follow_patient_name(self, seed):
         rng = random.Random(seed)
-        value = gen_ca_ramq(rng, surname="Tremblay", first_name="Émile")
-        assert normalize(value)[:4] == "TREÉ"
+        value = raw_ca_ramq(rng, surname="Tremblay", first_name="Émile")
+        assert value[:4] == "TREÉ"

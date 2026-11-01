@@ -1,19 +1,22 @@
 """Evaluate the Canadian adversarial / hard split (plan item 3.2).
 
-Reports leak recall and strict (fully-covered) recall per (entity, variant)
-cell for stock Presidio and Presidio + pack, using the same overlap/coverage
-definitions as the main harness (metrics.py). The `control` variant is the
-in-distribution baseline; the other variants isolate one out-of-distribution
-perturbation each, so the drop from control quantifies robustness honestly —
-this split exists to NOT be circular, and low numbers here are findings, not
-failures.
+Reports, per (entity, variant) cell and for stock Presidio and Presidio +
+pack:
 
-Writes evaluation/results/hard_ca.{md,json}. Regression floors (set at the
-measured values, not at 1.0) are gated in CI by check_thresholds.py using
-the "hard_min_recall" section of thresholds.json.
+- leak recall      gold overlapped by ANY prediction (incidental DATE_TIME /
+                   PHONE_NUMBER overlap counts);
+- strict recall    gold fully covered by the union of predictions;
+- pack recall      gold overlapped by a prediction of the gold's own type —
+                   the only number that measures the pack's recognizers.
+
+The `control` variant is the in-distribution baseline; the other variants
+isolate one out-of-distribution perturbation each. Low numbers are findings,
+not failures. CI gates PACK recall per variant (thresholds.json,
+"hard_min_pack_recall"); leak recall is reported but not gated because it
+passes even when the pack contributes nothing.
 
 Usage:
-    python benchmark/generate_hard.py --per-cell 10
+    python benchmark/generate_hard.py --per-cell 50
     python evaluation/run_hard.py
 """
 
@@ -28,7 +31,7 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 sys.path.insert(0, str(REPO / "evaluation"))
 
-from metrics import Span, fully_covered  # noqa: E402
+from metrics import Span, attributed_types, fully_covered  # noqa: E402
 from run_eval import build_analyzer, collect_metadata, predict_presidio  # noqa: E402
 
 VARIANTS = [
@@ -39,12 +42,13 @@ VARIANTS = [
     "ocr_confusable",
     "dictation",
 ]
+_KEYS = ("detected", "covered", "attributed")
 
 
 def evaluate(notes: list[dict], predictions: list[list[Span]]) -> dict:
-    """Per (entity, variant) leak/strict recall. One gold entity per note."""
+    """Per (entity, variant) counts. One gold entity per note."""
     cells: dict[tuple[str, str], dict] = defaultdict(
-        lambda: {"gold": 0, "detected": 0, "covered": 0, "missed": []}
+        lambda: {"gold": 0, "detected": 0, "covered": 0, "attributed": 0, "missed": []}
     )
     for note, preds in zip(notes, predictions, strict=True):
         ent = note["entities"][0]
@@ -52,26 +56,30 @@ def evaluate(notes: list[dict], predictions: list[list[Span]]) -> dict:
         cell = cells[(ent["type"], note["variant"])]
         cell["gold"] += 1
         overlapping = [p for p in preds if p.overlaps(gold)]
+        owners = attributed_types(gold.type)
         if overlapping:
             cell["detected"] += 1
-        else:
-            cell["missed"].append(ent["value"])
         if fully_covered(gold, overlapping):
             cell["covered"] += 1
+        if any(p.type in owners for p in overlapping):
+            cell["attributed"] += 1
+        else:
+            cell["missed"].append(ent["value"])
     return dict(cells)
 
 
 def by_variant(cells: dict) -> dict:
-    agg: dict[str, dict] = defaultdict(lambda: {"gold": 0, "detected": 0, "covered": 0})
+    agg: dict[str, dict] = defaultdict(lambda: {"gold": 0, **{k: 0 for k in _KEYS}})
     for (_, variant), c in cells.items():
         agg[variant]["gold"] += c["gold"]
-        agg[variant]["detected"] += c["detected"]
-        agg[variant]["covered"] += c["covered"]
+        for k in _KEYS:
+            agg[variant][k] += c[k]
     return {
         v: {
             **a,
             "recall": a["detected"] / a["gold"],
             "strict_recall": a["covered"] / a["gold"],
+            "attributed_recall": a["attributed"] / a["gold"],
         }
         for v, a in agg.items()
     }
@@ -79,22 +87,29 @@ def by_variant(cells: dict) -> dict:
 
 def matrix_table(system: str, cells: dict, entities: list[str]) -> list[str]:
     lines = [
-        f"### {system} — leak recall (strict recall) per entity x variant",
+        f"### {system} — pack recall [leak recall / strict recall] per entity x variant",
         "",
         "| Entity | " + " | ".join(VARIANTS) + " |",
         "|---|" + "---|" * len(VARIANTS),
     ]
+
+    def fmt(c: dict) -> str:
+        g = c["gold"]
+        return (
+            f"**{c['attributed'] / g:.2f}** "
+            f"[{c['detected'] / g:.2f} / {c['covered'] / g:.2f}]"
+        )
+
     for entity in entities:
-        row = [entity]
-        for variant in VARIANTS:
-            c = cells[(entity, variant)]
-            row.append(f"{c['detected'] / c['gold']:.2f} ({c['covered'] / c['gold']:.2f})")
-        lines.append("| " + " | ".join(row) + " |")
+        lines.append(
+            f"| {entity} | " + " | ".join(fmt(cells[(entity, v)]) for v in VARIANTS) + " |"
+        )
     agg = by_variant(cells)
     lines.append(
         "| **ALL** | "
         + " | ".join(
-            f"**{agg[v]['recall']:.2f} ({agg[v]['strict_recall']:.2f})**"
+            f"**{agg[v]['attributed_recall']:.2f}** "
+            f"[{agg[v]['recall']:.2f} / {agg[v]['strict_recall']:.2f}]"
             for v in VARIANTS
         )
         + " |"
@@ -110,20 +125,21 @@ def main() -> None:
     with open(path, encoding="utf-8") as f:
         notes = [json.loads(line) for line in f]
     entities = sorted({n["entities"][0]["type"] for n in notes})
+    per_cell = len(notes) // (len(entities) * len(VARIANTS))
 
     lines = [
         "# Adversarial / hard split — Canada",
         "",
-        f"{len(notes)} single-identifier notes; checksum-valid values rendered in "
-        "out-of-distribution surface forms. `control` is the in-distribution "
-        "baseline; degradation from control is the honest robustness number.",
+        f"{len(notes)} single-identifier notes ({per_cell} per entity x variant cell); "
+        "checksum-valid values rendered in out-of-distribution surface forms. "
+        "`control` is the in-distribution baseline.",
         "",
-        "Interpretation caveat: leak recall counts overlap by ANY recognizer, so "
-        "on degraded variants part of the remaining recall is *incidental* masking "
-        "by built-in recognizers (DATE_TIME / PHONE_NUMBER happening to overlap), "
-        "not identifier recognition — where the pack and stock rows are identical, "
-        "the pack's own patterns contributed nothing. Strict recall (in "
-        "parentheses) shows whether the value was fully covered.",
+        "Each cell shows **pack recall** (gold overlapped by a prediction of its "
+        "own type: the recognizer actually fired) followed by [leak recall / "
+        "strict recall]. Leak recall counts overlap by ANY recognizer, so on "
+        "degraded variants it includes incidental masking by DATE_TIME or "
+        "PHONE_NUMBER; where pack recall is 0.00 the pack's own patterns "
+        "contributed nothing. CI gates pack recall only.",
         "",
     ]
     results: dict = {}
@@ -141,7 +157,7 @@ def main() -> None:
         }
         print(
             f"{system:18s}: "
-            + "  ".join(f"{v}={agg[v]['recall']:.2f}" for v in VARIANTS)
+            + "  ".join(f"{v}={agg[v]['attributed_recall']:.2f}" for v in VARIANTS)
         )
 
     out_dir = REPO / "evaluation" / "results"

@@ -222,7 +222,7 @@ The project ships with **practice documents** (synthetic clinical notes) and scr
 2. **Presidio + CA builtins** — generic tool with Presidio’s own (normally switched-off) SIN and postal-code rules  
 3. **Presidio + this package** — generic tool **with** this package’s rules  
 
-On the practice notes, the package is expected to find **all** injected Canadian ID numbers that the benchmark labels, while the first two miss the provincial health-card numbers.
+On the practice notes, the package is expected to find every checksum-backed Canadian ID number the benchmark labels (SIN, OHIP, BC PHN, postal codes, Alberta ULI under Alberta wording), while the first two miss the provincial health-card numbers. A few renderings are deliberately outside the rules (lowercase RAMQ letters, unlabelled generic health cards, addresses split over two lines) and show up as misses on purpose.
 
 ### Running the main check (same as automated CI)
 
@@ -237,27 +237,31 @@ python evaluation/check_thresholds.py
 
 After `run_eval.py --all`, open `evaluation/results/results.md`.
 
-You will see tables with columns like **Recall**, **Strict recall**, **FN rate**. Here is what they mean in plain language:
+You will see tables with columns like **Leak recall**, **Strict recall**, **Pack recall**. Here is what they mean in plain language:
 
 | Column name in the file | Plain meaning |
 |---|---|
 | **Gold** | How many labeled IDs of that type were in the practice notes |
-| **Detected (overlap)** | How many of those the software found (at least partially) |
-| **Recall** | **“Found rate”** — out of all IDs that should be there, what fraction did we catch? **1.000 = found all of them** |
+| **Leak recall** | **“Masked rate”** — out of all IDs that should be there, what fraction got covered by *any* flag, even one from an unrelated rule? **1.000 = none leaked** |
 | **Strict recall** | **“Fully covered rate”** — the entire labeled ID span was inside what we flagged, not just a piece of it |
-| **FN rate** | **“Miss rate”** — fraction we failed to find. **0.000 = missed none** |
-| **Span precision** (in the paragraph below the table) | **“Wrong alarm rate among our flags”** — when we flagged something as an ID, how often were we right? Higher is better |
+| **Pack recall** | **“Found by the right rule”** — the rule that owns that ID type is the one that fired. This is the number the automatic gate checks, because leak recall can stay at 1.000 even if a rule is deleted |
+| **Typed exact** | Exact span and exact type label |
+| **Pipeline precision** (below the table) | Of everything the whole system flagged, how much overlapped a real ID? Dominated by Presidio's built-in rules |
+| **Pack precision** (below the table) | The same, counting only this package's `CA_*` flags |
+| **Over-redaction** (below the table) | Characters blacked out per note that were not part of any real ID |
+
+Below the main table there is a per-rendering breakdown (dashed, dotted, compact, lowercase, …) so you can see which formats a rule misses.
 
 Focus on rows labeled **Presidio + pack** (not “Stock Presidio”).
 
 **Success for a release:** the last command prints something like:
 
 ```
-53 checks, 0 failure(s).
+57 checks, 0 failure(s). Summary: evaluation/results/gate_summary.md
 Threshold gate passed.
 ```
 
-That means every automatic minimum-quality bar passed.
+That means every automatic minimum-quality bar passed. `gate_summary.md` lists each bar beside the measured value.
 
 **Failure:** you see `FAIL` lines and a non-zero failure count. Something regressed compared to the expected baseline — treat the release as **not ready** until a maintainer investigates.
 
@@ -265,9 +269,9 @@ That means every automatic minimum-quality bar passed.
 
 | Script | Plain purpose |
 |---|---|
-| `run_negatives.py` | Feeds **notes with no real IDs** but lots of confusing numbers (credit cards, lab values). Measures **wrong alarms**. Lower is better. |
-| `run_hard.py` | Uses **deliberately awkward** formatting (no label words, odd separators, line breaks). Shows where the rules are brittle. |
-| `run_address_eval.py` | Tests **street addresses** on a separate holdout set not used to train the rules. |
+| `run_negatives.py` | Feeds **notes with no real IDs** but lots of confusing numbers (credit cards, MRNs, phone numbers, lab values, and ID words placed next to innocent numbers). Reports **wrong alarms per kind of number**. Lower is better. |
+| `run_hard.py` | Uses **deliberately awkward** formatting (no label words, odd separators, line breaks, OCR errors, dictation spacing). Shows where the rules are brittle; several cells are 0.00 and that is the honest reading. |
+| `run_address_eval.py` | Tests **street addresses** on a separate holdout set, half in the format the rule expects and half in formats it does not (two lines, province spelled out, no postal code). Only the expected format is gated. |
 | `run_core_eval.py --all` | Tests the **simple scan** path only (no Presidio). Expect lower “found rate” on context-sensitive IDs — that is expected, not a Presidio regression. |
 
 

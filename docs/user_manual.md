@@ -24,14 +24,15 @@ This package adds **rules for Canadian ID formats** to text-scanning workflows.
 
 Think of it as a **specialized spell-checker for ID numbers**: it looks at a block of text, finds strings that look like official identifiers, and checks whether they pass format and checksum rules where those rules are public.
 
-It can be used in two ways:
+It can be used in three ways:
 
 | Way to use it | Best for | Extra software needed |
 |---|---|---|
-| **Simple scan** (`scan`) | Quick tests, scripts, services that only need ID detection | Python only |
+| **Command line** (`pii-detector-ca scan`) | Checking a folder of files before sharing them; producing a list of what was found; writing masked copies | Python only |
+| **Simple scan** (`scan` in Python) | Quick tests, scripts, services that only need ID detection | Python only |
 | **Presidio integration** | Full clinical de-identification pipelines that also find names, dates, etc. | Presidio, spaCy, and related models |
 
-Most of this manual focuses on the **simple scan**, because that is the easiest way to try the product.
+Most of this manual focuses on the **command line** and the **simple scan**, because those are the easiest ways to try the product.
 
 ---
 
@@ -87,6 +88,32 @@ When testing, use:
 - made-up numbers that pass the checksum rules (see examples below), or
 - the synthetic practice notes included with this project, or
 - redacted copies where you have replaced digits with `X`
+
+---
+
+## How to scan a folder of files (command line)
+
+After installing, you have a command called `pii-detector-ca`. Point it at a file or a folder:
+
+```bash
+pii-detector-ca scan my_notes/
+```
+
+For every file it prints one line describing what it found. To save that list instead of printing it, add `-o found.jsonl`. To look inside sub-folders too, add `-r`.
+
+To get **copies of your files with the ID numbers blacked out**, add a folder to write them to:
+
+```bash
+pii-detector-ca scan my_notes/ --redact-dir my_notes_redacted/
+```
+
+Each found number is replaced by its type in square brackets, for example `[CA_SIN]`. Your original files are never changed.
+
+At the end, a one-line summary tells you how many files were read, how many contained identifiers, and how many of each type were found. If you only want a yes/no answer ("is there anything in here I should not share?"), add `--fail-on-match`: the command then finishes with a non-zero status when anything is found, which scripts can check.
+
+The command works on plain-text files. If your data is one record per line in JSON format, it reads that too (see the README for the `--text-field` option).
+
+By default the command does **not** need Presidio and therefore does not report the two ID types that depend on nearby words (Alberta ULI and the generic health-card catch-all). If you have installed the Presidio extra, add `--engine presidio` to include them, and `--include-builtins` to also flag names and dates.
 
 ---
 
@@ -222,7 +249,7 @@ The project ships with **practice documents** (synthetic clinical notes) and scr
 2. **Presidio + CA builtins** — generic tool with Presidio’s own (normally switched-off) SIN and postal-code rules  
 3. **Presidio + this package** — generic tool **with** this package’s rules  
 
-On the practice notes, the package is expected to find **all** injected Canadian ID numbers that the benchmark labels, while the first two miss the provincial health-card numbers.
+On the practice notes, the package is expected to find every checksum-backed Canadian ID number the benchmark labels (SIN, OHIP, BC PHN, postal codes, Alberta ULI under Alberta wording), while the first two miss the provincial health-card numbers. A few renderings are deliberately outside the rules (lowercase RAMQ letters, unlabelled generic health cards, addresses split over two lines) and show up as misses on purpose.
 
 ### Running the main check (same as automated CI)
 
@@ -237,27 +264,31 @@ python evaluation/check_thresholds.py
 
 After `run_eval.py --all`, open `evaluation/results/results.md`.
 
-You will see tables with columns like **Recall**, **Strict recall**, **FN rate**. Here is what they mean in plain language:
+You will see tables with columns like **Leak recall**, **Strict recall**, **Pack recall**. Here is what they mean in plain language:
 
 | Column name in the file | Plain meaning |
 |---|---|
 | **Gold** | How many labeled IDs of that type were in the practice notes |
-| **Detected (overlap)** | How many of those the software found (at least partially) |
-| **Recall** | **“Found rate”** — out of all IDs that should be there, what fraction did we catch? **1.000 = found all of them** |
+| **Leak recall** | **“Masked rate”** — out of all IDs that should be there, what fraction got covered by *any* flag, even one from an unrelated rule? **1.000 = none leaked** |
 | **Strict recall** | **“Fully covered rate”** — the entire labeled ID span was inside what we flagged, not just a piece of it |
-| **FN rate** | **“Miss rate”** — fraction we failed to find. **0.000 = missed none** |
-| **Span precision** (in the paragraph below the table) | **“Wrong alarm rate among our flags”** — when we flagged something as an ID, how often were we right? Higher is better |
+| **Pack recall** | **“Found by the right rule”** — the rule that owns that ID type is the one that fired. This is the number the automatic gate checks, because leak recall can stay at 1.000 even if a rule is deleted |
+| **Typed exact** | Exact span and exact type label |
+| **Pipeline precision** (below the table) | Of everything the whole system flagged, how much overlapped a real ID? Dominated by Presidio's built-in rules |
+| **Pack precision** (below the table) | The same, counting only this package's `CA_*` flags |
+| **Over-redaction** (below the table) | Characters blacked out per note that were not part of any real ID |
+
+Below the main table there is a per-rendering breakdown (dashed, dotted, compact, lowercase, …) so you can see which formats a rule misses.
 
 Focus on rows labeled **Presidio + pack** (not “Stock Presidio”).
 
 **Success for a release:** the last command prints something like:
 
 ```
-53 checks, 0 failure(s).
+57 checks, 0 failure(s). Summary: evaluation/results/gate_summary.md
 Threshold gate passed.
 ```
 
-That means every automatic minimum-quality bar passed.
+That means every automatic minimum-quality bar passed. `gate_summary.md` lists each bar beside the measured value.
 
 **Failure:** you see `FAIL` lines and a non-zero failure count. Something regressed compared to the expected baseline — treat the release as **not ready** until a maintainer investigates.
 
@@ -265,9 +296,9 @@ That means every automatic minimum-quality bar passed.
 
 | Script | Plain purpose |
 |---|---|
-| `run_negatives.py` | Feeds **notes with no real IDs** but lots of confusing numbers (credit cards, lab values). Measures **wrong alarms**. Lower is better. |
-| `run_hard.py` | Uses **deliberately awkward** formatting (no label words, odd separators, line breaks). Shows where the rules are brittle. |
-| `run_address_eval.py` | Tests **street addresses** on a separate holdout set not used to train the rules. |
+| `run_negatives.py` | Feeds **notes with no real IDs** but lots of confusing numbers (credit cards, MRNs, phone numbers, lab values, and ID words placed next to innocent numbers). Reports **wrong alarms per kind of number**. Lower is better. |
+| `run_hard.py` | Uses **deliberately awkward** formatting (no label words, odd separators, line breaks, OCR errors, dictation spacing). Shows where the rules are brittle; several cells are 0.00 and that is the honest reading. |
+| `run_address_eval.py` | Tests **street addresses** on a separate holdout set, half in the format the rule expects and half in formats it does not (two lines, province spelled out, no postal code). Only the expected format is gated. |
 | `run_core_eval.py --all` | Tests the **simple scan** path only (no Presidio). Expect lower “found rate” on context-sensitive IDs — that is expected, not a Presidio regression. |
 
 
@@ -277,6 +308,8 @@ That means every automatic minimum-quality bar passed.
 
 | Goal | Command |
 |---|---|
+| Scan a folder | `pii-detector-ca scan my_notes/` |
+| Scan and write masked copies | `pii-detector-ca scan my_notes/ --redact-dir out/` |
 | Try in Python | `from pii_detector_ca import scan` |
 | Run full quality report | `python evaluation/run_eval.py --all` |
 | Pass/fail gate | `python evaluation/check_thresholds.py` |

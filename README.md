@@ -1,8 +1,8 @@
 # pii-detector-ca
 
-Checksum-validated detectors for **Canadian** health and government identifiers, usable standalone or as [Microsoft Presidio](https://microsoft.github.io/presidio/) recognizers, plus a synthetic clinical-text benchmark and evaluation harness.
+Find **Canadian** government and health identifiers in text. A checksum-validated scanner you can run from the command line over files, directories or JSON Lines records, call from Python, or plug into [Microsoft Presidio](https://microsoft.github.io/presidio/) as a set of recognizers. Ships with a synthetic clinical-text benchmark and an evaluation gate.
 
-Most clinical de-identification tooling is built and tested on US identifier formats. Presidio's default registry has no provincial health-card recognizers: an Ontario health number, a Quebec RAMQ number or a BC PHN passes through a stock de-identification pipeline silently. This package closes that gap with deterministic, checksum-backed recognizers that plug into any Presidio `AnalyzerEngine`, or run standalone with no Presidio/spaCy dependency at runtime.
+Most clinical de-identification tooling is built and tested on US identifier formats. Presidio's default registry has no provincial health-card recognizers: an Ontario health number, a Quebec RAMQ number or a BC PHN passes through a stock de-identification pipeline silently. This package closes that gap with deterministic, checksum-backed rules. The base install has no dependencies: the `pii-detector-ca` command and the `scan()` function run on the standard library alone. Presidio and spaCy are an optional extra for pipelines that also need names and dates.
 
 > **Scope.** Canada only. An Indian identifier pack is planned as a separate package (`pii-detector-in`); it is not part of this one.
 
@@ -21,7 +21,7 @@ Most clinical de-identification tooling is built and tested on US identifier for
 
 "Pack recall" means the recognizer that owns the entity fired on the gold span; it is the number CI gates. Full tables, including leak recall (masked by any recognizer), strict recall, per-surface-form breakdowns, and the false-positive rates per confusable source, are in `evaluation/results/`.
 
-**Relationship to Presidio's own Canadian recognizers.** Presidio ≥ 2.2.363 ships a `CA_SIN` recognizer and ≥ 2.2.365 a `CA_POSTAL_CODE` recognizer, both **disabled by default** in `default_recognizers.yaml`. The six health-card and address entities above have no upstream equivalent. If you enable Presidio's built-ins, skip ours to avoid duplicate detections: `add_recognizers(registry, exclude=["CA_SIN", "CA_POSTAL_CODE"])`. The evaluation reports a "Presidio + CA builtins" baseline so the health-card contribution is measured against the strongest no-pack configuration.
+**Relationship to Presidio's own Canadian recognizers.** Presidio ≥ 2.2.363 ships a `CA_SIN` recognizer and ≥ 2.2.365 a `CA_POSTAL_CODE` recognizer, both **disabled by default** in `default_recognizers.yaml`. The six health-card and address entities above have no upstream equivalent. If you enable Presidio's built-ins, skip ours to avoid duplicate detections: `add_recognizers(registry, exclude=["CA_SIN", "CA_POSTAL_CODE"])`. The evaluation reports a "Presidio + CA builtins" baseline with whichever of those two recognizers the installed Presidio provides; the locked evaluation environment pins presidio-analyzer 2.2.363, so the committed baseline includes the upstream `CA_SIN` recognizer only. On the benchmark's varied renderings that upstream recognizer reaches 0.709 pack recall on `CA_SIN` versus 1.000 for this package's.
 
 ## Install
 
@@ -36,7 +36,39 @@ From source: `git clone https://github.com/thisiskarthikeyan/pii-detector-ca.git
 
 ## Usage
 
-### Standalone detection (no Presidio required at runtime)
+### Run against files (command line)
+
+The base install provides a `pii-detector-ca` command (also `python -m pii_detector_ca`). It reads plain-text files, directories, JSON Lines records or standard input, and writes one JSON Lines record per document.
+
+```bash
+pii-detector-ca scan notes/*.txt                       # one JSON line per file on stdout
+pii-detector-ca scan -r notes/ -o hits.jsonl           # whole tree, results to a file
+pii-detector-ca scan records.jsonl --text-field note   # JSON Lines input, text in "note"
+cat letter.txt | pii-detector-ca scan -                # stdin
+pii-detector-ca scan notes/ --redact-dir redacted/     # also write masked copies
+pii-detector-ca scan notes/ --fail-on-match -q         # exit 3 if anything is found
+```
+
+Each output line looks like this:
+
+```json
+{"source": "notes/a.txt", "id": null, "chars": 812,
+ "entities": [{"entity": "CA_SIN", "start": 41, "end": 52, "text": "123-456-782", "score": 1.0},
+              {"entity": "CA_OHIP", "start": 20, "end": 35, "text": "7577 752 616 AB", "score": 1.0}]}
+```
+
+A summary goes to stderr (`documents=12 with_identifiers=9 identifiers=14 (CA_OHIP 6, CA_SIN 8)`); `-q` silences it. `--redact-dir` writes a copy of every document with each span replaced by `[ENTITY]` (change the text with `--placeholder`). `--entities CA_SIN,CA_OHIP` restricts the report. Exit status is 0 normally, 2 on a bad path or malformed input, 3 with `--fail-on-match` when at least one identifier was found, which makes the command usable as a pre-share check in a pipeline.
+
+The default engine is the dependency-free `scan()` described below, so the two context-gated entities (`CA_AB_ULI`, `CA_HEALTH_CARD`) are not reported. With the Presidio extra installed, `--engine presidio` runs the full `AnalyzerEngine` with this package's recognizers added; `--include-builtins` also reports Presidio's own `PERSON`, `DATE_TIME` and similar entities, and `--spacy-model` picks the model (default `en_core_web_sm`).
+
+```bash
+pip install "pii-detector-ca[presidio]" && python -m spacy download en_core_web_sm
+pii-detector-ca scan --engine presidio --include-builtins -r notes/ --redact-dir redacted/
+```
+
+Redaction is a plain span replacement. It is not a de-identification policy: nothing here decides what counts as identifying in your setting, and the "What this is not" section applies in full.
+
+### Python API: standalone detection (no Presidio required at runtime)
 
 ```python
 from pii_detector_ca import scan
@@ -46,9 +78,9 @@ for hit in matches:
     print(hit.entity, hit.start, hit.end, hit.text, hit.score)
 ```
 
-`scan()` is pattern + validator only — it applies **no context-word boosting**. Checksum/structure-backed entities (`CA_SIN`, `CA_OHIP`, `CA_RAMQ`, `CA_BC_PHN`, `CA_POSTAL_CODE`, `CA_STREET_ADDRESS`) work fully; the context-gated `CA_AB_ULI` and `CA_HEALTH_CARD` never reach the default threshold standalone and need the Presidio integration. Entity rules live in `pii_detector_ca.core` (validators, specs, scanner); the Presidio recognizers are thin adapters over the same specs. See [docs/architecture/core_contract.md](docs/architecture/core_contract.md).
+`scan()` is pattern + validator only — it applies **no context-word boosting**. Checksum/structure-backed entities (`CA_SIN`, `CA_OHIP`, `CA_RAMQ`, `CA_BC_PHN`, `CA_POSTAL_CODE`, `CA_STREET_ADDRESS`) behave exactly as in the Presidio integration; the context-gated `CA_AB_ULI` and `CA_HEALTH_CARD` never reach the default threshold standalone and need the Presidio integration. `evaluation/results/results_core.md` reports the standalone path on the same benchmark. Entity rules live in `pii_detector_ca.core` (validators, specs, scanner); the Presidio recognizers are thin adapters over the same specs. See [docs/architecture/core_contract.md](docs/architecture/core_contract.md).
 
-### Presidio integration
+### Python API: Presidio integration
 
 ```python
 from presidio_analyzer import AnalyzerEngine
@@ -80,10 +112,10 @@ A non-technical walkthrough is in [docs/user_manual.md](docs/user_manual.md).
 - **Not a compliance guarantee.** Using this package does not by itself satisfy PIPEDA, PHIPA, provincial health-information acts, or any other regulation. It is one detection layer; keep human review and your organization's privacy process in the loop.
 - **Not a full de-identifier.** It detects identifiers. Person names, dates, and free-text clues come from Presidio's underlying NLP engine (spaCy), which this package does not improve. Most remaining misses on the benchmark are non-Anglophone person names.
 - **Not validated on real clinical text.** All reported numbers come from a synthetic benchmark (below). Real notes carry OCR noise, dictation artifacts, and formats a template generator cannot anticipate.
-- **Checksum-valid ≠ real, and the collision floor is not small.** About 8% of random 9-digit strings pass the SIN check and about 9% of random 10-digit strings pass the OHIP check, with no context required. Measured on the negatives corpus: 10% of random 10-digit MRNs, encounter numbers and compact phone numbers are flagged `CA_OHIP` at score 1.0 with no health context (`evaluation/results/negatives_ca.md`, sources `mrn10`, `encounter10`, `phone_compact`). Whether compact 10-digit matches should require context is an open design question, tracked as expected-failure tests in `tests/test_negatives.py`.
+- **Checksum-valid ≠ real, and the collision floor is not small.** About 8% of random 9-digit strings pass the SIN check and about 9% of random 10-digit strings pass the OHIP check, with no context required. Measured on the negatives corpus: 10–20% of random 10-digit MRNs, encounter numbers and compact phone or fax numbers are flagged `CA_OHIP` (occasionally `CA_BC_PHN`) at score 1.0 with no health context (`evaluation/results/negatives_ca.md`, sources `mrn10`, `encounter10`, `phone_compact`). Whether compact 10-digit matches should require context is an open design question, tracked as expected-failure tests in `tests/test_negatives.py`.
 - **Context gating has a measured false-positive cost.** Checksumless types (Alberta ULI, generic health cards) rely on context words within Presidio's 5-token window. An innocent 9-digit number inside that window of "health card", "Alberta" or "assurance maladie" is flagged in roughly 70–140% of cases (two recognizers often fire on one span); see the `trap_*` rows in `negatives_ca.md`.
 - **No robustness to line wraps, OCR confusables, dictation spacing or digit regrouping.** Pack recall on those hard-split variants is 0.00 (`evaluation/results/hard_ca.md`). Dot and slash separators are matched.
-- **French prose is out of scope.** French context words are implemented (and exercised in tests) but the benchmark is English-language clinical prose only.
+- **French prose is out of scope.** French context words are implemented (exercised in unit tests and by the `trap_french` negatives source) but the benchmark is English-language clinical prose only.
 
 ## Benchmark
 

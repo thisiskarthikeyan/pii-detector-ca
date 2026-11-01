@@ -52,9 +52,10 @@ def predict_core(notes: list[dict]) -> list[list[Span]]:
     predictions: list[list[Span]] = []
     for note in notes:
         matches = scan(note["text"], threshold=DEFAULT_THRESHOLD)
-        predictions.append(
-            [Span(m.start, m.end, TYPE_MAP.get(m.entity, m.entity)) for m in matches]
-        )
+        # Keep the predicted type as emitted: metrics.ATTRIBUTION maps
+        # CA_STREET_ADDRESS onto gold ADDRESS, so pre-mapping here would make
+        # every address look unattributed.
+        predictions.append([Span(m.start, m.end, m.entity) for m in matches])
     return predictions
 
 
@@ -110,16 +111,7 @@ def run(split: str, out_lines: list[str], runs: list[dict]) -> None:
         {
             "system": "Core scanner",
             "split": split,
-            "entities": {
-                entity: {
-                    "gold": s.gold,
-                    "detected": s.detected,
-                    "covered": s.covered,
-                    "recall": s.recall,
-                    "strict_recall": s.strict_recall,
-                }
-                for entity, s in sorted(stats.items())
-            },
+            "entities": {entity: s.as_dict() for entity, s in sorted(stats.items())},
             "overall": o,
             "span_precision": precision,
             "bootstrap_ci_95": ci,

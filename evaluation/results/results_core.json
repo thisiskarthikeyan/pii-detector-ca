@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2026-10-29T05:17:27+00:00",
+    "generated_at": "2026-11-01T00:37:43+00:00",
     "engine": "core.scan",
     "score_threshold": 0.35
   },
@@ -13,69 +13,93 @@
           "gold": 42,
           "detected": 38,
           "covered": 28,
+          "attributed": 30,
           "recall": 0.9047619047619048,
-          "strict_recall": 0.6666666666666666
+          "strict_recall": 0.6666666666666666,
+          "attributed_recall": 0.7142857142857143,
+          "typed_recall": 0.6666666666666666
         },
         "CA_AB_ULI": {
           "gold": 9,
           "detected": 0,
           "covered": 0,
+          "attributed": 0,
           "recall": 0.0,
-          "strict_recall": 0.0
+          "strict_recall": 0.0,
+          "attributed_recall": 0.0,
+          "typed_recall": 0.0
         },
         "CA_BC_PHN": {
           "gold": 21,
           "detected": 21,
           "covered": 21,
+          "attributed": 21,
           "recall": 1.0,
-          "strict_recall": 1.0
+          "strict_recall": 1.0,
+          "attributed_recall": 1.0,
+          "typed_recall": 1.0
         },
         "CA_HEALTH_CARD": {
           "gold": 42,
           "detected": 1,
           "covered": 1,
+          "attributed": 0,
           "recall": 0.023809523809523808,
-          "strict_recall": 0.023809523809523808
+          "strict_recall": 0.023809523809523808,
+          "attributed_recall": 0.0,
+          "typed_recall": 0.0
         },
         "CA_OHIP": {
           "gold": 23,
           "detected": 23,
           "covered": 19,
+          "attributed": 23,
           "recall": 1.0,
-          "strict_recall": 0.8260869565217391
+          "strict_recall": 0.8260869565217391,
+          "attributed_recall": 1.0,
+          "typed_recall": 0.8260869565217391
         },
         "CA_POSTAL_CODE": {
           "gold": 34,
           "detected": 34,
           "covered": 34,
+          "attributed": 34,
           "recall": 1.0,
-          "strict_recall": 1.0
+          "strict_recall": 1.0,
+          "attributed_recall": 1.0,
+          "typed_recall": 1.0
         },
         "CA_RAMQ": {
           "gold": 18,
           "detected": 18,
           "covered": 18,
+          "attributed": 18,
           "recall": 1.0,
-          "strict_recall": 1.0
+          "strict_recall": 1.0,
+          "attributed_recall": 1.0,
+          "typed_recall": 1.0
         },
         "CA_SIN": {
           "gold": 30,
           "detected": 30,
           "covered": 30,
+          "attributed": 30,
           "recall": 1.0,
-          "strict_recall": 1.0
+          "strict_recall": 1.0,
+          "attributed_recall": 1.0,
+          "typed_recall": 1.0
         }
       },
       "overall": {
         "gold": 219,
         "detected": 165,
         "covered": 151,
-        "attributed": 126,
+        "attributed": 156,
         "recall": 0.7534246575342466,
         "fn_rate": 0.2465753424657534,
         "strict_recall": 0.6894977168949772,
         "strict_fn_rate": 0.3105022831050228,
-        "attributed_recall": 0.5753424657534246,
+        "attributed_recall": 0.7123287671232876,
         "typed_recall": 0.684931506849315
       },
       "span_precision": {
@@ -88,16 +112,12 @@
         },
         "pack": {
           "tp": 165,
-          "dup": 0,
+          "dup": 30,
           "fp": 0,
-          "total": 165,
+          "total": 195,
           "precision": 1.0
         },
         "pred_counts": {
-          "ADDRESS": {
-            "tp": 30,
-            "fp": 0
-          },
           "CA_BC_PHN": {
             "tp": 21,
             "fp": 0
@@ -117,6 +137,10 @@
           "CA_SIN": {
             "tp": 31,
             "fp": 0
+          },
+          "CA_STREET_ADDRESS": {
+            "tp": 30,
+            "fp": 0
           }
         },
         "overredaction": {
@@ -131,10 +155,10 @@
             "gold": 1,
             "detected": 1,
             "covered": 0,
-            "attributed": 0,
+            "attributed": 1,
             "recall": 1.0,
             "strict_recall": 0.0,
-            "attributed_recall": 0.0,
+            "attributed_recall": 1.0,
             "typed_recall": 0.0
           },
           "ADDRESS|no_comma_province": {
@@ -161,20 +185,20 @@
             "gold": 28,
             "detected": 28,
             "covered": 27,
-            "attributed": 0,
+            "attributed": 28,
             "recall": 1.0,
             "strict_recall": 0.9642857142857143,
-            "attributed_recall": 0.0,
+            "attributed_recall": 1.0,
             "typed_recall": 0.9642857142857143
           },
           "ADDRESS|postal_own_line": {
             "gold": 1,
             "detected": 1,
             "covered": 1,
-            "attributed": 0,
+            "attributed": 1,
             "recall": 1.0,
             "strict_recall": 1.0,
-            "attributed_recall": 0.0,
+            "attributed_recall": 1.0,
             "typed_recall": 1.0
           },
           "ADDRESS|province_spelled": {
@@ -819,8 +843,8 @@
           0.7489
         ],
         "attributed_recall": [
-          0.5185,
-          0.6261
+          0.6524,
+          0.766
         ],
         "precision": [
           1.0,
@@ -840,69 +864,93 @@
           "gold": 364,
           "detected": 358,
           "covered": 292,
+          "attributed": 312,
           "recall": 0.9835164835164835,
-          "strict_recall": 0.8021978021978022
+          "strict_recall": 0.8021978021978022,
+          "attributed_recall": 0.8571428571428571,
+          "typed_recall": 0.8021978021978022
         },
         "CA_AB_ULI": {
           "gold": 99,
           "detected": 0,
           "covered": 0,
+          "attributed": 0,
           "recall": 0.0,
-          "strict_recall": 0.0
+          "strict_recall": 0.0,
+          "attributed_recall": 0.0,
+          "typed_recall": 0.0
         },
         "CA_BC_PHN": {
           "gold": 158,
           "detected": 158,
           "covered": 158,
+          "attributed": 158,
           "recall": 1.0,
-          "strict_recall": 1.0
+          "strict_recall": 1.0,
+          "attributed_recall": 1.0,
+          "typed_recall": 1.0
         },
         "CA_HEALTH_CARD": {
           "gold": 409,
           "detected": 17,
           "covered": 17,
+          "attributed": 0,
           "recall": 0.04156479217603912,
-          "strict_recall": 0.04156479217603912
+          "strict_recall": 0.04156479217603912,
+          "attributed_recall": 0.0,
+          "typed_recall": 0.0
         },
         "CA_OHIP": {
           "gold": 169,
           "detected": 169,
           "covered": 144,
+          "attributed": 169,
           "recall": 1.0,
-          "strict_recall": 0.8520710059171598
+          "strict_recall": 0.8520710059171598,
+          "attributed_recall": 1.0,
+          "typed_recall": 0.8520710059171598
         },
         "CA_POSTAL_CODE": {
           "gold": 271,
           "detected": 271,
           "covered": 271,
+          "attributed": 271,
           "recall": 1.0,
-          "strict_recall": 1.0
+          "strict_recall": 1.0,
+          "attributed_recall": 1.0,
+          "typed_recall": 1.0
         },
         "CA_RAMQ": {
           "gold": 161,
           "detected": 153,
           "covered": 153,
+          "attributed": 153,
           "recall": 0.9503105590062112,
-          "strict_recall": 0.9503105590062112
+          "strict_recall": 0.9503105590062112,
+          "attributed_recall": 0.9503105590062112,
+          "typed_recall": 0.9503105590062112
         },
         "CA_SIN": {
           "gold": 275,
           "detected": 275,
           "covered": 275,
+          "attributed": 275,
           "recall": 1.0,
-          "strict_recall": 1.0
+          "strict_recall": 1.0,
+          "attributed_recall": 1.0,
+          "typed_recall": 1.0
         }
       },
       "overall": {
         "gold": 1906,
         "detected": 1401,
         "covered": 1310,
-        "attributed": 1026,
+        "attributed": 1338,
         "recall": 0.7350472193074502,
         "fn_rate": 0.2649527806925498,
         "strict_recall": 0.6873032528856243,
         "strict_fn_rate": 0.3126967471143757,
-        "attributed_recall": 0.5383001049317944,
+        "attributed_recall": 0.70199370409234,
         "typed_recall": 0.6783840503672612
       },
       "span_precision": {
@@ -915,16 +963,12 @@
         },
         "pack": {
           "tp": 1401,
-          "dup": 22,
+          "dup": 334,
           "fp": 0,
-          "total": 1423,
+          "total": 1735,
           "precision": 1.0
         },
         "pred_counts": {
-          "ADDRESS": {
-            "tp": 312,
-            "fp": 0
-          },
           "CA_BC_PHN": {
             "tp": 159,
             "fp": 0
@@ -944,6 +988,10 @@
           "CA_SIN": {
             "tp": 290,
             "fp": 0
+          },
+          "CA_STREET_ADDRESS": {
+            "tp": 312,
+            "fp": 0
           }
         },
         "overredaction": {
@@ -958,10 +1006,10 @@
             "gold": 9,
             "detected": 9,
             "covered": 0,
-            "attributed": 0,
+            "attributed": 4,
             "recall": 1.0,
             "strict_recall": 0.0,
-            "attributed_recall": 0.0,
+            "attributed_recall": 0.4444444444444444,
             "typed_recall": 0.0
           },
           "ADDRESS|no_comma_province": {
@@ -988,20 +1036,20 @@
             "gold": 297,
             "detected": 297,
             "covered": 278,
-            "attributed": 0,
+            "attributed": 294,
             "recall": 1.0,
             "strict_recall": 0.936026936026936,
-            "attributed_recall": 0.0,
+            "attributed_recall": 0.98989898989899,
             "typed_recall": 0.936026936026936
           },
           "ADDRESS|postal_own_line": {
             "gold": 14,
             "detected": 14,
             "covered": 14,
-            "attributed": 0,
+            "attributed": 14,
             "recall": 1.0,
             "strict_recall": 1.0,
-            "attributed_recall": 0.0,
+            "attributed_recall": 1.0,
             "typed_recall": 1.0
           },
           "ADDRESS|province_spelled": {
@@ -2316,8 +2364,8 @@
           0.7064
         ],
         "attributed_recall": [
-          0.5203,
-          0.558
+          0.6821,
+          0.7209
         ],
         "precision": [
           1.0,

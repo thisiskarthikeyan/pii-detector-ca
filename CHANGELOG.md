@@ -4,6 +4,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+
+- `pii-detector-ca scan` command (also `python -m pii_detector_ca`): scans plain-text files, directories (`-r`), JSON Lines records (`--text-field`, `--id-field`) or stdin; writes one JSON Lines record per document; `--redact-dir` writes masked copies with `[ENTITY]` placeholders (`--placeholder` to change); `--entities` filter; `--fail-on-match` exit status 3 for pipelines; `--engine presidio` runs the full `AnalyzerEngine` with the pack added, `--include-builtins` reports Presidio's own entities. The default `core` engine has no dependencies. Console-script entry point in `pyproject.toml`; CLI smoke test in the standalone CI job.
+
 ### Changed
 
 - Evaluation gate now enforces **pack recall** (the owning recognizer overlapped the gold span) for identifier entities instead of leak recall, plus a per-recognizer prediction-count presence check; removing a recognizer fails CI (`tests/test_gate.py`). Previously `CA_BC_PHN` and `CA_AB_ULI` passed with their recognizers deleted because built-in recognizers masked the same spans.

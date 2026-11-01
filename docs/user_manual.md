@@ -24,14 +24,15 @@ This package adds **rules for Canadian ID formats** to text-scanning workflows.
 
 Think of it as a **specialized spell-checker for ID numbers**: it looks at a block of text, finds strings that look like official identifiers, and checks whether they pass format and checksum rules where those rules are public.
 
-It can be used in two ways:
+It can be used in three ways:
 
 | Way to use it | Best for | Extra software needed |
 |---|---|---|
-| **Simple scan** (`scan`) | Quick tests, scripts, services that only need ID detection | Python only |
+| **Command line** (`pii-detector-ca scan`) | Checking a folder of files before sharing them; producing a list of what was found; writing masked copies | Python only |
+| **Simple scan** (`scan` in Python) | Quick tests, scripts, services that only need ID detection | Python only |
 | **Presidio integration** | Full clinical de-identification pipelines that also find names, dates, etc. | Presidio, spaCy, and related models |
 
-Most of this manual focuses on the **simple scan**, because that is the easiest way to try the product.
+Most of this manual focuses on the **command line** and the **simple scan**, because those are the easiest ways to try the product.
 
 ---
 
@@ -87,6 +88,32 @@ When testing, use:
 - made-up numbers that pass the checksum rules (see examples below), or
 - the synthetic practice notes included with this project, or
 - redacted copies where you have replaced digits with `X`
+
+---
+
+## How to scan a folder of files (command line)
+
+After installing, you have a command called `pii-detector-ca`. Point it at a file or a folder:
+
+```bash
+pii-detector-ca scan my_notes/
+```
+
+For every file it prints one line describing what it found. To save that list instead of printing it, add `-o found.jsonl`. To look inside sub-folders too, add `-r`.
+
+To get **copies of your files with the ID numbers blacked out**, add a folder to write them to:
+
+```bash
+pii-detector-ca scan my_notes/ --redact-dir my_notes_redacted/
+```
+
+Each found number is replaced by its type in square brackets, for example `[CA_SIN]`. Your original files are never changed.
+
+At the end, a one-line summary tells you how many files were read, how many contained identifiers, and how many of each type were found. If you only want a yes/no answer ("is there anything in here I should not share?"), add `--fail-on-match`: the command then finishes with a non-zero status when anything is found, which scripts can check.
+
+The command works on plain-text files. If your data is one record per line in JSON format, it reads that too (see the README for the `--text-field` option).
+
+By default the command does **not** need Presidio and therefore does not report the two ID types that depend on nearby words (Alberta ULI and the generic health-card catch-all). If you have installed the Presidio extra, add `--engine presidio` to include them, and `--include-builtins` to also flag names and dates.
 
 ---
 
@@ -281,6 +308,8 @@ That means every automatic minimum-quality bar passed. `gate_summary.md` lists e
 
 | Goal | Command |
 |---|---|
+| Scan a folder | `pii-detector-ca scan my_notes/` |
+| Scan and write masked copies | `pii-detector-ca scan my_notes/ --redact-dir out/` |
 | Try in Python | `from pii_detector_ca import scan` |
 | Run full quality report | `python evaluation/run_eval.py --all` |
 | Pass/fail gate | `python evaluation/check_thresholds.py` |

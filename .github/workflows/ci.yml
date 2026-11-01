@@ -50,6 +50,18 @@ jobs:
               raise SystemExit("expected ImportError without presidio")
           print("standalone OK")
           PY
+      - name: CLI smoke test (no Presidio)
+        run: |
+          mkdir -p /tmp/notes /tmp/redacted
+          printf 'Health card 1234 567 897 KD, SIN 130-692-544.\n' > /tmp/notes/a.txt
+          printf 'No identifiers here.\n' > /tmp/notes/b.txt
+          /tmp/smoke/bin/pii-detector-ca scan /tmp/notes -o /tmp/hits.jsonl --redact-dir /tmp/redacted
+          test "$(wc -l < /tmp/hits.jsonl)" -eq 2
+          grep -q '"CA_OHIP"' /tmp/hits.jsonl && grep -q '"CA_SIN"' /tmp/hits.jsonl
+          grep -q '\[CA_SIN\]' /tmp/redacted/a.txt
+          ! grep -q '130-692-544' /tmp/redacted/a.txt
+          if /tmp/smoke/bin/pii-detector-ca scan /tmp/notes/a.txt --fail-on-match -q > /dev/null; then exit 1; fi
+          echo "CLI OK"
 
   eval:
     # Locked environment: eval numbers must be reproducible, so this job

@@ -1,8 +1,8 @@
 # pii-detector-ca
 
-Checksum-validated detectors for **Canadian** health and government identifiers, usable standalone or as [Microsoft Presidio](https://microsoft.github.io/presidio/) recognizers, plus a synthetic clinical-text benchmark and evaluation harness.
+Find **Canadian** government and health identifiers in text. A checksum-validated scanner you can run from the command line over files, directories or JSON Lines records, call from Python, or plug into [Microsoft Presidio](https://microsoft.github.io/presidio/) as a set of recognizers. Ships with a synthetic clinical-text benchmark and an evaluation gate.
 
-Most clinical de-identification tooling is built and tested on US identifier formats. Presidio's default registry has no provincial health-card recognizers: an Ontario health number, a Quebec RAMQ number or a BC PHN passes through a stock de-identification pipeline silently. This package closes that gap with deterministic, checksum-backed recognizers that plug into any Presidio `AnalyzerEngine`, or run standalone with no Presidio/spaCy dependency at runtime.
+Most clinical de-identification tooling is built and tested on US identifier formats. Presidio's default registry has no provincial health-card recognizers: an Ontario health number, a Quebec RAMQ number or a BC PHN passes through a stock de-identification pipeline silently. This package closes that gap with deterministic, checksum-backed rules. The base install has no dependencies: the `pii-detector-ca` command and the `scan()` function run on the standard library alone. Presidio and spaCy are an optional extra for pipelines that also need names and dates.
 
 > **Scope.** Canada only. An Indian identifier pack is planned as a separate package (`pii-detector-in`); it is not part of this one.
 
@@ -36,7 +36,39 @@ From source: `git clone https://github.com/thisiskarthikeyan/pii-detector-ca.git
 
 ## Usage
 
-### Standalone detection (no Presidio required at runtime)
+### Run against files (command line)
+
+The base install provides a `pii-detector-ca` command (also `python -m pii_detector_ca`). It reads plain-text files, directories, JSON Lines records or standard input, and writes one JSON Lines record per document.
+
+```bash
+pii-detector-ca scan notes/*.txt                       # one JSON line per file on stdout
+pii-detector-ca scan -r notes/ -o hits.jsonl           # whole tree, results to a file
+pii-detector-ca scan records.jsonl --text-field note   # JSON Lines input, text in "note"
+cat letter.txt | pii-detector-ca scan -                # stdin
+pii-detector-ca scan notes/ --redact-dir redacted/     # also write masked copies
+pii-detector-ca scan notes/ --fail-on-match -q         # exit 3 if anything is found
+```
+
+Each output line looks like this:
+
+```json
+{"source": "notes/a.txt", "id": null, "chars": 812,
+ "entities": [{"entity": "CA_SIN", "start": 41, "end": 52, "text": "123-456-782", "score": 1.0},
+              {"entity": "CA_OHIP", "start": 20, "end": 35, "text": "7577 752 616 AB", "score": 1.0}]}
+```
+
+A summary goes to stderr (`documents=12 with_identifiers=9 identifiers=14 (CA_OHIP 6, CA_SIN 8)`); `-q` silences it. `--redact-dir` writes a copy of every document with each span replaced by `[ENTITY]` (change the text with `--placeholder`). `--entities CA_SIN,CA_OHIP` restricts the report. Exit status is 0 normally, 2 on a bad path or malformed input, 3 with `--fail-on-match` when at least one identifier was found, which makes the command usable as a pre-share check in a pipeline.
+
+The default engine is the dependency-free `scan()` described below, so the two context-gated entities (`CA_AB_ULI`, `CA_HEALTH_CARD`) are not reported. With the Presidio extra installed, `--engine presidio` runs the full `AnalyzerEngine` with this package's recognizers added; `--include-builtins` also reports Presidio's own `PERSON`, `DATE_TIME` and similar entities, and `--spacy-model` picks the model (default `en_core_web_sm`).
+
+```bash
+pip install "pii-detector-ca[presidio]" && python -m spacy download en_core_web_sm
+pii-detector-ca scan --engine presidio --include-builtins -r notes/ --redact-dir redacted/
+```
+
+Redaction is a plain span replacement. It is not a de-identification policy: nothing here decides what counts as identifying in your setting, and the "What this is not" section applies in full.
+
+### Python API: standalone detection (no Presidio required at runtime)
 
 ```python
 from pii_detector_ca import scan
@@ -48,7 +80,7 @@ for hit in matches:
 
 `scan()` is pattern + validator only — it applies **no context-word boosting**. Checksum/structure-backed entities (`CA_SIN`, `CA_OHIP`, `CA_RAMQ`, `CA_BC_PHN`, `CA_POSTAL_CODE`, `CA_STREET_ADDRESS`) behave exactly as in the Presidio integration; the context-gated `CA_AB_ULI` and `CA_HEALTH_CARD` never reach the default threshold standalone and need the Presidio integration. `evaluation/results/results_core.md` reports the standalone path on the same benchmark. Entity rules live in `pii_detector_ca.core` (validators, specs, scanner); the Presidio recognizers are thin adapters over the same specs. See [docs/architecture/core_contract.md](docs/architecture/core_contract.md).
 
-### Presidio integration
+### Python API: Presidio integration
 
 ```python
 from presidio_analyzer import AnalyzerEngine

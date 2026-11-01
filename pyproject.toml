@@ -1,7 +1,7 @@
 [project]
 name = "pii-detector-ca"
 version = "0.1.0"
-description = "Checksum-validated detectors for Canadian health and government identifiers (SIN, OHIP, RAMQ, BC PHN, Alberta ULI, postal codes, street addresses): standalone or as Microsoft Presidio recognizers, with a synthetic clinical-text benchmark"
+description = "Find Canadian government and health identifiers (SIN, OHIP, RAMQ, BC PHN, Alberta ULI, postal codes, street addresses) in text files: a checksum-validated command-line scanner and Python API with no dependencies, optional Microsoft Presidio recognizers, and a synthetic clinical-text benchmark"
 readme = "README.md"
 license = { file = "LICENSE" }
 authors = [{ name = "Karthikeyan Murugaiah", email = "blue1agave@gmail.com" }]
@@ -38,6 +38,9 @@ dev = [
     "hypothesis>=6.100",
     "mypy>=1.10",
 ]
+
+[project.scripts]
+pii-detector-ca = "pii_detector_ca.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/thisiskarthikeyan/pii-detector-ca"
